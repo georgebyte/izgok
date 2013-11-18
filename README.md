@@ -1,7 +1,7 @@
 PP Project
 ==========
 
-Didakticna spletna igra.
+Didakticna spletna igra za ucenje zgodovine.
 
 Navodila za namestitev:
 -----------------------
