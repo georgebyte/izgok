@@ -6,9 +6,9 @@ Didakticna spletna igra za ucenje zgodovine.
 Navodila za namestitev:
 -----------------------
 
-git clone git@github.com:jurebajt/pp_project.git
-cd pp_project
-composer install
+1. git clone git@github.com:jurebajt/pp_project.git
+2. cd pp_project
+3. composer install
 
 Vzpostavitev podatkovne baze:
 -----------------------
