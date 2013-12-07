@@ -1,0 +1,18 @@
+body {
+    background: url(/img/paper-pattern.png) repeat;
+}
+
+#navigation {
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+#main-container {
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+#main-content h1 {
+    margin-top: 0px;
+}

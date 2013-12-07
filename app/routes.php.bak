@@ -1,0 +1,100 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the Closure to execute when that URI is requested.
+|
+*/
+
+Route::get('/', function()
+{
+	return View::make('hello');
+});
+
+Route::get('books/{genere?}', function($genere = null)
+{
+    if ($genere == null) {
+        return 'Books index.';
+    }
+    return "Books in the {$genere} category.";
+});
+
+Route::get('animals/{squirrel}', function($squirrel)
+{
+    $data['squirrel'] = $squirrel;
+    return View::make('simple', $data);
+});
+
+Route::get('first',function()
+{
+    return Redirect::to('second');
+});
+
+Route::get('second',function()
+{
+    return 'Second route.';
+});
+Route::get('third',function()
+{
+    return Redirect::to('fourth');
+});
+Route::get('fourth',function()
+{
+    return URL::previous();
+});
+Route::get('current/url', function()
+{
+    return URL::current();
+});
+Route::get('uri', function()
+{
+   return URL::to('register');
+});
+Route::get('secure', function()
+{
+   return URL::secure('register');
+});
+Route::get('register2', function()
+{
+   return URL::action('RegistrationController@showRegistrationForm');
+});
+Route::get('/flash', function()
+{
+Input::flash();
+return Redirect::to('new/request');
+});
+
+Route::get('new/request', function()
+{
+var_dump(Input::old());
+});
+
+Route::get('/nom-nom', function()
+{
+	$cookie = Cookie::make('low-carb', 'almond cookie', 1);
+	return Redirect::to('nom-nom2')->withCookie($cookie);
+});
+Route::get('/nom-nom2', function()
+{
+	$cookie = Cookie::get('low-carb');
+	var_dump($cookie);
+});
+
+Route::get('/sql', function()
+{
+	return Album::where('title', 'LIKE', '...%')->orWhere('artist', '=', 'Something Corporate')->toSql();
+});
+
+
+Route::get('/register', 'RegistrationController@showRegistrationForm');
+Route::post('/register', 'RegistrationController@processRegistrationForm');
+
+Route::get('{page}', function($page)
+{
+    return View::make('404');
+});
