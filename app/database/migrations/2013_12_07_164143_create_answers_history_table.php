@@ -14,13 +14,13 @@ class CreateAnswersHistoryTable extends Migration {
 		Schema::create('answers_history', function($table)
         {
             $table->increments('id');
+            $table->integer('id_quiz')->unsigned();
             $table->foreign('id_quiz')->references('id')->on('quizzes');
+            $table->integer('id_question')->unsigned();
             $table->foreign('id_question')->references('id')->on('questions');
+            $table->integer('id_user')->unsigned();
             $table->foreign('id_user')->references('id')->on('users');
             $table->integer('answer')->unsigned();
-
-
-            
         });
 	}
 
