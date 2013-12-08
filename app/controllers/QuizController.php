@@ -100,7 +100,7 @@ class QuizController extends BaseController {
             
             $questions = Question::whereIn('id', $questionIDs) -> get(array('question', 'answer_1', 'answer_2', 'answer_3', 'answer_correct')); 
 
-            $data = array("questionsData" => $questionsData, "questions" => $questions, "answerTokens" => $answerTokens);
+            $data = array("questionsData" => $questionsData, "questions" => $questions, "answerTokens" => $answerTokens, "quizID" => $id);
             return View::make('quiz', $data);
         }
 
@@ -117,16 +117,31 @@ class QuizController extends BaseController {
                 if(isset($inputAll[$tmp]))
                     $answered=$inputAll[$tmp];              
 
-
+                /*
                 echo "<li>Correct answer: {$value['correct_answer']}";
                     if($value['correct_answer'] == $answered)
                         echo"Answered correctly";
                 echo"</li>";
+                */
                 $answerHistory = AnswerHistory::where('id_quiz', '=', $id)->where('id_question', '=', $value['id_question'])->first();
                 $answerHistory -> user_answer = $answered;
                 $answerHistory -> save();
                 $i++;
-            }  
+            }
+            $questionsData = AnswerHistory::where('id_quiz', '=', $id) -> get(array('id_question', 'shuffle')); 
+
+            $questionIDs = array();
+            $answerTokens = array();
+
+            foreach($questionsData as $value)
+            {
+                array_push($questionIDs, $value['id_question']);
+                array_push($answerTokens, $value['shuffle']);
+            }
+            
+            $questions = Question::whereIn('id', $questionIDs) -> get(array('question', 'answer_1', 'answer_2', 'answer_3', 'answer_correct')); 
+            $data = array("questionsData" => $questionsData, "questions" => $questions, "answerTokens" => $answerTokens, "quizID" => $id);
+            return View::make('completed_quiz', $data);
         }
 
         /* selection quiz from table */
