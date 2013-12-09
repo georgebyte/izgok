@@ -1,23 +1,39 @@
 @extends('layouts.body')
 
 @section('content')
-
-    {{ Form::open(array('url' => URL::current())) }}
     <?php $cnt=0; ?>
 
 
     	<?php 
-    	$answerHistory = AnswerHistory::where('id_quiz', '=', $quizID) -> get(); 
+
+    	/*
+    	*  $correctAnswerArray             pravilni odgovori
+    	*  $answeredAnswerArrayAttacker    tabela odgovorov napadalca
+    	*  $answeredAnswerArrayDefender    tabela odgovorov branitelja
+    	*/
+
+
+    	/* parsanje odgovorov napadalca */
+    	$answerHistory = AnswerHistory::where('id_quiz', '=', $quizID) -> where('id_attacker', '=', Auth::user() -> id) -> get(); 
 		
 		$correctAnswerArray = array("0" => "0");
-		$answeredAnswerArray = array("0" => "0");
+		$answeredAnswerArrayAttacker = array("0" => "0");
 		foreach($answerHistory as $val)
 		{
 			array_push($correctAnswerArray, $val['correct_answer']);
-			array_push($answeredAnswerArray, $val['attacker_answer']);
+			array_push($answeredAnswerArrayAttacker, $val['attacker_answer']);
 		}
 
+
+		/* parsanje odgovorov branitelja */
+		$answerHistory = AnswerHistory::where('id_quiz', '=', $quizID) -> where('id_defender', '=', $defenderID) -> get();
+		$answeredAnswerArrayDefender = array("0" => "0");
+		foreach($answerHistory as $val)
+		{
+			array_push($answeredAnswerArrayDefender, $val['attacker_answer']);
+		}
 		?>
+
    	@foreach($questions as $question)
 		<?php
 
@@ -95,58 +111,57 @@
 			{{ Form::label($groupName, $question['question']) }}
 			<br />
 
-			@if ($answeredAnswerArray[$cnt] == 1)
-			{{ Form::radio($groupName, "1", true) }} {{ $answer1 }}
+			@if ($answeredAnswerArrayAttacker[$cnt] == 1)
+			{{ Form::radio($groupName, "1", true, array('disabled')) }} {{ $answer1 }}
 			@else
-			{{ Form::radio($groupName, "1") }} {{ $answer1 }}
+			{{ Form::radio($groupName, "1", false, array('disabled')) }} {{ $answer1 }}
 			@endif
-			@if ($answeredAnswerArray[$cnt] == $correctAnswerArray[$cnt] && $answeredAnswerArray[$cnt] == 1)
+			@if ($answeredAnswerArrayAttacker[$cnt] == $correctAnswerArray[$cnt] && $answeredAnswerArrayAttacker[$cnt] == 1)
 			<img src="/img/correct.png" />
 			@endif
-			@if ($answeredAnswerArray[$cnt] != $correctAnswerArray[$cnt] && $answeredAnswerArray[$cnt] == 1)
+			@if ($answeredAnswerArrayAttacker[$cnt] != $correctAnswerArray[$cnt] && $answeredAnswerArrayAttacker[$cnt] == 1)
 			<img src="/img/wrong.png" />
 			@endif
 			<br />
 
-			@if ($answeredAnswerArray[$cnt] == 2)
-			{{ Form::radio($groupName, "2", true)}} {{ $answer2 }}
+			@if ($answeredAnswerArrayAttacker[$cnt] == 2)
+			{{ Form::radio($groupName, "2", true, array('disabled'))}} {{ $answer2 }}
 			@else
-			{{ Form::radio($groupName, "2") }} {{ $answer2 }}
+			{{ Form::radio($groupName, "2", false, array('disabled')) }} {{ $answer2 }}
 			@endif
-			@if ($answeredAnswerArray[$cnt] == $correctAnswerArray[$cnt] && $answeredAnswerArray[$cnt] == 2)
+			@if ($answeredAnswerArrayAttacker[$cnt] == $correctAnswerArray[$cnt] && $answeredAnswerArrayAttacker[$cnt] == 2)
 			<img src="/img/correct.png" />
 			@endif
-			@if ($answeredAnswerArray[$cnt] != $correctAnswerArray[$cnt] && $answeredAnswerArray[$cnt] == 2)
+			@if ($answeredAnswerArrayAttacker[$cnt] != $correctAnswerArray[$cnt] && $answeredAnswerArrayAttacker[$cnt] == 2)
 			<img src="/img/wrong.png" />
 			@endif
 			<br />
 
-			@if ($answeredAnswerArray[$cnt] == 3)
-			{{ Form::radio($groupName, "3", true) }} {{ $answer3 }}
+			@if ($answeredAnswerArrayAttacker[$cnt] == 3)
+			{{ Form::radio($groupName, "3", true, array('disabled')) }} {{ $answer3 }}
 			@else
-			{{ Form::radio($groupName, "3") }} {{ $answer3 }}
+			{{ Form::radio($groupName, "3", false, array('disabled')) }} {{ $answer3 }}
 			@endif
-			@if ($answeredAnswerArray[$cnt] == $correctAnswerArray[$cnt] && $answeredAnswerArray[$cnt] == 3)
+			@if ($answeredAnswerArrayAttacker[$cnt] == $correctAnswerArray[$cnt] && $answeredAnswerArrayAttacker[$cnt] == 3)
 			<img src="/img/correct.png" />
 			@endif
-			@if ($answeredAnswerArray[$cnt] != $correctAnswerArray[$cnt] && $answeredAnswerArray[$cnt] == 3)
+			@if ($answeredAnswerArrayAttacker[$cnt] != $correctAnswerArray[$cnt] && $answeredAnswerArrayAttacker[$cnt] == 3)
 			<img src="/img/wrong.png" />
 			@endif
 			<br />
 
-			@if ($answeredAnswerArray[$cnt] == 4)
-			{{ Form::radio($groupName, "4", true) }} {{ $answer4 }}
+			@if ($answeredAnswerArrayAttacker[$cnt] == 4)
+			{{ Form::radio($groupName, "4", true, array('disabled')) }} {{ $answer4 }}
 			@else
-			{{ Form::radio($groupName, "4") }} {{ $answer4 }}
+			{{ Form::radio($groupName, "4", false, array('disabled')) }} {{ $answer4 }}
 			@endif
-			@if ($answeredAnswerArray[$cnt] == $correctAnswerArray[$cnt] && $answeredAnswerArray[$cnt] == 4)
+			@if ($answeredAnswerArrayAttacker[$cnt] == $correctAnswerArray[$cnt] && $answeredAnswerArrayAttacker[$cnt] == 4)
 			<img src="/img/correct.png" />
 			@endif
-			@if ($answeredAnswerArray[$cnt] != $correctAnswerArray[$cnt] && $answeredAnswerArray[$cnt] == 4)
+			@if ($answeredAnswerArrayAttacker[$cnt] != $correctAnswerArray[$cnt] && $answeredAnswerArrayAttacker[$cnt] == 4)
 			<img src="/img/wrong.png" />
 			@endif		
 		</div>
 	@endforeach
-	{{ Form::button('Answer', array('type' => 'submit', 'class' => 'btn btn-primary')) }}
-	{{ Form::close() }}
+
 @stop

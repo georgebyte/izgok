@@ -84,17 +84,17 @@ class QuizController extends BaseController {
                     break;
                 }
 
-                $answerHistory = new AnswerHistory;
-                $answerHistory -> id_quiz = $quizID;
-                $answerHistory -> id_question = $questionID;
-                
-                $answerHistory -> id_attacker = $attackerID;
-                $answerHistory -> id_defender = $defenderID;
-                
-                $answerHistory -> shuffle = $shuffleIndex;
-                $answerHistory -> correct_answer = $correctAnswer;
+                    $answerHistory = new AnswerHistory;
+                    $answerHistory -> id_quiz = $quizID;
+                    $answerHistory -> id_question = $questionID;
+                    
+                    $answerHistory -> id_attacker = $attackerID;
+                    $answerHistory -> id_defender = $defenderID;
+                    
+                    $answerHistory -> shuffle = $shuffleIndex;
+                    $answerHistory -> correct_answer = $correctAnswer;
 
-                $answerHistory -> save();
+                    $answerHistory -> save();
             }
             
             /* preusmeritev napadalca na pravkar ustvarjeni kviz */
@@ -123,6 +123,17 @@ class QuizController extends BaseController {
 
         public function postShow($id)
         {
+            /* pregled podatkov, kdo je ze odgovarjal na kviz */
+            $answersInfo= AnswerHistory::where('id_quiz', '=', $id) -> take(1) -> get(array('id_attacker','id_defender','attacker_answer','defender_answer'));
+            $answersInfo=$answersInfo[0];
+            $attackerID=$answersInfo['id_attacker'];
+            $defenderID=$answersInfo['id_defender'];
+            $attackerAnswer=$answersInfo['attacker_answer'];
+            $defenderAnswer=$answersInfo['defender_answer'];
+
+            /* TODO :: blokiranje ponovnega potrjevanja odgovorov */
+
+
             $inputAll = Input::all();
             $answerArray = AnswerHistory::where('id_quiz', '=', $id) -> get(array('correct_answer', 'id_question')); 
             $i=1;
@@ -155,8 +166,9 @@ class QuizController extends BaseController {
                 array_push($answerTokens, $value['shuffle']);
             }
             
-            $questions = Question::whereIn('id', $questionIDs) -> get(array('question', 'answer_1', 'answer_2', 'answer_3', 'answer_correct')); 
-            $data = array("questionsData" => $questionsData, "questions" => $questions, "answerTokens" => $answerTokens, "quizID" => $id);
+            $questions = Question::whereIn('id', $questionIDs) -> get(array('question', 'answer_1', 'answer_2', 'answer_3', 'answer_correct'));
+            $data = array("questionsData" => $questionsData, "questions" => $questions, "answerTokens" => $answerTokens, "quizID" => $id, "defenderID" => $defenderID);
+
             return View::make('completed_quiz', $data);
         }
 
