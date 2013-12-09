@@ -26,7 +26,7 @@ class CreateQuizzesTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('quizzes');   
+        Schema::dropIfExists('quizzes');   
     }
 
 }

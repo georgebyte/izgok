@@ -40,7 +40,7 @@ class CreateAnswersHistoryTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('answers_history');
+		Schema::dropIfExists('answers_history');
 	}
 
 }
