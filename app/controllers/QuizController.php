@@ -140,7 +140,7 @@ class QuizController extends BaseController {
                 echo"</li>";
                 */
                 $answerHistory = AnswerHistory::where('id_quiz', '=', $id)->where('id_question', '=', $value['id_question'])->first();
-                $answerHistory -> user_answer = $answered;
+                $answerHistory -> attacker_answer = $answered;
                 $answerHistory -> save();
                 $i++;
             }

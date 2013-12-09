@@ -14,7 +14,7 @@
 		foreach($answerHistory as $val)
 		{
 			array_push($correctAnswerArray, $val['correct_answer']);
-			array_push($answeredAnswerArray, $val['user_answer']);
+			array_push($answeredAnswerArray, $val['attacker_answer']);
 		}
 
 		?>
