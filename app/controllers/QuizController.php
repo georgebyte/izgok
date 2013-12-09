@@ -9,34 +9,44 @@ class QuizController extends BaseController {
         }
  
         public function getIndex()
-        {
-                
+        {   
             /* ustvari kviz v bazi */
+            
+        }
+
+        public function getAttackUser($attackedUserID = null)
+        {
+
+            /* Iz profila naselja po kliku na gumb "Napad" preusmerimo napadalca
+            na url http://pp-project.dev/quiz/attack-user/[$attackedUserID].
+            V getAttackUser zgeneriramo kviz, mu dodamo 8 vprasanj in shranimo
+            katera uporabnika resujeta ta kviz. */
+            
+            /* TODO: preveri ce je ID napadenega igralca veljaven (obstaja v bazi 
+            in ni enak IDju napadalca) */
+
+            /* TODO: BUG - ustvari se prevec kvizov */
+
+            /* generiranje kviza */
             $quiz = new Quiz();
             $quiz -> save();
             $quizId = $quiz -> id;
 
-            /* generiranje kviza */
+            /* izbira 8 unikatnih in nakljucnih vprasanj */
             $allQuestionsCount = Question::all()->count();
-            /* echo " all: {$allQuestionsCount} "; */
-
-            $selected = array();
-
-            /* generating Question IDs */
-            for($i=0; $i < 8; $i++)
-            {
-                do{
-                    $rand=rand(1,$allQuestionsCount);
-                }while(in_array($rand, $selected));
-                $selected[$i] = $rand;
-
+            $usedQuestionsCount = 8;
+            $selectedQuestionsIDs = array();
+            for($i=0; $i < $usedQuestionsCount; $i++) {
+                do {
+                    $randQuestionID = rand(1,$allQuestionsCount);
+                } while(in_array($randQuestionID, $selectedQuestionsIDs));
+                $selectedQuestionsIDs[$i] = $randQuestionID;
             }
 
-            foreach($selected as $value)
-            {
-                $rndToken=rand(1,8);
-                switch($rndToken)
-                {
+            foreach($selectedQuestionsIDs as $questionID) {
+                /* izbira shuffla */
+                $shuffleIndex=rand(1,8);
+                switch($shuffleIndex) {
                     case 1:
                         $correctAnswer=4;
                     break;
@@ -69,19 +79,25 @@ class QuizController extends BaseController {
                         $correctAnswer=1;
                     break;
                 }
-                $answerHistory = new AnswerHistory();
-                $answerHistory -> id_question = $value;
-                $answerHistory -> id_user = Auth::user() -> id;
-                $answerHistory -> id_quiz = $quizId;
-                $answerHistory -> shuffle = $rndToken;
-                $answerHistory -> correct_answer = $correctAnswer;
-                $answerHistory -> save();
+
+                $attackerAnswerHistory = new AnswerHistory();
+                $attackerAnswerHistory -> id_question = $questionID;
+                $attackerAnswerHistory -> id_user = Auth::user() -> id;
+                $attackerAnswerHistory -> id_quiz = $quizId;
+                $attackerAnswerHistory -> shuffle = $shuffleIndex;
+                $attackerAnswerHistory -> correct_answer = $correctAnswer;
+                $attackerAnswerHistory -> save();
+
+                $defenderAnswerHistory = new AnswerHistory();
+                $defenderAnswerHistory -> id_question = $questionID;
+                $defenderAnswerHistory -> id_user = $attackedUserID;
+                $defenderAnswerHistory -> id_quiz = $quizId;
+                $defenderAnswerHistory -> shuffle = $shuffleIndex;
+                $defenderAnswerHistory -> correct_answer = $correctAnswer;
+                $defenderAnswerHistory -> save();
             }
             
-
-
-            /* generiranje url-ja*/
-
+            /* preusmeritev napadalca na pravkar ustvarjeni kviz */
             return Redirect::to("quiz/id/$quizId");
         }
 
