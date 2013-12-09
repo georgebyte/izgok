@@ -28,9 +28,13 @@ class QuizController extends BaseController {
             /* TODO: BUG - ustvari se prevec kvizov */
 
             /* generiranje kviza */
+            $generated=false;
+            if(!$generated){
             $quiz = new Quiz();
             $quiz -> save();
             $quizId = $quiz -> id;
+            $generated=true;
+            }
 
             /* izbira 8 unikatnih in nakljucnih vprasanj */
             $allQuestionsCount = Question::all()->count();
