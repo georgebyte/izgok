@@ -14,33 +14,33 @@ class QuizController extends BaseController {
             
         }
 
-        public function getAttackUser($attackedUserID = null)
+        public function getAttack($attackedUserID = null)
         {
 
             /* Iz profila naselja po kliku na gumb "Napad" preusmerimo napadalca
-            na url http://pp-project.dev/quiz/attack-user/[$attackedUserID].
+            na url http://pp-project.dev/quiz/attack/[$attackedUserID].
             V getAttackUser zgeneriramo kviz, mu dodamo 8 vprasanj in shranimo
             katera uporabnika resujeta ta kviz. */
             
-            /* TODO: preveri ce je ID napadenega igralca veljaven (obstaja v bazi 
+            /* preveri ce je ID napadenega igralca veljaven (obstaja v bazi 
             in ni enak IDju napadalca) */
+            $attackerID = Auth::user() -> id;
 
-            /* TODO: BUG - ustvari se prevec kvizov */
+            if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
+                App::abort(404, 'Page not found');
+            }
+            $defenderID = $attackedUserID;
 
             /* generiranje kviza */
-            $generated=false;
-            if(!$generated){
-            $quiz = new Quiz();
+            $quiz = new Quiz;
             $quiz -> save();
-            $quizId = $quiz -> id;
-            $generated=true;
-            }
+            $quizID = $quiz -> id;
 
             /* izbira 8 unikatnih in nakljucnih vprasanj */
-            $allQuestionsCount = Question::all()->count();
+            $allQuestionsCount = Question::all() -> count();
             $usedQuestionsCount = 8;
             $selectedQuestionsIDs = array();
-            for($i=0; $i < $usedQuestionsCount; $i++) {
+            for($i = 0; $i < $usedQuestionsCount; $i++) {
                 do {
                     $randQuestionID = rand(1,$allQuestionsCount);
                 } while(in_array($randQuestionID, $selectedQuestionsIDs));
@@ -84,28 +84,24 @@ class QuizController extends BaseController {
                     break;
                 }
 
-                $attackerAnswerHistory = new AnswerHistory();
-                $attackerAnswerHistory -> id_question = $questionID;
-                $attackerAnswerHistory -> id_user = Auth::user() -> id;
-                $attackerAnswerHistory -> id_quiz = $quizId;
-                $attackerAnswerHistory -> shuffle = $shuffleIndex;
-                $attackerAnswerHistory -> correct_answer = $correctAnswer;
-                $attackerAnswerHistory -> save();
+                $answerHistory = new AnswerHistory;
+                $answerHistory -> id_quiz = $quizID;
+                $answerHistory -> id_question = $questionID;
+                
+                $answerHistory -> id_attacker = $attackerID;
+                $answerHistory -> id_defender = $defenderID;
+                
+                $answerHistory -> shuffle = $shuffleIndex;
+                $answerHistory -> correct_answer = $correctAnswer;
 
-                $defenderAnswerHistory = new AnswerHistory();
-                $defenderAnswerHistory -> id_question = $questionID;
-                $defenderAnswerHistory -> id_user = $attackedUserID;
-                $defenderAnswerHistory -> id_quiz = $quizId;
-                $defenderAnswerHistory -> shuffle = $shuffleIndex;
-                $defenderAnswerHistory -> correct_answer = $correctAnswer;
-                $defenderAnswerHistory -> save();
+                $answerHistory -> save();
             }
             
             /* preusmeritev napadalca na pravkar ustvarjeni kviz */
-            return Redirect::to("quiz/id/$quizId");
+            return Redirect::to("quiz/show/$quizID");
         }
 
-        public function getId($id=null)
+        public function getShow($id=null)
         {
             $questionsData = AnswerHistory::where('id_quiz', '=', $id) -> get(array('id_question', 'shuffle')); 
 
@@ -125,7 +121,7 @@ class QuizController extends BaseController {
         }
 
 
-        public function postId($id)
+        public function postShow($id)
         {
             $inputAll = Input::all();
             $answerArray = AnswerHistory::where('id_quiz', '=', $id) -> get(array('correct_answer', 'id_question')); 

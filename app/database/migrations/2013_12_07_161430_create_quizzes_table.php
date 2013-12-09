@@ -11,15 +11,12 @@ class CreateQuizzesTable extends Migration {
      */
     public function up()
     {
-        Schema::create('quizzes', function($table)
-        {
-            $table->increments('id');
-            $table->timestamps();
-        });
-        
-
-        
-        
+        Schema::create('quizzes', function($table) {
+            $table -> increments('id');
+            $table -> timestamps();
+            $table -> dateTime('submit_time_attacker') -> nullable();
+            $table -> dateTime('submit_time_defender') -> nullable();
+        });        
     }
 
     /**
@@ -29,8 +26,7 @@ class CreateQuizzesTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('quizzes');
-       
+        Schema::drop('quizzes');   
     }
 
 }

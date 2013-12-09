@@ -11,16 +11,25 @@ class CreateAnswersHistoryTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('answers_history', function($table)
-        {
-            $table->increments('id');
-            $table->integer('id_quiz')->unsigned();
-            $table->foreign('id_quiz')->references('id')->on('quizzes');
-            $table->integer('id_question')->unsigned();
-            $table->foreign('id_question')->references('id')->on('questions');
-            $table->integer('id_user')->unsigned();
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->integer('answer')->unsigned();
+		Schema::create('answers_history', function($table) {
+            $table -> increments('id');
+
+            $table -> integer('id_quiz') -> unsigned();
+            $table -> foreign('id_quiz') -> references('id') -> on('quizzes') -> onDelete('cascade');
+
+            $table -> integer('id_question') -> unsigned() -> nullable();
+            $table -> foreign('id_question') -> references('id') -> on('questions') -> onDelete('set null');
+
+            $table -> integer('id_attacker') -> unsigned() -> nullable();
+            $table -> foreign('id_attacker') -> references('id') -> on('users') -> onDelete('set null');
+            $table -> integer('id_defender') -> unsigned() -> nullable();
+            $table -> foreign('id_defender') -> references('id') -> on('users') -> onDelete('set null');
+
+            $table -> integer('attacker_answer') -> unsigned() -> nullable();
+            $table -> integer('defender_answer') -> unsigned() -> nullable();
+
+            $table -> integer('shuffle') -> unsigned();
+            $table -> integer('correct_answer') -> unsigned();
         });
 	}
 

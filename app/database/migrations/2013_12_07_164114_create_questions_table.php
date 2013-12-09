@@ -11,16 +11,15 @@ class CreateQuestionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('questions', function($table)
-        {
-            $table->increments('id');
-            $table->text('question',1023);
-            $table->text('answer_1');
-            $table->text('answer_2');
-            $table->text('answer_3');
-            $table->text('answer_correct');
-            $table->timestamps();
-            $table->integer('tezavnost')->unsigned();
+		Schema::create('questions', function($table) {
+            $table -> increments('id');
+            $table -> text('question',1023);
+            $table -> text('answer_1');
+            $table -> text('answer_2');
+            $table -> text('answer_3');
+            $table -> text('answer_correct');
+            $table -> timestamps();
+            $table -> integer('tezavnost') -> unsigned();
         });
 	}
 

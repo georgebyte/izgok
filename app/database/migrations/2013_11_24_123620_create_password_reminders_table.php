@@ -11,11 +11,10 @@ class CreatePasswordRemindersTable extends Migration {
      */
     public function up()
     {
-        Schema::create('password_reminders', function($t)
-        {
-            $t->string('email');
-            $t->string('token');
-            $t->timestamp('created_at');
+        Schema::create('password_reminders', function($table) {
+            $table -> string('email');
+            $table -> string('token');
+            $table -> timestamp('created_at');
         });
     }
 

@@ -4,6 +4,8 @@ class QuestionsTableSeeder extends Seeder {
 
     public function run()
     {
+    	DB::table('questions')->delete();
+
 		Question::create(array('question' => 'Katera ozemlja so Rimljani dobili po prvi punski vojni?', 'answer_1' => 'Sardinijo, Korziko, Monako', 'answer_2' => 'Siciljo, Korziko', 'answer_3' => 'Sicilijo, Sardinijo', 'answer_correct' => 'Sicilijo, Korziko, Sardinijo'));
 		Question::create(array('question' => 'Kako so se imenovali predstavniki plebejcev v rimskem senatu, v začetnem obdobju republike?', 'answer_1' => 'Republikanci', 'answer_2' => 'Oligarhi', 'answer_3' => 'Patriciji', 'answer_correct' => 'Ljudski tribuni'));
 		Question::create(array('question' => 'Kdaj se je zgodil prvi znani vpad Hunov v Evropo?', 'answer_1' => '346', 'answer_2' => '427', 'answer_3' => '304', 'answer_correct' => '375'));
