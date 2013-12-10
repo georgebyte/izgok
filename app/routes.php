@@ -16,3 +16,5 @@ Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showIndex'));
 Route::controller('auth', 'AuthController');
 
 Route::controller('quiz', 'QuizController');
+
+Route::controller('history', 'HistoryController');
