@@ -11,6 +11,7 @@ body {
     background-color: #f8f8f8;
     border-radius: 4px;
     padding: 20px;
+    margin-bottom: 20px;
 }
 
 #main-content h1 {
@@ -18,19 +19,44 @@ body {
 }
 
 .report {
-    
+    padding: 0, 15px;
+}
+
+.report-item {
+    margin-bottom: 20px;
+}
+
+.report-question {
+    line-height: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 20px 0;
+    border-top: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+}
+
+.report-answers {
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+}
+
+.report-answers:last-child {
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .report-answer {
-    width: 100%;
+    line-height: 30px;
+    border-top: 1px solid #CCCCCC;
 }
 
 .answer-image-placeholder {
-    float: left;
+    
 }
 
 .report-answer-text {
-    float: left;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
 }
 
 .correct-answer {

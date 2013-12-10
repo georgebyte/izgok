@@ -2,7 +2,7 @@
 
 @section('content')
     <?php $cnt = 0; ?>
-    <div class="report">
+    <div class="report col-xs-12">
         @foreach($questions as $question)
             <?php
             $shuffle = $shuffles[$cnt];
@@ -68,13 +68,13 @@
 
             $groupName="question".$cnt;     
             ?>
-            <div class="report-item">
-                <div class="report-question">
+            <div class="report-item text-center row">
+                <div class="report-question col-xs-12">
                 {{ $question['question'] }}
-                <br />
-                <div class="report-answers">
-                    <div class="report-answer">
-                        <div class="answer-image-placeholder">
+                </div>
+                <div class="report-answers col-xs-12">
+                    <div class="report-answer row">
+                        <div class="answer-image-placeholder col-xs-2">
                             @if ($attackerAnswers[$cnt] == 1)
                                 @if ($attackerAnswers[$cnt] == $correctAnswers[$cnt])
                                     <img src="/img/correct.png" />
@@ -83,10 +83,10 @@
                                 @endif
                             @endif
                         </div>
-                        <div class="report-answer-text @if($correctAnswers[$cnt] == 1)correct-answer@endif">
+                        <div class="report-answer-text col-xs-8 @if($correctAnswers[$cnt] == 1)correct-answer@endif">
                             {{ $answer1 }}
                         </div>
-                        <div class="answer-image-placeholder">
+                        <div class="answer-image-placeholder col-xs-2">
                             @if ($defenderAnswers[$cnt] == 1)
                                 @if ($defenderAnswers[$cnt] == $correctAnswers[$cnt])
                                     <img src="/img/correct.png" />
@@ -96,8 +96,8 @@
                             @endif
                         </div>
                     </div>
-                    <div class="report-answer">
-                        <div class="answer-image-placeholder">
+                    <div class="report-answer row">
+                        <div class="answer-image-placeholder col-xs-2">
                             @if ($attackerAnswers[$cnt] == 2)
                                 @if ($attackerAnswers[$cnt] == $correctAnswers[$cnt])
                                     <img src="/img/correct.png" />
@@ -106,10 +106,10 @@
                                 @endif
                             @endif
                         </div>
-                        <div class="report-answer-text @if($correctAnswers[$cnt] == 2)correct-answer@endif">
+                        <div class="report-answer-text col-xs-8 @if($correctAnswers[$cnt] == 2)correct-answer@endif">
                             {{ $answer2 }}
                         </div>
-                        <div class="answer-image-placeholder">
+                        <div class="answer-image-placeholder col-xs-2">
                             @if ($defenderAnswers[$cnt] == 2)
                                 @if ($defenderAnswers[$cnt] == $correctAnswers[$cnt])
                                     <img src="/img/correct.png" />
@@ -119,8 +119,8 @@
                             @endif
                         </div>
                     </div>
-                    <div class="report-answer">
-                        <div class="answer-image-placeholder">
+                    <div class="report-answer row">
+                        <div class="answer-image-placeholder col-xs-2">
                             @if ($attackerAnswers[$cnt] == 3)
                                 @if ($attackerAnswers[$cnt] == $correctAnswers[$cnt])
                                     <img src="/img/correct.png" />
@@ -129,10 +129,10 @@
                                 @endif
                             @endif
                         </div>
-                        <div class="report-answer-text @if($correctAnswers[$cnt] == 3)correct-answer@endif">
+                        <div class="report-answer-text col-xs-8 @if($correctAnswers[$cnt] == 3)correct-answer@endif">
                             {{ $answer3 }}
                         </div>
-                        <div class="answer-image-placeholder">
+                        <div class="answer-image-placeholder col-xs-2">
                             @if ($defenderAnswers[$cnt] == 3)
                                 @if ($defenderAnswers[$cnt] == $correctAnswers[$cnt])
                                     <img src="/img/correct.png" />
@@ -142,8 +142,8 @@
                             @endif
                         </div>
                     </div>
-                    <div class="report-answer">
-                        <div class="answer-image-placeholder">
+                    <div class="report-answer row">
+                        <div class="answer-image-placeholder col-xs-2">
                             @if ($attackerAnswers[$cnt] == 4)
                                 @if ($attackerAnswers[$cnt] == $correctAnswers[$cnt])
                                     <img src="/img/correct.png" />
@@ -152,10 +152,10 @@
                                 @endif
                             @endif
                         </div>
-                        <div class="report-answer-text @if($correctAnswers[$cnt] == 4)correct-answer@endif">
+                        <div class="report-answer-text col-xs-8 @if($correctAnswers[$cnt] == 4)correct-answer@endif">
                             {{ $answer4 }}
                         </div>
-                        <div class="answer-image-placeholder">
+                        <div class="answer-image-placeholder col-xs-2">
                             @if ($defenderAnswers[$cnt] == 4)
                                 @if ($defenderAnswers[$cnt] == $correctAnswers[$cnt])
                                     <img src="/img/correct.png" />
