@@ -2,193 +2,199 @@
 
 class QuizController extends BaseController {
 
+    public function __construct()
+    {
+        $this->beforeFilter('auth');
+    }
 
-        public function __construct()
-        {
-            $this->beforeFilter('auth');
+    public function getAttack($attackedUserID = null)
+    {
+        /* Iz profila naselja po kliku na gumb "Napad" preusmerimo napadalca
+        na url http://pp-project.dev/quiz/attack/[$attackedUserID].
+        V getAttackUser zgeneriramo kviz, mu dodamo 8 vprasanj in shranimo
+        katera uporabnika resujeta ta kviz. Nato uporabnika preusmerimo na zgenerirani kviz.*/
+        
+        /* preveri ce je ID napadenega igralca veljaven (obstaja v bazi 
+        in ni enak IDju napadalca) */
+        $attackerID = Auth::user() -> id;
+
+        if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
+            return 'Napaden igralec ni veljaven.';
         }
- 
-        public function getIndex()
-        {   
-            /* ustvari kviz v bazi */
-            
-        }
+        $defenderID = $attackedUserID;
 
-        public function getAttack($attackedUserID = null)
-        {
+        /* generiranje kviza */
+        $quiz = new Quiz;
+        $quiz -> id_attacker = $attackerID;
+        $quiz -> id_defender = $defenderID;
+        // TODO: shraniti je potrebno id ozemlja, ki je bilo napadeno
+        $quiz -> save();
+        $quizID = $quiz -> id;
 
-            /* Iz profila naselja po kliku na gumb "Napad" preusmerimo napadalca
-            na url http://pp-project.dev/quiz/attack/[$attackedUserID].
-            V getAttackUser zgeneriramo kviz, mu dodamo 8 vprasanj in shranimo
-            katera uporabnika resujeta ta kviz. */
-            
-            /* preveri ce je ID napadenega igralca veljaven (obstaja v bazi 
-            in ni enak IDju napadalca) */
-            $attackerID = Auth::user() -> id;
-
-            if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
-                App::abort(404, 'Page not found');
-            }
-            $defenderID = $attackedUserID;
-
-            /* generiranje kviza */
-            $quiz = new Quiz;
-            $quiz -> save();
-            $quizID = $quiz -> id;
-
-            /* izbira 8 unikatnih in nakljucnih vprasanj */
-            $allQuestionsCount = Question::all() -> count();
-            $usedQuestionsCount = 8;
-            $selectedQuestionsIDs = array();
-            for($i = 0; $i < $usedQuestionsCount; $i++) {
-                do {
-                    $randQuestionID = rand(1,$allQuestionsCount);
-                } while(in_array($randQuestionID, $selectedQuestionsIDs));
-                $selectedQuestionsIDs[$i] = $randQuestionID;
-            }
-
-            foreach($selectedQuestionsIDs as $questionID) {
-                /* izbira shuffla */
-                $shuffleIndex=rand(1,8);
-                switch($shuffleIndex) {
-                    case 1:
-                        $correctAnswer=4;
-                    break;
-
-                    case 2:
-                        $correctAnswer=3;
-                    break;
-
-                    case 3:
-                        $correctAnswer=2;
-                    break;
-
-                    case 4:
-                        $correctAnswer=1;
-                    break;
-
-                    case 5:
-                        $correctAnswer=2;
-                    break;
-
-                    case 6:
-                        $correctAnswer=4;
-                    break;
-
-                    case 7:
-                        $correctAnswer=3;
-                    break;
-
-                    case 8:
-                        $correctAnswer=1;
-                    break;
-                }
-
-                    $answerHistory = new AnswerHistory;
-                    $answerHistory -> id_quiz = $quizID;
-                    $answerHistory -> id_question = $questionID;
-                    
-                    $answerHistory -> id_attacker = $attackerID;
-                    $answerHistory -> id_defender = $defenderID;
-                    
-                    $answerHistory -> shuffle = $shuffleIndex;
-                    $answerHistory -> correct_answer = $correctAnswer;
-
-                    $answerHistory -> save();
-            }
-            
-            /* preusmeritev napadalca na pravkar ustvarjeni kviz */
-            return Redirect::to("quiz/show/$quizID");
+        /* izbira 8 unikatnih in nakljucnih vprasanj */
+        $allQuestionsCount = Question::all() -> count();
+        $selectedQuestionsIDs = array();
+        for($i = 0; $i < Config::get('quiz.quizQuestionsCount', 8); $i++) {
+            do {
+                $randQuestionID = rand(1,$allQuestionsCount);
+            } while(in_array($randQuestionID, $selectedQuestionsIDs));
+            $selectedQuestionsIDs[$i] = $randQuestionID;
         }
 
-        public function getShow($id=null)
-        {
-            $questionsData = AnswerHistory::where('id_quiz', '=', $id) -> get(array('id_question', 'shuffle')); 
+        foreach($selectedQuestionsIDs as $questionID) {
+            /* izbira shuffla */
+            $shuffleIndex=rand(1,8);
+            switch($shuffleIndex) {
+                case 1:
+                    $correctAnswer=4;
+                break;
 
-            $questionIDs = array();
-            $answerTokens = array();
+                case 2:
+                    $correctAnswer=3;
+                break;
 
-            foreach($questionsData as $value)
-            {
-                array_push($questionIDs, $value['id_question']);
-                array_push($answerTokens, $value['shuffle']);
+                case 3:
+                    $correctAnswer=2;
+                break;
+
+                case 4:
+                    $correctAnswer=1;
+                break;
+
+                case 5:
+                    $correctAnswer=2;
+                break;
+
+                case 6:
+                    $correctAnswer=4;
+                break;
+
+                case 7:
+                    $correctAnswer=3;
+                break;
+
+                case 8:
+                    $correctAnswer=1;
+                break;
             }
-            
-            $questions = Question::whereIn('id', $questionIDs) -> get(array('question', 'answer_1', 'answer_2', 'answer_3', 'answer_correct')); 
 
-            $data = array("questionsData" => $questionsData, "questions" => $questions, "answerTokens" => $answerTokens, "quizID" => $id);
+            $answerHistory = new AnswerHistory;
+            $answerHistory -> id_quiz = $quizID;
+            $answerHistory -> id_question = $questionID;                   
+            $answerHistory -> shuffle = $shuffleIndex;
+            $answerHistory -> correct_answer = $correctAnswer;
+            $answerHistory -> save();
+        }
+        
+        /* preusmeritev napadalca na pravkar ustvarjeni kviz */
+        return Redirect::to("quiz/show/$quizID");
+    }
+
+    public function getShow($quizID = null)
+    {
+        /* preveri ce je ID kviza veljaven */
+        $quiz = Quiz::find($quizID);
+        if (!$quiz) {
+            return 'Zahtevani kviz ne obstaja.';
+        }
+
+        /* ugotovi ali je prijavljeni uporabnik napadalec ali branilec v trenutnem kvizu */
+        $isAttacker = ($quiz -> id_attacker == Auth::user() -> id) ? true : false;
+        $isDefender = ($quiz -> id_defender == Auth::user() -> id) ? true : false;
+        /* ce uporabnik ni ne napadalec ne branilec v trenutnem kvizu vrni error */
+        if (!($isAttacker || $isDefender)) {
+            return 'Zahtevani kviz ni na voljo za prikaz.';
+        }
+        
+        /* iz baze preberi katera vprasanja so del kviza in njihove informacije */
+        $questionsData = AnswerHistory::where('id_quiz', '=', $quizID) -> get(array('id_question', 'attacker_answer', 'defender_answer', 'shuffle', 'correct_answer')); 
+        $questionsIDs = array();
+        $attackerAnswers = array();
+        $defenderAnswers = array();
+        $correctAnswers = array();
+        $shuffles = array();
+        foreach($questionsData as $questionData) {
+            array_push($questionsIDs, $questionData['id_question']);
+            array_push($attackerAnswers, $questionData['attacker_answer']);
+            array_push($defenderAnswers, $questionData['defender_answer']);
+            array_push($shuffles, $questionData['shuffle']);
+            array_push($correctAnswers, $questionData['correct_answer']);
+        }
+        
+        /* iz baze preberi vprasanje in odgovore za vsa vprasanja, ki so del trenutnega kviza */
+        $questions = Question::whereIn('id', $questionsIDs) -> get(array('question', 'answer_1', 'answer_2', 'answer_3', 'answer_correct')); 
+
+        /* pripravi podatke, ki se jih poslje v View za prikaz neoddanega kviza */
+        $data = array('questionsData' => $questionsData, 'questions' => $questions, 'shuffles' => $shuffles, 'quizID' => $quizID, 'attackerAnswers' => $attackerAnswers, 'defenderAnswers' => $defenderAnswers, 'correctAnswers' => $correctAnswers);
+
+        /* igralcu, ki kviza se ni oddal prikazi kviz, na katerega lahko odgovarja */
+        if(($isAttacker && $quiz -> submit_time_attacker == null) || ($isDefender && $quiz -> submit_time_defender == null)) {
             return View::make('quiz', $data);
         }
 
+        /* igralcu, ki je kviz ze oddal prikazi porocilo o napadu */
+        if(($isAttacker && $quiz -> submit_time_attacker != null) || ($isDefender && $quiz -> submit_time_defender != null)) {
+            return View::make('report', $data);
+        }
+    }
 
-        public function postShow($id)
-        {
-            /* pregled podatkov, kdo je ze odgovarjal na kviz */
-            $answersInfo= AnswerHistory::where('id_quiz', '=', $id) -> take(1) -> get(array('id_attacker','id_defender','attacker_answer','defender_answer'));
-            $answersInfo=$answersInfo[0];
-            $attackerID=$answersInfo['id_attacker'];
-            $defenderID=$answersInfo['id_defender'];
-            $attackerAnswer=$answersInfo['attacker_answer'];
-            $defenderAnswer=$answersInfo['defender_answer'];
-
-            /* TODO :: blokiranje ponovnega potrjevanja odgovorov */
-
-
-            $inputAll = Input::all();
-            $answerArray = AnswerHistory::where('id_quiz', '=', $id) -> get(array('correct_answer', 'id_question')); 
-            $i=1;
-            foreach($answerArray as $value)
-            {
-                $tmp = "question".$i;
-                $answered=5;
-                if(isset($inputAll[$tmp]))
-                    $answered=$inputAll[$tmp];              
-
-                /*
-                echo "<li>Correct answer: {$value['correct_answer']}";
-                    if($value['correct_answer'] == $answered)
-                        echo"Answered correctly";
-                echo"</li>";
-                */
-                $answerHistory = AnswerHistory::where('id_quiz', '=', $id)->where('id_question', '=', $value['id_question'])->first();
-                $answerHistory -> attacker_answer = $answered;
-                $answerHistory -> save();
-                $i++;
-            }
-            $questionsData = AnswerHistory::where('id_quiz', '=', $id) -> get(array('id_question', 'shuffle')); 
-
-            $questionIDs = array();
-            $answerTokens = array();
-
-            foreach($questionsData as $value)
-            {
-                array_push($questionIDs, $value['id_question']);
-                array_push($answerTokens, $value['shuffle']);
-            }
-            
-            $questions = Question::whereIn('id', $questionIDs) -> get(array('question', 'answer_1', 'answer_2', 'answer_3', 'answer_correct'));
-            $data = array("questionsData" => $questionsData, "questions" => $questions, "answerTokens" => $answerTokens, "quizID" => $id, "defenderID" => $defenderID);
-
-            return View::make('completed_quiz', $data);
+    public function postShow($quizID = null)
+    {
+        /* preveri ce je ID kviza veljaven */
+        $quiz = Quiz::find($quizID);
+        if (!$quiz) {
+            return 'Zahtevani kviz ne obstaja.';
         }
 
-        /* selection quiz from table */
-            /* url: /quiz/idKviza */
-            /* kviz=$_GET['quiz'] */
-            /* verifikacija ID-ja kviza
-            * ce je kviz ze zakljucen izpise porocilo
-            * ce ID ne obstaja return error 404 
-            * ce ID obstaja in kviz se ni zakljucen prikazemo vprasanje */
+        /* ugotovi ali je prijavljeni uporabnik napadalec ali branilec v trenutnem kvizu */
+        $isAttacker = ($quiz -> id_attacker == Auth::user() -> id) ? true : false;
+        $isDefender = ($quiz -> id_defender == Auth::user() -> id) ? true : false;
+        /* ce uporabnik ni ne napadalec ne branilec v trenutnem kvizu vrni error */
+        if (!($isAttacker || $isDefender)) {
+            return 'Zahtevani kviz ni na voljo za prikaz.';
+        }
+        /* igralcu, ki je kviz ze oddal ne dovoli ponovne oddaje */
+        if(($isAttacker && $quiz -> submit_time_attacker != null) || ($isDefender && $quiz -> submit_time_defender != null)) {
+            return Redirect::to("quiz/show/$quizID");
+        }
 
-            
+        /* preberi uporabnikove odgovore */
+        $userAnswers = Input::all();
 
-        /* randomize */
+        /* iz baze pridobi pravilne odgovore na vprasanja iz trenutnega kviza */
+        $quizAnswers = AnswerHistory::where('id_quiz', '=', $quizID) -> get(array('correct_answer', 'id_question')); 
+        
+        /* loop skozi vsa vprasanja v trenutnem kvizu */
+        $i=1;
+        foreach($quizAnswers as $quizAnswer) {
+            $questionIndex = "question".$i;
+            $i++;
 
+            /* ce uporabnik na vprasanje ni odgovoril oz. je oddal neveljaven odgovor nastavi kot uporabnikov odgovor vrednost 5 */
+            $userAnswer = 5;
+            if(isset($userAnswers[$questionIndex]) && (int)$userAnswers[$questionIndex] >= 1 && (int)$userAnswers[$questionIndex] <= 4) {
+                $userAnswer = $userAnswers[$questionIndex];
+            }              
 
-        /* create form */
+            /* iz baze pridobi vprasanje iz trenutnega kviza, ki se ga obravnana in posodobi njegov zapis v bazi */ 
+            $answerHistory = AnswerHistory::where('id_quiz', '=', $quizID) -> where('id_question', '=', $quizAnswer['id_question']) -> first();
+            if ($isAttacker) {
+                $answerHistory -> attacker_answer = $userAnswer;
+            } else if ($isDefender) {
+                $answerHistory -> defender_answer = $userAnswer;
+            }
+            $answerHistory -> save();            
+        }
 
+        /* nastavi cas oddaje kviza za uporabnika */
+        if ($isAttacker) {
+            $quiz -> submit_time_attacker = date("Y-m-d H:i:s");
+        } else if ($isDefender) {
+            $quiz -> submit_time_defender = date("Y-m-d H:i:s");
+        }
+        $quiz -> save();
 
-
-
+        return Redirect::to("quiz/show/$quizID");
+    }
 
 }

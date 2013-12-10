@@ -16,3 +16,24 @@ body {
 #main-content h1 {
     margin-top: 0px;
 }
+
+.report {
+    
+}
+
+.report-answer {
+    width: 100%;
+}
+
+.answer-image-placeholder {
+    float: left;
+}
+
+.report-answer-text {
+    float: left;
+}
+
+.correct-answer {
+    background-color: green;
+    color: white;
+}

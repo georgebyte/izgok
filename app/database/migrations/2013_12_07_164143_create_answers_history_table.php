@@ -20,11 +20,6 @@ class CreateAnswersHistoryTable extends Migration {
             $table -> integer('id_question') -> unsigned() -> nullable();
             $table -> foreign('id_question') -> references('id') -> on('questions') -> onDelete('set null');
 
-            $table -> integer('id_attacker') -> unsigned() -> nullable();
-            $table -> foreign('id_attacker') -> references('id') -> on('users') -> onDelete('set null');
-            $table -> integer('id_defender') -> unsigned() -> nullable();
-            $table -> foreign('id_defender') -> references('id') -> on('users') -> onDelete('set null');
-
             $table -> integer('attacker_answer') -> unsigned() -> nullable();
             $table -> integer('defender_answer') -> unsigned() -> nullable();
 
