@@ -1,7 +1,19 @@
 @extends('layouts.body')
 
 @section('content')
-    <?php $cnt = 0; ?>
+    <?php 
+    $correctNumAnswers = $correctNumAnswers[0];
+    $cnt = 0; 
+    $numberOfCorrectAnswersAttacker = $correctNumAnswers['attacker_num_correct_ans'];
+    $numberOfCorrectAnswersDefender = $correctNumAnswers['defender_num_correct_ans'];
+    ?>
+    <div class="report col-xs-12">
+        <b>Attacker</b>
+        Correct: {{ $numberOfCorrectAnswersAttacker }}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b>Defender</b>
+        Correct: {{ $numberOfCorrectAnswersDefender }}
+    </div>
     <div class="report col-xs-12">
         @foreach($questions as $question)
             <?php

@@ -7,28 +7,36 @@ class QuizController extends BaseController {
         $this->beforeFilter('auth');
     }
 
-    public function getAttack($attackedUserID = null)
+    public function getAttack($attackedUserID = null, $attackedTerritoryID = null)
     {
         /* Iz profila naselja po kliku na gumb "Napad" preusmerimo napadalca
-        na url http://pp-project.dev/quiz/attack/[$attackedUserID].
+        na url http://pp-project.dev/quiz/attack/[$attackedUserID]/[$villageID].
         V getAttackUser zgeneriramo kviz, mu dodamo 8 vprasanj in shranimo
         katera uporabnika resujeta ta kviz. Nato uporabnika preusmerimo na zgenerirani kviz.*/
-        
+
         /* preveri ce je ID napadenega igralca veljaven (obstaja v bazi 
         in ni enak IDju napadalca) */
+
         $attackerID = Auth::user() -> id;
 
         if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
             $data = array("error" => "Napaden igralec ni veljaven.");
             return View::make('error', $data);
         }
-        $defenderID = $attackedUserID;
 
+        $defenderID = $attackedUserID;
+        /*  */ 
+        if (!Territory::where('id', '=', $attackedTerritoryID) -> where('id_owner', '=', $defenderID) -> get() || $attackedTerritoryID == "TODO") {
+            $data = array("error" => "Izbranega ozemlja ni mogoce napasti.");
+            return View::make('error', $data);
+        }
+
+        
         /* generiranje kviza */
         $quiz = new Quiz;
         $quiz -> id_attacker = $attackerID;
         $quiz -> id_defender = $defenderID;
-        // TODO: shraniti je potrebno id ozemlja, ki je bilo napadeno
+        $quiz -> id_attacked_territory = $attackedTerritoryID;
         $quiz -> save();
         $quizID = $quiz -> id;
 
@@ -127,8 +135,9 @@ class QuizController extends BaseController {
         /* iz baze preberi vprasanje in odgovore za vsa vprasanja, ki so del trenutnega kviza */
         $questions = Question::whereIn('id', $questionsIDs) -> get(array('question', 'answer_1', 'answer_2', 'answer_3', 'answer_correct')); 
 
+        $correctNumAnswers = Quiz::where('id', $quizID) -> get(array('attacker_num_correct_ans', 'defender_num_correct_ans')); 
         /* pripravi podatke, ki se jih poslje v View za prikaz neoddanega kviza */
-        $data = array('questionsData' => $questionsData, 'questions' => $questions, 'shuffles' => $shuffles, 'quizID' => $quizID, 'attackerAnswers' => $attackerAnswers, 'defenderAnswers' => $defenderAnswers, 'correctAnswers' => $correctAnswers);
+        $data = array('questionsData' => $questionsData, 'questions' => $questions, 'shuffles' => $shuffles, 'quizID' => $quizID, 'attackerAnswers' => $attackerAnswers, 'defenderAnswers' => $defenderAnswers, 'correctAnswers' => $correctAnswers, 'correctNumAnswers' => $correctNumAnswers);
 
         /* igralcu, ki kviza se ni oddal prikazi kviz, na katerega lahko odgovarja */
         if(($isAttacker && $quiz -> submit_time_attacker == null) || ($isDefender && $quiz -> submit_time_defender == null)) {
@@ -171,6 +180,9 @@ class QuizController extends BaseController {
         
         /* loop skozi vsa vprasanja v trenutnem kvizu */
         $i=1;
+        /* spremenjlivke namenjene stetju pravilnih odgovorv */
+        $correctAttacker = 0;
+        $correctDefender = 0;
         foreach($quizAnswers as $quizAnswer) {
             $questionIndex = "question".$i;
             $i++;
@@ -183,21 +195,35 @@ class QuizController extends BaseController {
 
             /* iz baze pridobi vprasanje iz trenutnega kviza, ki se ga obravnana in posodobi njegov zapis v bazi */ 
             $answerHistory = AnswerHistory::where('id_quiz', '=', $quizID) -> where('id_question', '=', $quizAnswer['id_question']) -> first();
+
             if ($isAttacker) {
                 $answerHistory -> attacker_answer = $userAnswer;
+
+                if($userAnswer == $quizAnswer['correct_answer']){
+                    $correctAttacker += 1; /* stetje pravilnih  odgovorov za napadalca */
+                }
             } else if ($isDefender) {
                 $answerHistory -> defender_answer = $userAnswer;
+
+                if($userAnswer == $quizAnswer['correct_answer']){
+                    $correctDefender += 1; /* stetje pravilnih  odgovorov za branilca */
+                }
             }
             $answerHistory -> save();            
         }
 
         /* nastavi cas oddaje kviza za uporabnika */
+        /* TODO :: pravilno vnesti noter ce je branilec offline */
         if ($isAttacker) {
             $quiz -> submit_time_attacker = date("Y-m-d H:i:s");
+            $quiz -> attacker_num_correct_ans = $correctAttacker;
         } else if ($isDefender) {
             $quiz -> submit_time_defender = date("Y-m-d H:i:s");
+            $quiz -> attacker_num_correct_ans = $correctDefender;
         }
         $quiz -> save();
+
+        /* TODO :: pregled ce sta ze oba koncala kviz - dodelitev ozemlja ... */
 
         return Redirect::to("quiz/show/$quizID");
     }
