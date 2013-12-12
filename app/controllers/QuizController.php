@@ -19,7 +19,8 @@ class QuizController extends BaseController {
         $attackerID = Auth::user() -> id;
 
         if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
-            return 'Napaden igralec ni veljaven.';
+            $data = array("error" => "Napaden igralec ni veljaven.");
+            return View::make('error', $data);
         }
         $defenderID = $attackedUserID;
 
@@ -95,7 +96,8 @@ class QuizController extends BaseController {
         /* preveri ce je ID kviza veljaven */
         $quiz = Quiz::find($quizID);
         if (!$quiz) {
-            return 'Zahtevani kviz ne obstaja.';
+            $data = array("error" => "Zahtevani kviz ne obstaja.");
+            return View::make('error', $data);
         }
 
         /* ugotovi ali je prijavljeni uporabnik napadalec ali branilec v trenutnem kvizu */
@@ -103,7 +105,8 @@ class QuizController extends BaseController {
         $isDefender = ($quiz -> id_defender == Auth::user() -> id) ? true : false;
         /* ce uporabnik ni ne napadalec ne branilec v trenutnem kvizu vrni error */
         if (!($isAttacker || $isDefender)) {
-            return 'Zahtevani kviz ni na voljo za prikaz.';
+            $data = array("error" => "Zahtevani kviz ni na voljo za prikaz.");
+            return View::make('error', $data);
         }
         
         /* iz baze preberi katera vprasanja so del kviza in njihove informacije */
@@ -143,7 +146,8 @@ class QuizController extends BaseController {
         /* preveri ce je ID kviza veljaven */
         $quiz = Quiz::find($quizID);
         if (!$quiz) {
-            return 'Zahtevani kviz ne obstaja.';
+            $data = array("error" => "Zahtevani kviz ne obstaja.");
+            return View::make('error', $data);            
         }
 
         /* ugotovi ali je prijavljeni uporabnik napadalec ali branilec v trenutnem kvizu */
@@ -151,7 +155,8 @@ class QuizController extends BaseController {
         $isDefender = ($quiz -> id_defender == Auth::user() -> id) ? true : false;
         /* ce uporabnik ni ne napadalec ne branilec v trenutnem kvizu vrni error */
         if (!($isAttacker || $isDefender)) {
-            return 'Zahtevani kviz ni na voljo za prikaz.';
+            $data = array("error" => "Zahtevani ni na voljo za prikaz.");
+            return View::make('error', $data);            
         }
         /* igralcu, ki je kviz ze oddal ne dovoli ponovne oddaje */
         if(($isAttacker && $quiz -> submit_time_attacker != null) || ($isDefender && $quiz -> submit_time_defender != null)) {
