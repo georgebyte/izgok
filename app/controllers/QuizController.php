@@ -17,18 +17,16 @@ class QuizController extends BaseController {
         /* preveri ce je ID napadenega igralca veljaven (obstaja v bazi 
         in ni enak IDju napadalca) */
 
-        $attackerID = Auth::user() -> id;
-
         if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
-            $data = array("error" => "Napaden igralec ni veljaven.");
-            return View::make('error', $data);
+            $f = Config::get('error.errorInfo', "napaka");
+            return $f("Napaden igralec ni veljaven.");
         }
 
         $defenderID = $attackedUserID;
         /*  */ 
         if (!Territory::where('id', '=', $attackedTerritoryID) -> where('id_owner', '=', $defenderID) -> get() || $attackedTerritoryID == "TODO") {
-            $data = array("error" => "Izbranega ozemlja ni mogoce napasti.");
-            return View::make('error', $data);
+            $f = Config::get('error.errorInfo', "napaka");
+            return $f("Izbranega ozemlja ni mogoce napasti.");
         }
 
         
