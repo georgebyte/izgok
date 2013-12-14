@@ -1,4 +1,9 @@
 <?php
+/*
+*   primer klicanja izpisa napake
+*   $f = Config::get('error.errorInfo', "napaka");
+*        return $f("sporocilo napake", array("uri" => [boolean][optional] , "code" => "[value][optional]"));
+*/
 
 class QuizController extends BaseController {
 
@@ -19,7 +24,7 @@ class QuizController extends BaseController {
 
         if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
             $f = Config::get('error.errorInfo', "napaka");
-            return $f("Napaden igralec ni veljaven.");
+            return $f("Napaden igralec ni veljaven.", array("uri" => true, "code" => "403"));
         }
 
         $defenderID = $attackedUserID;

@@ -69,6 +69,19 @@ App::down(function()
 	return Response::make("Be right back!", 503);
 });
 
+
+/*
+|--------------------------------------------------------------------------
+|custom 404 page
+|--------------------------------------------------------------------------
+*/
+
+App::missing(function($exception)
+{
+	$data = array("error" => "Stran ni na voljo oz. ne obstaja.", "code" => "404", "uri" => $_SERVER['REQUEST_URI']);
+		return View::make('error', $data);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File
