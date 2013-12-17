@@ -64,10 +64,79 @@ class AuthController extends BaseController {
             $userdata = array(
                 'username' => $data['username'],
                 'email'    => $data['email'],
+                'location' => $data['location'], 
                 'password' => Hash::make($data['password'])
             );
+
+            /* dodajanje uporabnika */
             $user = new User($userdata);
             $user->save();
+            $userID = $user -> id;
+            $userName = $user -> username;
+
+            /* iskanje polozaja na mapi */
+            $positionOnMap = $userdata['location'];
+            $allTerritoriesCount = Territory::all() -> count();
+
+            /* razdelitev limit za sirjenje od znotraj navzven */
+            $min = (int)($allTerritoriesCount / 10);
+            $min = (int)(($min + 1) * 10);
+            $max = (int)($min * 2.2);
+            $minNeg = -1 * $min;
+            $maxNeg = -1 * $max;
+
+            if($allTerritoriesCount <= $min){
+
+                switch($positionOnMap){
+                    case 'NE': 
+                        $posx=rand(0,$min);
+                        $posy=rand(0,$min);
+                    break;
+                    case 'SE': 
+                        $posx=rand(0,$min);
+                        $posy=rand($minNeg,0);
+                    break;
+                    case 'SW':
+                        $posx=rand($minNeg,0);
+                        $posy=rand($minNeg,0);
+                    break;
+                    case 'NW': 
+                        $posx=rand($minNeg,0);
+                        $posy=rand(0,$min);
+                    break;
+                }
+            }
+            elseif($allTerritoriesCount > $min && $allTerritoriesCount <= $max){
+
+                switch($positionOnMap){
+                    case 'NE': 
+                        $posx=rand(0,$max);
+                        $posy=rand(0,$max);
+                    break;
+                    case 'SE': 
+                        $posx=rand(0,$max);
+                        $posy=rand($maxNeg,0);
+                    break;
+                    case 'SW':
+                        $posx=rand($maxNeg,0);
+                        $posy=rand($maxNeg,0);
+                    break;
+                    case 'NW': 
+                        $posx=rand($maxNeg,0);
+                        $posy=rand(0,$max);
+                    break;
+                }
+            }
+
+            /* dodajanje teritorija uporabniku */
+            $userName = $userdata['username'];
+            $territoryName = $userName."'s village";
+            $territory = new Territory;
+            $territory -> name = $territoryName;
+            $territory -> pos_x = $posx;
+            $territory -> pos_y = $posy;
+            $territory -> save();
+
             return Redirect::to('/');
         }
 

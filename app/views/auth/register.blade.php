@@ -49,6 +49,18 @@
             )) }}
         </div>
         
+        <div class="form-group">
+                {{ Form::label("location", "Lokacija na mapi") }}
+                <br>
+                {{ Form::radio("location", 'NE', true) }} NE
+                &nbsp;
+                {{ Form::radio("location", 'SE') }} SE
+                &nbsp;
+                {{ Form::radio("location", 'SW') }} SW
+                &nbsp;
+                {{ Form::radio("location", 'NW') }} NW
+        </div>
+
         {{ Form::button('Register', array(
             'type'  => 'submit',
             'class' => 'btn btn-primary'

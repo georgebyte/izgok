@@ -24,7 +24,7 @@ class QuizController extends BaseController {
 
         if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
             $f = Config::get('error.errorInfo', "napaka");
-            return $f("Napaden igralec ni veljaven.", array("uri" => true, "code" => "403"));
+            return $f("Napaden igralec ni veljaven.");
         }
 
         $defenderID = $attackedUserID;
