@@ -110,20 +110,20 @@ class AuthController extends BaseController {
 
                 switch($positionOnMap){
                     case 'NE': 
-                        $posx=rand(0,$max);
-                        $posy=rand(0,$max);
+                        $posx=rand($min,$max);
+                        $posy=rand($min,$max);
                     break;
                     case 'SE': 
-                        $posx=rand(0,$max);
-                        $posy=rand($maxNeg,0);
+                        $posx=rand($min,$max);
+                        $posy=rand($maxNeg,$minNeg);
                     break;
                     case 'SW':
-                        $posx=rand($maxNeg,0);
-                        $posy=rand($maxNeg,0);
+                        $posx=rand($maxNeg,$minNeg);
+                        $posy=rand($maxNeg,$minNeg);
                     break;
                     case 'NW': 
-                        $posx=rand($maxNeg,0);
-                        $posy=rand(0,$max);
+                        $posx=rand($maxNeg,$minNeg);
+                        $posy=rand($min,$max);
                     break;
                 }
             }
