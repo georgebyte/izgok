@@ -135,6 +135,7 @@ class AuthController extends BaseController {
             $territory -> name = $territoryName;
             $territory -> pos_x = $posx;
             $territory -> pos_y = $posy;
+            $territory -> id_owner = $userID;
             $territory -> save();
 
             return Redirect::to('/');
