@@ -5,9 +5,14 @@
 	<h1>Zgodovina bitk</h1>
 
 	<?php 
-	$cnt=0; 
-	$attackedTerritoryData = $attackedTerritoryData[0];
+	$cnt=0;
 	?>
+	@if(count($attackedTerritoryData) > 0)
+		<?php $attackedTerritoryData = $attackedTerritoryData[0]; ?>
+	@endif
+	@if(count($attackedTerritoryData) == 0)
+		Zgodovina bitk je prazna.
+	@endif
 	@foreach($quizIDs as $quizID)
 		<?php 
 		$date=$quizDates[$cnt];

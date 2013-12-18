@@ -17,8 +17,7 @@ class HistoryController extends BaseController {
     	$quizDates = array();
     	$solvedQuizes = array();
     	$data = array();
-        $attackedTerritories = array();
-
+        $attackedTerritoryData = array();
 
     	/* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
     	/* array s podatki id kviza*/
@@ -37,13 +36,13 @@ class HistoryController extends BaseController {
         		$solved = true;
 
             /* pridobivanje podatkov naselja */
+            /* TODO :: fix empty attackedterritorydata*/
             $attackedTerritoryData = Territory::where('id', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
 
     		/* polnenje tabel s podatki */
     		array_push($quizIDsArray, $value['id']);
     		array_push($quizDates, $value['created_at']);
     		array_push($solvedQuizes, $solved);
-            array_push($attackedTerritories, $attackedTerritoryData);
     	}
 
 
@@ -55,7 +54,6 @@ class HistoryController extends BaseController {
     	unset($quizIDsArray);
     	unset($quizDates);
     	unset($solvedQuizes);
-        unset($attackedTerritories);
 
     	/* vracanje view in posiljanje podatkov */
     	return View::make('history', $data);
