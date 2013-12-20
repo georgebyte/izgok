@@ -19,4 +19,6 @@ Route::controller('quiz', 'QuizController');
 
 Route::get('history', array('as' => 'history', 'uses' => 'HistoryController@showIndex'));
 
+Route::get('profile', array('as' => 'profile', 'uses' => 'ProfileController@showIndex'));
+
 //Route::controller('history', 'HistoryController');

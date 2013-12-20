@@ -32,7 +32,7 @@ class AddNumberOfCorrectAnswersToQuizzesAndVillageid extends Migration {
 	{
 		Schema::table('quizzes', function($table)
 		{
-		    $table -> dropForeign('id_attacked_territory');
+		    //$table -> dropForeign('id_attacked_territory');
 		    $table -> dropColumn('id_attacked_territory');
 		    $table -> dropColumn('attacker_num_correct_ans');
 		    $table -> dropColumn('defender_num_correct_ans');

@@ -19,9 +19,9 @@
 		$solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno";
 		?>
 	 	<li> Napad na naselje: 
-	 		{{ $attackedTerritoryData['name'] }} ({{$attackedTerritoryData['pos_x']}},{{$attackedTerritoryData['pos_y']}})
+	 		{{ $t['name'] }} ({{$attackedTerritoryData['pos_x']}},{{$attackedTerritoryData['pos_y']}})
 	 		<br>
-	 		<a href="quiz/show/{{$quizID}}"> Poročilo bitke - {{ $date}} {{ $solved }}</a></li>
+	 	</li>
 	 	<?php $cnt++; ?>
 	@endforeach
 

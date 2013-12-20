@@ -18,7 +18,7 @@ class CreateTerritoriesTable extends Migration {
             $table -> integer('pos_x');
             $table -> integer('pos_y');
 			$table -> integer('id_owner') -> unsigned() -> nullable();
-            $table -> foreign('id_owner') -> references('id') -> on('users') -> onDelete('set null');
+            //$table -> foreign('id_owner') -> references('id') -> on('users') -> onDelete('set null');
         });
 	}
 

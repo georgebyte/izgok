@@ -15,10 +15,10 @@ class CreateAnswersHistoryTable extends Migration {
             $table -> increments('id');
 
             $table -> integer('id_quiz') -> unsigned();
-            $table -> foreign('id_quiz') -> references('id') -> on('quizzes') -> onDelete('cascade');
+            //$table -> foreign('id_quiz') -> references('id') -> on('quizzes') -> onDelete('cascade');
 
             $table -> integer('id_question') -> unsigned() -> nullable();
-            $table -> foreign('id_question') -> references('id') -> on('questions') -> onDelete('set null');
+            //$table -> foreign('id_question') -> references('id') -> on('questions') -> onDelete('set null');
 
             $table -> integer('attacker_answer') -> unsigned() -> nullable();
             $table -> integer('defender_answer') -> unsigned() -> nullable();
