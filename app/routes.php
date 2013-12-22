@@ -21,4 +21,8 @@ Route::get('history', array('as' => 'history', 'uses' => 'HistoryController@show
 
 Route::get('profile', array('as' => 'profile', 'uses' => 'ProfileController@showIndex'));
 
+Route::get('control', 'ControlPanelController@getChange');
+
+Route::post('control', 'ControlPanelController@postChange');
+
 //Route::controller('history', 'HistoryController');
