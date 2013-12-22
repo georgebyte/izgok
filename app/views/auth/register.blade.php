@@ -3,7 +3,9 @@
 @section('content')
     {{ Form::open(array(
         'url'   => 'auth/register',
-        'class' => 'col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3'
+        'class' => 'col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3',
+        //za dodajanje slik uporabnikov
+        'files' => true
     )) }}
 
         <div class="form-group @if($errors->has('username'))has-error @elseif(!$errors->has('username') && $errors->all())has-success @endif">
@@ -49,6 +51,16 @@
             )) }}
         </div>
         
+        <div class="form-group @if($errors->has('slika'))has-error @endif">
+            {{ Form::label('slika', 'Slika uporabnika', array(
+                'class' => 'control-label'
+            )) }}
+            {{ Form::file('slika', '', array(
+                'class' => 'form-control',
+            )) }}
+            {{ $errors->first('slika', '<p class="help-block">:message</p>') }}
+        </div>
+        
         <div class="form-group">
                 {{ Form::label("location", "Lokacija na mapi") }}
                 <br>
@@ -60,6 +72,8 @@
                 &nbsp;
                 {{ Form::radio("location", 'NW') }} NW
         </div>
+
+       
 
         {{ Form::button('Register', array(
             'type'  => 'submit',

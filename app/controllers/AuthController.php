@@ -55,7 +55,8 @@ class AuthController extends BaseController {
         $rules = array(
             'username' => 'required|alpha_num|min:3|max:32|unique:users,username',
             'email'    => 'required|email|max:320|unique:users,email',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'slika'    => 'required|image|between:0,500'
         );
 
         $validator = Validator::make($data, $rules);
@@ -66,6 +67,7 @@ class AuthController extends BaseController {
                 'email'    => $data['email'],
                 'location' => $data['location'], 
                 'password' => Hash::make($data['password'])
+
             );
 
             /* dodajanje uporabnika */
@@ -73,6 +75,18 @@ class AuthController extends BaseController {
             $user->save();
             $userID = $user -> id;
             $userName = $user -> username;
+            
+
+            /* shranjevanje slik v direktorij uploads */
+            
+            $file = Input::file('slika');
+            $destinationPath="uploads";
+            $fileName=$userID;
+            $file->move($destinationPath, $fileName.".".$file->getClientOriginalExtension());
+            
+            /* shranjevanje poti do slike v bazo */
+            User::where('id', '=', $userID)
+                 ->update(array('image_path' => $destinationPath."/".$fileName.".".$file->getClientOriginalExtension()));
 
             /* iskanje polozaja na mapi */
             $positionOnMap = $userdata['location'];

@@ -21,7 +21,10 @@ class ProfileController extends BaseController {
        
 
     	/* branje podatkov iz tabel territories in quizzes in njihovo shranjevanje v spremenljivke*/
-    	
+    	$name = User::find($myID)->username;
+
+        $image = User::find($myID)->image_path;
+
     	$quizCount = Quiz::where('id_attacker', '=', $myID) 
             -> orWhere('id_defender', '=', $myID) 
             -> count();
@@ -48,7 +51,7 @@ class ProfileController extends BaseController {
         
         /* sestavljanje tabele $data ki bo poslana v view */
 
-    	$data=array("id"=>$myID, "qc" => $quizCount,"tc" => $territoryCount, "t" => $territories, "hsa" => $highScoreAttack, "hsd" => $highScoreDefense, "aas" => $averageAttackScore, "ads" => $averageDefenseScore);
+    	$data=array("na"=>$name, "im" =>$image, "id"=>$myID, "qc" => $quizCount,"tc" => $territoryCount, "t" => $territories, "hsa" => $highScoreAttack, "hsd" => $highScoreDefense, "aas" => $averageAttackScore, "ads" => $averageDefenseScore);
 
     	/* vracanje view in posiljanje podatkov */
     	return View::make('profile', $data);
