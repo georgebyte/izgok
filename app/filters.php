@@ -78,3 +78,25 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+|--------------------------------------------------------------------------
+| Admin Filter
+|--------------------------------------------------------------------------
+|
+| Checks in database if user has administrative rights. 
+| Returns  1  if it has or  0  if not.
+|
+*/
+
+Route::filter('admin', function()
+{
+	$userID = Auth::user() -> id;
+	$isAdmin = User::where('id', '=', $userID)->get(array('is_admin'));
+	$isAdmin = $isAdmin[0];
+	$isAdmin = $isAdmin['is_admin'];
+	if(!$isAdmin){
+		$f = Config::get('error.errorInfo', "napaka");
+        return $f("Access denied.", array("code" => "403"));
+	}
+});
