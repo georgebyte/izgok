@@ -51,6 +51,8 @@ class ControlPanelController extends BaseController {
                     $destinationPath="uploads";
                     $fileName=$userID;
                     $file->move($destinationPath, $fileName.".".$file->getClientOriginalExtension());
+                    User::where('id', '=', $userID)
+                        ->update(array('image_path'=>$destinationPath."/".$fileName.".".$file->getClientOriginalExtension()));
                 }
                 
                 return Redirect::to('profile');
