@@ -21,6 +21,7 @@ class QuizController extends BaseController {
 
         /* preveri ce je ID napadenega igralca veljaven (obstaja v bazi 
         in ni enak IDju napadalca) */
+        $attackerID = Auth::user() -> id;
 
         if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
             $f = Config::get('error.errorInfo', "napaka");

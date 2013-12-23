@@ -19,7 +19,7 @@
 		$solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno";
 		?>
 	 	<li> Napad na naselje: 
-	 		{{ $t['name'] }} ({{$attackedTerritoryData['pos_x']}},{{$attackedTerritoryData['pos_y']}})
+	 		{{ $attackedTerritoryData['name'] }} ({{$attackedTerritoryData['pos_x']}},{{$attackedTerritoryData['pos_y']}})
 	 		<br>
 	 	</li>
 	 	<?php $cnt++; ?>
