@@ -25,6 +25,6 @@ Route::get('control', 'ControlPanelController@getChange');
 
 Route::post('control', 'ControlPanelController@postChange');
 
-Route::get('admin', 'AdminController@showIndex');
+Route::controller('admin', 'AdminController');
 
 //Route::controller('history', 'HistoryController');

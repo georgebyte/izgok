@@ -8,10 +8,28 @@ class AdminController extends BaseController {
         $this->beforeFilter('admin');
     }
 
-    public function showIndex()
+    public function Userform()
     {
-
-    	return View::make('admin');
+        exit("TODO :: user control form view");
     }
 
+    public function Territoryform()
+    {
+        exit("TODO :: territory control form view");
+    }  
+
+    public function getForm($form = null)
+    {
+        $data = array("error" => "Zahtevana funkcija ne obstaja.");
+
+        if($form == null)
+          return View::make('admin');  
+
+        if($form == "user")
+            AdminController::UserForm();
+        elseif($form == "territory")
+            AdminController::TerritoryForm();
+        else
+            return View::make('admin', $data);
+    }  
 }
