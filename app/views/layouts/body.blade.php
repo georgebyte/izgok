@@ -6,7 +6,7 @@
     @section('header')
         @include('layouts.header')
     @show
-        <div id="main-container">
+    <div id="main-container">
         <section class="row">
             @section('content_container')
                 <section id="main-content" class="col-sm-9">

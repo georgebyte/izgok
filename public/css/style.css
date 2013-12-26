@@ -63,3 +63,34 @@ body {
     background-color: green;
     color: white;
 }
+
+.map {
+    background-color: #57932f;
+    width: 94%;
+}
+
+.left-arrow, .right-arrow {
+    width: 3%;
+    height: 10px;
+}
+
+.left-arrow, .right-arrow, .map {
+    float: left;
+}
+
+.map-row {
+
+}
+
+.village, .empty_territory {
+    width: 13.922077922%;
+    padding: 1% 1%;
+    margin: 2px 2px;
+    float: left;
+    border: 1px dashed white;
+}
+
+.village img, .empty_territory img {
+    max-width:100%;
+    max-height:100%;
+}
