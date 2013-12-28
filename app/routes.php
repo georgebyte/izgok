@@ -29,4 +29,6 @@ Route::post('control', 'ControlPanelController@postChange');
 
 Route::controller('admin', 'AdminController');
 
+Route::post('edit', 'AdminController@postEdit');
+
 //Route::controller('history', 'HistoryController');
