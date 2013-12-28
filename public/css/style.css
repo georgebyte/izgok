@@ -148,3 +148,7 @@ body {
 .territory-info {
     padding-top: 20px;
 }
+
+td.village-name, td.player-name {
+    text-align: right;
+}

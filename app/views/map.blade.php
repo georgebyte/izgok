@@ -13,6 +13,7 @@
                     <h3>({{ $x }}, {{ $y }})</h3>
                 </div>
                 <div class='map'>
+                    <?php $villageIndex = 0; ?>
                     @for ($currentY = $y-$visibleMapSize; $currentY <= $y+$visibleMapSize; $currentY++)
                         <div class='map-row clearfix'>
                             @for ($currentX = $x-$visibleMapSize; $currentX <= $x+$visibleMapSize; $currentX++)
@@ -27,8 +28,9 @@
 
                                 @if ($currentTerritory)
                                     <div class='village'>
-                                        <a href='/territory/{{ $currentTerritory['id'] }}/'><img src='/img/village.png'></a>
+                                        <a href='/territory/{{ $currentTerritory['id'] }}/'><img data-ref='{{ $currentTerritory['name'] }}' src='/img/village.png'></a>
                                     </div>
+                                    <?php $villageIndex++; ?>
                                 @else
                                     <div class='empty_territory'>
                                         @if ($currentX % 9 == 0 && $currentY % 4 == 0)
@@ -65,12 +67,12 @@
                 <div class='territory-info'>
                     <table class="table">
                         <tr>
-                            <td>Name</td>
-                            <td>---</td>
+                            <td>Ime naselja</td>
+                            <td class='village-name'>---</td>
                         </tr>
                         <tr>
-                            <td>Player</td>
-                            <td>---</td>
+                            <td>Vladar</td>
+                            <td class='player-name'>---</td>
                         </tr>
                     </table>
                 </div>
@@ -81,4 +83,14 @@
         @show
     </div>
 </div>
+<script>
+$(document).ready(function() {
+    $('.village img').mouseover(function(){
+        $('.village-name').html($(this).data('ref'));
+    });
+    $('.village img').mouseout(function(){
+        $('.village-name').html('---');
+    });
+});
+</script>
 @stop

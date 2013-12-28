@@ -10,12 +10,12 @@
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     @show
-</head>
-<body>
-    @yield('body')
     @section('javascript')
         <script src="https://code.jquery.com/jquery.js"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     @show
+</head>
+<body>  
+    @yield('body')
 </body>
 </html>
