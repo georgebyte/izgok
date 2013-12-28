@@ -39,6 +39,8 @@
                                             <img src='/img/empty_territory_2.png'>
                                         @elseif ($currentX % 7 == 0 && $currentY % 5 == 0)
                                             <img src='/img/empty_territory_3.png'>
+                                        @elseif (abs($currentX - $currentY) == $currentX % 3 && $currentY != 0)
+                                            <img src='/img/empty_territory_2.png'>
                                         @else
                                             <img src='/img/empty_territory_0.png'>
                                         @endif
