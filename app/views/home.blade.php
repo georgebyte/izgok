@@ -15,6 +15,12 @@
     		<li>
     			/auth/login
     		</li>
+            <li>
+                /map
+            </li>
+            <li>
+                /admin/form
+            </li>            
     	</ul>
 
     </p>

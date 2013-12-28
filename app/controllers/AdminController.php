@@ -25,9 +25,8 @@ class AdminController extends BaseController {
 
         $data = array("error" => "Zahtevana funkcija ne obstaja.");
 
-        if($form == null){
+        if($form == null)
             return View::make('admin');
-        }
             
         elseif($form == "user"){
 
@@ -61,11 +60,9 @@ class AdminController extends BaseController {
     {
         $data = array("error" => "Zahtevana funkcija ne obstaja.");
 
-        if($form == null){
+        if($form == null)
             return View::make('admin');
-        }
             
-
         elseif($form == "user"){
             $userList = User::orderBy('username', 'asc') -> get(array('id', 'username'));
             $data = array("userList" => $userList);
