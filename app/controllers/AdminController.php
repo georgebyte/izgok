@@ -51,12 +51,10 @@ postTerritory($territoryId)
         $inputData = Input::all();
         $territoryID = $inputData['territoryid'];
 
-        //$territoryAllData = Territory::where('id', '=', $territoryID) -> orderBy('name', 'asc') -> get(array('id', 'name'));
+        Territory::whereIn('id', $territoryID) -> delete();
 
-
-        dd($territoryID);
-
-        //return View::make('adminedituser');
+        $data = array("deletedTerritories" => "successful");
+        return View::make('adminedituser', $data);
 
     }
 

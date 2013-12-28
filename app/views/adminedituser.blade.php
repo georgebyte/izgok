@@ -42,6 +42,9 @@
                     {{ Form::button('Delete territory(ies)', array('name' => 'edit', 'type' => 'submit', 'class' => 'btn btn-primary')) }}
                     {{ Form::close() }}
                 </div>
+            @elseif(isset($deletedTerritories))
+                <h4>Territories are deleted.</h4>
+                <a href={{ URL::previous() }}>Go back</a>
             @else
                 <h4>User is edited.</h4>
                 <a href={{ URL::previous() }}>Go back</a>
