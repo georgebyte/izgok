@@ -10,12 +10,11 @@
     		$uId = $user['id'];
     		$uName = $user['username'];
     		$usersArray[$uId]=$uName;
-
     	}
     ?>
     <div class="form-group">
     	<br>
-		{{ Form::open(array('url' => URL::current())) }}
+		{{ Form::open(array('url' => 'admin/user')) }}
 		{{ Form::label('userid', 'User:') }}&nbsp;
 		{{ Form::select('userid', $usersArray)}}
 		<br>
