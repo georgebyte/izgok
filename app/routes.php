@@ -21,7 +21,9 @@ Route::controller('map', 'MapController');
 
 Route::get('history', array('as' => 'history', 'uses' => 'HistoryController@showIndex'));
 
-Route::get('profile', array('as' => 'profile', 'uses' => 'ProfileController@showIndex'));
+Route::controller('profile', 'ProfileController');
+
+Route::controller('scoreboard', 'ScoreboardController');
 
 Route::get('control', 'ControlPanelController@getChange');
 

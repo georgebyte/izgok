@@ -1,27 +1,56 @@
 <?php
 
 class ProfileController extends BaseController {
-
+    
     public function __construct()
     {
         $this->beforeFilter('auth');
+        
     }
 
-    public function showIndex()
+    public function getIndex()
     {
 
+        return Redirect::to("/profile/show/");
+    }
+
+
+    public function postIndex()
+    {
+        $data=Input::all();
+        return Redirect::to("/profile/show/".$data['find']);
+    }
+
+
+    public function getShow($name="myName")
+    {
+
+    	/* data je tabela podatkov poslanih v view */
     	
-    	
+        
+        if($name=="myName"){
+            $myID = Auth::user() -> id;
+            $name = User::find($myID)->username;
+        }
+        else{
+            $temp = User::where('username', '=', $name)->count();
+            if($temp==0){
+                return View::make('playernotfound');
+            }
+            $myID = User::where('username', '=', $name)->get(array('id'));
+            foreach($myID as $myID){
+                $myID=$myID['id'];
+            }
+        }
+        $data = array();
 
-
-
-        /* data je tabela podatkov poslanih v view */
-    	$myID = Auth::user() -> id;
-    	$data = array();
+        
        
 
     	/* branje podatkov iz tabel territories in quizzes in njihovo shranjevanje v spremenljivke*/
-    	$name = User::find($myID)->username;
+    	
+        
+
 
         $image = User::find($myID)->image_path;
 
