@@ -1,9 +1,8 @@
 <header class="row">
-    <div class="col-sm-3">
-        <h1>iZGOK</h1>
-        <p>Igrivi zgodovinski kviz</p>
+    <div class="logo col-lg-3">
+        <a href="{{ URL::to('/') }}"><img src='/img/iZGOK_logo.png'></a>
     </div>
-    <div class="col-sm-9">
+    <div class="navigation-container col-lg-9">
         @section('navigation')
             @include('layouts.navigation')
         @show

@@ -2,9 +2,82 @@ body {
     background: url(/img/paper-pattern.png) repeat;
 }
 
+a {
+    color: #685648;
+}
+
+a:hover, a:active {
+    color: #8E7F72;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #685648;
+    border-color: #453C35;
+}
+
+.btn-primary:hover {
+    background-color: #4D3E33;
+    border-color: #453C35;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+    background-color: #685648;
+}
+
+.logo {
+    text-align: center;
+}
+
+.logo img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 #navigation {
-    margin-top: 20px;
+    margin-top: 57px;
     border-radius: 4px;
+}
+
+@media (max-width: 1199px) {
+    #navigation {
+        margin-top: 20px;
+    }
+
+    .logo img {
+        max-width: 50%;
+        max-height: 50%;
+    }
+}
+
+@media (max-width: 639px) {
+    .logo img {
+        max-width: 70%;
+        max-height: 70%;
+    }
+}
+
+.navbar-header p {
+    padding: 0 10px;
+    margin: 0 0;
+    line-height: 50px;
+}
+
+.guest-notice {
+    float: right;
+    line-height: 50px;
+    padding: 0 10px;
+    margin: 0 0;
+}
+
+.game-navigation:first-child a {
+    padding-left: 0;
+}
+
+@media (max-width: 767px) {
+    .game-navigation:first-child a {
+        padding-left: 10px;
+    }
 }
 
 #main-container {
@@ -16,6 +89,14 @@ body {
 
 #main-content h1 {
     margin-top: 0px;
+}
+
+#footer {
+    margin-top: 20px;
+}
+
+#footer p {
+    margin: 0 0;
 }
 
 .report {
@@ -153,8 +234,6 @@ td.village-name, td.player-name {
     text-align: right;
 }
 
-
-
 .search-form {
   display: inline;
   width: 500px;
@@ -165,7 +244,6 @@ td.village-name, td.player-name {
     float:left;
     padding:0px 5px;
 }
-
 
 .profile{
     float:left;
