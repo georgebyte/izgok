@@ -14,11 +14,22 @@
     ?>
     <div class="form-group">
     	<br>
-		{{ Form::open(array('url' => 'admin/user')) }}
-		{{ Form::label('userid', 'User:') }}&nbsp;
-		{{ Form::select('userid', $usersArray)}}
-		<br>
-		{{ Form::button('Edit', array('type' => 'submit', 'class' => 'btn btn-primary')) }}
-	{{ Form::close() }}
+    	{{ Form::open(array('url' => 'admin/user')) }}
+        	{{ Form::label('userid', 'User:') }}&nbsp;
+            {{ Form::select('userid', $usersArray)}}
+            {{ Form::button('Edit', array('type' => 'submit', 'name' => 'dropdown', 'class' => 'btn btn-primary')) }}
+            <br><br>
+            {{ Form::label('username', 'User:') }}&nbsp;
+            {{ Form::text('username', '', array('id' => 'username')) }}
+            {{ Form::button('Edit', array('type' => 'submit', 'name' => 'searchbox', 'class' => 'btn btn-primary')) }}
+    	{{ Form::close() }}
     </div>
+    <div id='ShowUsers'><br /></div>
+<script>
+$(document).ready(function(){
+    $('#username').keyup(function() {
+        $('#ShowUsers').load('/api/lookup/' + $('#username').val());
+    });
+}); 
+</script>    
 @stop

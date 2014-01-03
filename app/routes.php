@@ -31,4 +31,6 @@ Route::post('control', 'ControlPanelController@postChange');
 
 Route::controller('admin', 'AdminController');
 
+Route::controller('api', 'ApiController');
+
 //Route::controller('history', 'HistoryController');
