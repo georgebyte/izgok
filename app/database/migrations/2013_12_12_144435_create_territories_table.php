@@ -20,6 +20,7 @@ class CreateTerritoriesTable extends Migration {
 			$table -> integer('id_owner') -> unsigned() -> nullable();
             //$table -> foreign('id_owner') -> references('id') -> on('users') -> onDelete('set null');
             $table -> boolean('is_main_village');
+            $table -> boolean('is_npc_village');
         });
 	}
 

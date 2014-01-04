@@ -28,7 +28,7 @@
                      <li> Napad na naselje: 
                              {{ $attackedTerritoryData['name'] }} ({{$attackedTerritoryData['pos_x']}},{{$attackedTerritoryData['pos_y']}})
                              <br>
-                             <a href="quiz/show/{{$quizID}}"> Poročilo bitke - {{ $date}} {{ $solved }}</a></li>
+                             <a href="/quiz/show/{{$quizID}}"> Poročilo bitke - {{ $date}} {{ $solved }}</a></li>
                      <?php $cnt++; ?>
             @endforeach
 

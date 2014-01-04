@@ -11,6 +11,7 @@ class MapController extends BaseController {
     {
         return Redirect::to("/map/show/");
     }
+
     public function getShow($x = 0, $y = 0)
     {
         $visibleMapSize = Config::get('map.visibleMapSize', 4);
@@ -35,6 +36,38 @@ class MapController extends BaseController {
         $data['visibleTerritories'] = $visibleTerritoriesData;
 
         return View::make('map', $data);
+    }
+
+    public function getTerritory($territoryID = null, $x = null, $y = null)
+    {
+        $data = array('territoryID' => $territoryID, 'x' => $x, 'y' => $y);
+        $rules = array(
+            'territoryID' => 'required|integer',
+            'x'           => 'required|integer',
+            'y'           => 'required|integer'
+        );
+        $validator = Validator::make($data, $rules);
+        if (!$validator->passes()) {
+            $f = Config::get('error.errorInfo', "napaka");
+            return $f("Navedene koordinate niso veljavne.");
+        }
+
+        $data = array('territoryID' => $territoryID, 'name' => null, 'description' => null, 'player' => null, 'playerID' => null, 'x' => $x, 'y' => $y);
+        if (!$territoryID) {
+            $data['name'] = "Divjina";
+            $data['description'] = "Nenaseljeno ozemlje";
+            $data['player'] = "---";
+            $data['playerID'] = 0;
+            return View::make('territory', $data);
+        } else {
+            $dbTerritory = Territory::where('id', '=', $territoryID)->first();
+            $dbPlayer = User::where('id', '=', $dbTerritory['id_owner'])->first();
+            $data['name'] = $dbTerritory['name'];
+            $data['description'] = $dbTerritory['description'];
+            $data['player'] = $dbPlayer['username'];
+            $data['playerID'] = $dbPlayer['id'];
+            return View::make('territory', $data);
+        }
     }
 
 }

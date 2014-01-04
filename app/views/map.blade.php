@@ -28,22 +28,24 @@
 
                                 @if ($currentTerritory)
                                     <div class='village'>
-                                        <a href='/territory/{{ $currentTerritory['id'] }}/'><img data-ref='{{ $currentTerritory['name'] }}' src='/img/village.png'></a>
+                                        <a href='/map/territory/{{ $currentTerritory['id'] }}/{{ $currentX }}/{{ $currentY }}'><img data-ref='{{ $currentTerritory['name'] }}' src='/img/village.png'></a>
                                     </div>
                                     <?php $villageIndex++; ?>
                                 @else
                                     <div class='empty_territory'>
-                                        @if ($currentX % 9 == 0 && $currentY % 4 == 0)
-                                            <img src='/img/empty_territory_1.png'>
-                                        @elseif ($currentX % 4 == 0 && $currentY % 7 == 0)
-                                            <img src='/img/empty_territory_2.png'>
-                                        @elseif ($currentX % 7 == 0 && $currentY % 5 == 0)
-                                            <img src='/img/empty_territory_3.png'>
-                                        @elseif ($currentX % 7 == 0 && $currentY % 9 == 0)
-                                            <img src='/img/empty_territory_4.png'>
-                                        @else
-                                            <img src='/img/empty_territory_0.png'>
-                                        @endif
+                                        <a href='/map/territory/0/{{ $currentX }}/{{ $currentY }}'>
+                                            @if ($currentX % 9 == 0 && $currentY % 4 == 0)
+                                                <img src='/img/empty_territory_1.png'>
+                                            @elseif ($currentX % 4 == 0 && $currentY % 7 == 0)
+                                                <img src='/img/empty_territory_2.png'>
+                                            @elseif ($currentX % 7 == 0 && $currentY % 5 == 0)
+                                                <img src='/img/empty_territory_3.png'>
+                                            @elseif ($currentX % 7 == 0 && $currentY % 9 == 0)
+                                                <img src='/img/empty_territory_4.png'>
+                                            @else
+                                                <img src='/img/empty_territory_0.png'>
+                                            @endif
+                                        </a>
                                     </div>
                                 @endif
                             @endfor

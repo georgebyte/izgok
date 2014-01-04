@@ -15,10 +15,13 @@
                 <li><a href="{{ URL::to('profile') }}"><span class="glyphicon glyphicon-user"></span> Profil</a></li>
                 <li><a href="{{ URL::to('map') }}"><span class="glyphicon glyphicon-globe"></span> Zemljevid</a></li>
                 <li><a href="{{ URL::to('scoreboard') }}"><span class="glyphicon glyphicon-stats"></span> Lestvica igralcev</a></li>
-                <li><a href="{{ URL::to('history') }}"><span class="glyphicon glyphicon-envelope"></span> Poročila napadov</a>
-                @if(checkUnsolved() > 0)
-                <img src="/img/notice.png">({{ checkUnsolved(); }})
-                @endif
+                <li>
+                    <?php $unsolved = checkUnsolved(); ?>
+                    <a href="{{ URL::to('history') }}@if($unsolved > 0)/unsolved/@endif"><span class="glyphicon glyphicon-envelope"></span> Poročila napadov
+                        @if($unsolved > 0)
+                            <span class="unsolved-notice" href="{{ URL::to('history') }}">{{ $unsolved }}</span>
+                        @endif
+                    </a>
                 </li>
             </ul>
             <ul class="user-navigation nav navbar-nav navbar-right">

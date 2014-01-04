@@ -19,10 +19,10 @@
                 </aside>
             @show
         </section>
-
-        @section('footer')
-            @include('layouts.footer')
-        @show
     </div>
+
+    @section('footer')
+        @include('layouts.footer')
+    @show
 </div>
 @stop
