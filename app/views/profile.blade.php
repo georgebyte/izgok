@@ -44,7 +44,7 @@
 				ozemlja
 			@endif
 			@if(count($t) > 4)
-				ozemlj
+				ozemelj
 			@endif
 		@endif
 		</div>
