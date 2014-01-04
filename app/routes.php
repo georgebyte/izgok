@@ -19,8 +19,6 @@ Route::controller('quiz', 'QuizController');
 
 Route::controller('map', 'MapController');
 
-Route::get('history', array('as' => 'history', 'uses' => 'HistoryController@showIndex'));
-
 Route::controller('profile', 'ProfileController');
 
 Route::controller('scoreboard', 'ScoreboardController');
@@ -33,4 +31,6 @@ Route::controller('admin', 'AdminController');
 
 Route::controller('api', 'ApiController');
 
-//Route::controller('history', 'HistoryController');
+Route::controller('history', 'HistoryController');
+
+//Route::get('history', array('as' => 'history', 'uses' => 'HistoryController@showIndex'));

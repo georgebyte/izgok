@@ -93,4 +93,33 @@ App::missing(function($exception)
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Checking for unsolved quizzes
+|--------------------------------------------------------------------------
+*/
+
+function checkUnsolved(){
+
+	    $myID = Auth::user() -> id;
+        $count = 0;
+        /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
+        /* array s podatki id kviza*/
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory'));
+
+        foreach($quizHistory as $value){
+            /* branje podatkov */
+            $quiz = Quiz::find($value['id']);
+            $isAttacker = ($quiz -> id_attacker == Auth::user() -> id) ? true : false;
+            $isDefender = ($quiz -> id_defender == Auth::user() -> id) ? true : false;
+
+            if(($isAttacker && $quiz -> submit_time_attacker == null) || ($isDefender && $quiz -> submit_time_defender == null))
+				$count += 1;            
+        }
+
+        return $count;
+}
+
+
+
 require app_path().'/filters.php';
