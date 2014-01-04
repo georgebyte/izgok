@@ -22,9 +22,7 @@ class HistoryController extends BaseController {
     	/* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
     	/* array s podatki id kviza*/
     	$quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory')); 
-
     	foreach($quizHistory as $value){
-
     		/* branje podatkov */
     		$quiz = Quiz::find($value['id']);
     		$isAttacker = ($quiz -> id_attacker == Auth::user() -> id) ? true : false;
@@ -37,7 +35,7 @@ class HistoryController extends BaseController {
 
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
-            $attackedTerritoryData = Territory::where('id', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
+            $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
 
     		/* polnenje tabel s podatki */
     		array_push($quizIDsArray, $value['id']);
