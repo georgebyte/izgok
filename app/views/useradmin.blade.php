@@ -24,12 +24,8 @@
             {{ Form::button('Edit', array('type' => 'submit', 'name' => 'searchbox', 'class' => 'btn btn-primary')) }}
     	{{ Form::close() }}
     </div>
-    <div id='ShowUsers'><br /></div>
-<script>
-$(document).ready(function(){
-    $('#username').keyup(function() {
-        $('#ShowUsers').load('/api/lookup/' + $('#username').val());
-    });
-}); 
-</script>    
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="/js/UserAutoComplete.js"></script>
 @stop

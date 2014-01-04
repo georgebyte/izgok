@@ -9,16 +9,11 @@ class ApiController extends BaseController {
 
     public function getLookup($user = null)
     {
-				if($user == null)
-					return ("");
-				
-				echo"looking for {$user} <br>";
-				$userAllData = User::where('username', 'LIKE', $user.'%') -> get(array('username'));
-				$return = "";
+				$userAllData = User::where('username', 'LIKE', '%'.$user.'%') -> get(array('username'));
+				$tmp = array();
 				foreach($userAllData as $val){
-
-					$return .= "<li>{$val['username']}</li>";
+					array_push($tmp, $val['username']);
 				}
-				return $return;
+				return Response::json($tmp);
     }
 } 
