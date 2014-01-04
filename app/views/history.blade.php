@@ -6,6 +6,9 @@
     <br>
     <?php 
     $cnt=0;
+    $territoryName = array();
+    $territoryPosX = array();
+    $territoryPosY = array();
     ?>
     <div class="container">
         <a href="/history"> Vsi </a> - 
@@ -13,22 +16,24 @@
         <a href="/history/defense"> Obramba </a> - 
         <a href="/history/unsolved"> Nereseni </a>
         <br><br>
-            //TODO: bug pri izpisu seznama porocil - vedno isti village
             @if(count($attackedTerritoryData) > 0)
-                    <?php $attackedTerritoryData = $attackedTerritoryData[0]; ?>
+                @foreach($attackedTerritoryData as $key => $value)
+                    <?php 
+                    array_push($territoryName, $value['name']); 
+                    array_push($territoryPosX, $value['pos_x']);
+                    array_push($territoryPosY, $value['pos_y']); 
+                    ?>
+                @endforeach
             @endif
             @if(count($attackedTerritoryData) == 0)
                     Zgodovina bitk je prazna.
             @endif
             @foreach($quizIDs as $quizID)
-                    <?php 
-                    $date=$quizDates[$cnt];
-                    $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno";
-                    ?>
+                    <?php $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno"; ?>
                      <li> Napad na naselje: 
-                             {{ $attackedTerritoryData['name'] }} ({{$attackedTerritoryData['pos_x']}},{{$attackedTerritoryData['pos_y']}})
+                             {{ $territoryName[$cnt] }} ({{$territoryPosX[$cnt]}},{{$territoryPosY[$cnt]}})
                              <br>
-                             <a href="/quiz/show/{{$quizID}}"> Poročilo bitke - {{ $date}} {{ $solved }}</a></li>
+                             <a href="/quiz/show/{{$quizID}}"> Poročilo bitke - {{ $quizDates[$cnt]}} {{ $solved }}</a></li>
                      <?php $cnt++; ?>
             @endforeach
 
