@@ -16,6 +16,10 @@
         <a href="/history/defense"> Obramba </a> - 
         <a href="/history/unsolved"> Nereseni </a>
         <br><br>
+            
+            @if(count($attackedTerritoryData) == 0)
+                    Zgodovina bitk je prazna.
+            @endif
             @if(count($attackedTerritoryData) > 0)
                 @foreach($attackedTerritoryData as $key => $value)
                     <?php 
@@ -24,18 +28,15 @@
                     array_push($territoryPosY, $value['pos_y']); 
                     ?>
                 @endforeach
+                @foreach($quizIDs as $quizID)
+                        <?php $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno"; ?>
+                         <li> Napad na naselje: 
+                                 {{ $territoryName[$cnt] }} ({{$territoryPosX[$cnt]}},{{$territoryPosY[$cnt]}})
+                                 <br>
+                                 <a href="/quiz/show/{{$quizID}}"> Poročilo bitke - {{ $quizDates[$cnt]}} {{ $solved }}</a></li>
+                         <?php $cnt++; ?>
+                @endforeach
             @endif
-            @if(count($attackedTerritoryData) == 0)
-                    Zgodovina bitk je prazna.
-            @endif
-            @foreach($quizIDs as $quizID)
-                    <?php $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno"; ?>
-                     <li> Napad na naselje: 
-                             {{ $territoryName[$cnt] }} ({{$territoryPosX[$cnt]}},{{$territoryPosY[$cnt]}})
-                             <br>
-                             <a href="/quiz/show/{{$quizID}}"> Poročilo bitke - {{ $quizDates[$cnt]}} {{ $solved }}</a></li>
-                     <?php $cnt++; ?>
-            @endforeach
 
     </div>
 @stop
