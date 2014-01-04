@@ -4,9 +4,30 @@
 
 	<?php 
 		$cnt=0;
-		
 	?>
-	<h1>Lestvica igralcev</h1><br/><br/>
+	{{ Form::open(array(
+        'url'   => 'profile',
+        'class' => 'search-form'
+    )) }}
+
+        <div class="form-components">
+        {{ Form::text('find', '', array(
+                'class'       => 'form-control',
+                'placeholder' => 'Poišči igralca',
+                'id'		  => 'username'
+        )) }}
+ 		</div>
+            
+        <div class="form-components">
+        {{ Form::button('Poišči', array(
+            'type'  => 'submit',
+            'class' => 'btn btn-primary'
+        )) }}
+        </div>
+
+    {{ Form::close() }}
+	<br><br><br>
+	<h1>Lestvica igralcev</h1><br/>
 	<div style="padding:20px; background-color:#eeeeee; border-radius:25px; border-collapse:separate">
 	<table>
 	@foreach($scores as $nameAndImage => $score)
@@ -33,8 +54,7 @@
 	@endforeach
 	</table>
 	</div>
-
-
-
-
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="/js/UserAutoComplete.js"></script>
 @stop

@@ -2,34 +2,12 @@
 
 @section('content')
 
-	
-	{{ Form::open(array(
-        'url'   => 'profile',
-        'class' => 'search-form'
-    )) }}
-
-        <div class="form-components">
-        {{ Form::text('find', '', array(
-                'class'       => 'form-control',
-                'placeholder' => 'Poišči igralca'
-        )) }}
- 		</div>
-            
-        <div class="form-components">
-        {{ Form::button('Poišči', array(
-            'type'  => 'submit',
-            'class' => 'btn btn-primary'
-        )) }}
-        </div>
-
-    {{ Form::close() }}
-
 
 
 	<div class="profile">
 		<h1>Statistika</h1>
 		<h3>{{ $na }}</h3>
-		<?php 
+		<?php
 		$aas=number_format($aas,1);
 		$ads=number_format($ads,1);
 		?>
@@ -44,13 +22,31 @@
 		<strong>Število ozemelj: {{ $tc }}</strong> <br/><br/>
 		<strong>Ozemlja:</h4><br/><br/>
 		<div style="padding-left:15px">
-		@foreach($t as $t)
-			<li>Ime: {{ $t['name'] }} <br/>
-		 		Opis: {{ $t['description'] }} <br/>
-		 		koordinate: {{ $t['pos_x']}}, {{ $t['pos_y'] }} <br>
+		@foreach($t as $val)
+			<li>Ime: {{ $val['name'] }} <br/>
+		 		Opis: {{ $val['description'] }} <br/>
+		 		koordinate: {{ $val['pos_x']}}, {{ $val['pos_y'] }} <br>
+		 		&nbsp;&nbsp;<a href="/map/show/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}">Pojdi na mapo</a>
 		 		<hr>
 			</li>
 		@endforeach
+		@if(count($t) == 0)
+			Ta igralec nima nobenega ozemlja
+		@else
+			Ta igralec ima {{ count($t) }}
+			@if(count($t) == 1)
+				ozemlje
+			@endif
+			@if(count($t) == 2)
+				ozemlji
+			@endif
+			@if(count($t) == 3 || count($t) == 4)
+				ozemlja
+			@endif
+			@if(count($t) > 4)
+				ozemlj
+			@endif
+		@endif
 		</div>
 	</div>
 
