@@ -62,15 +62,20 @@ postTerritory($territoryId)
     {
 
             $inputData = Input::all();
-
             /* spremenjlivke */
             $userData = array();
 
             /* zbiranje podatkov o uporabniku */
-            $userID = $inputData['userid'];
-            $userAllData = User::where('id', '=', $userID) -> get(array('id', 'username', 'email'));
+            if(isset($_POST['searchbox'])){
+                $userName = $inputData['username'];
+                $userAllData = User::where('username', '=', $userName) -> get(array('id', 'username', 'email'));
+            }
+            if(isset($_POST['dropdown'])){
+                $userID = $inputData['userid'];
+                $userAllData = User::where('id', '=', $userID) -> get(array('id', 'username', 'email'));
+            }
             $userAllData = $userAllData[0];
-
+            $userID = $userAllData['id'];
             /* shranjevanje podatkov v $userData array */
             $userData['id'] = $userAllData['id'];
             $userData['username'] = $userAllData['username'];
