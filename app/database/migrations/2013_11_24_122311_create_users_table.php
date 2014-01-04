@@ -16,6 +16,8 @@ class CreateUsersTable extends Migration {
             $table -> string('username', 32);
             $table -> string('email', 128);
             $table -> string('password', 60);
+            $table -> string('image_path', 32);
+            $table -> boolean('is_admin');
             $table -> timestamps();
         });
     }
