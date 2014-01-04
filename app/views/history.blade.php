@@ -13,7 +13,7 @@
         <a href="/history/defense"> Obramba </a> - 
         <a href="/history/unsolved"> Nereseni </a>
         <br><br>
-        
+            //TODO: bug pri izpisu seznama porocil - vedno isti village
             @if(count($attackedTerritoryData) > 0)
                     <?php $attackedTerritoryData = $attackedTerritoryData[0]; ?>
             @endif

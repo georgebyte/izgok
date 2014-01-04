@@ -224,7 +224,7 @@ class QuizController extends BaseController {
             $quiz -> attacker_num_correct_ans = $correctAttacker;
         } else if ($isDefender) {
             $quiz -> submit_time_defender = date("Y-m-d H:i:s");
-            $quiz -> attacker_num_correct_ans = $correctDefender;
+            $quiz -> defender_num_correct_ans = $correctDefender;
         }
         $quiz -> save();
 
