@@ -11,7 +11,7 @@ class UserTableSeeder extends Seeder {
                 'email'      => 'jure.bajt@gmail.com',
                 'username'   => 'jure',
                 'password'   => Hash::make('jure'),
-                'image_path' => 'uploads/1.jpg',
+                'image_path' => md5('1').".jpg",
                 'is_admin'   => '1'
             )
         );
@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder {
                 'email'      => 'sandi.mikus@gmail.com',
                 'username'   => 'sandi',
                 'password'   => Hash::make('sandi'),
-                'image_path' => 'uploads/2.jpg',
+                'image_path' => md5('2').".jpg",
                 'is_admin'   => '1'
             )
         );
@@ -31,7 +31,7 @@ class UserTableSeeder extends Seeder {
                 'email'      => 'ziga.zumer@gmail.com',
                 'username'   => 'ziga',
                 'password'   => Hash::make('ziga'),
-                'image_path' => 'uploads/3.jpg',
+                'image_path' => md5('3').".jpg",
                 'is_admin'   => '1'
             )
         );
@@ -41,7 +41,7 @@ class UserTableSeeder extends Seeder {
                 'email'      => 'matejmart@gmail.com',
                 'username'   => 'matej',
                 'password'   => Hash::make('matej'),
-                'image_path' => 'uploads/4.jpg',
+                'image_path' => md5('4').".jpg",
                 'is_admin'   => '1'
             )
         );

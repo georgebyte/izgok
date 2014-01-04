@@ -23,11 +23,9 @@ class ControlPanelController extends BaseController {
         $data=Input::all();
 
         
-        if (Auth::validate(array('username' => $data['oldUsername'], 'password' => $data['oldPassword'])))       
+        if (Auth::validate(array('username' => Auth::user() -> username, 'password' => $data['oldPassword'])))       
         {    
             $rules = array(
-                
-                'username'    => 'alpha_num|min:3|max:32|unique:users,username',
                 'password'    => 'confirmed',
                 'slika'       => 'image|between:0,500'
             );
@@ -35,24 +33,20 @@ class ControlPanelController extends BaseController {
             $validator = Validator::make($data, $rules);
 
             if ($validator->passes()) {
-                $userID = Auth::user() -> id;
-                if(Input::has('username')){
-                    User::where('id', '=', $userID)
-                        ->update(array('username'=>Input::get('username')));
-                }       
+                $userID = Auth::user() -> id;   
                 
                 if(Input::has('password')){
                     User::where('id', '=', $userID)
                         ->update(array('password'=>Hash::make(Input::get('password'))));
                 }  
-                /* shranjevanje slik v direktorij uploads */
+
                 if(Input::hasFile('slika')){
                     $file = Input::file('slika');
-                    $destinationPath="uploads";
-                    $fileName=$userID;
-                    $file->move($destinationPath, $fileName.".".$file->getClientOriginalExtension());
-                    User::where('id', '=', $userID)
-                        ->update(array('image_path'=>$destinationPath."/".$fileName.".".$file->getClientOriginalExtension()));
+                    $fileName = md5($userID).".".$file->getClientOriginalExtension();
+                    $destinationPath = Config::get('auth.usersAvatarsLocation');
+                    $file->move($destinationPath, $fileName);
+
+                    User::where('id', '=', $userID)->update(array('image_path' => $fileName));
                 }
                 
                 return Redirect::to('profile');

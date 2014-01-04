@@ -68,4 +68,6 @@ return array(
 
 	),
 
+	'usersAvatarsLocation' => 'uploads/avatars',
+
 );

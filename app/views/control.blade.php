@@ -8,17 +8,6 @@
         'files' => true
     )) }}
 
-        <div class="form-group @if($errors->has('oldUsername'))has-error @elseif(!$errors->has('oldUsername') && $errors->all())has-success @endif">
-            {{ Form::label('oldUsername', 'Old username (required field)', array(
-                'class' => 'control-label'
-            )) }}
-            {{ Form::text('oldUsername', '', array(
-                'class'       => 'form-control',
-                'placeholder' => 'Old username'
-            )) }}
-            {{ $up }}
-        </div>
-
        <div class="form-group @if($errors->has('oldPassword'))has-error @endif">
             {{ Form::label('oldPassword', 'Old password (required field)', array(
                 'class' => 'control-label'
@@ -29,19 +18,6 @@
             )) }}
             {{ $up }}
         </div>
-
-         <div class="form-group @if($errors->has('username'))has-error @elseif(!$errors->has('username') && $errors->all())has-success @endif">
-            {{ Form::label('username', 'Change username', array(
-                'class' => 'control-label'
-            )) }}
-            {{ Form::text('username', '', array(
-                'class'       => 'form-control',
-                'placeholder' => 'New username'
-            )) }}
-            {{ $errors->first('username', '<p class="help-block">:message</p>') }}
-        </div>
-
-
 
         <div class="form-group @if($errors->has('password'))has-error @endif">
             {{ Form::label('password', 'Change password', array(

@@ -26,7 +26,7 @@ class ScoreboardController extends BaseController {
         foreach ($users as $user) {
             $id=$user->id;
             $name=$user->username;
-            $image=$user->image_path;
+            $image=Config::get('auth.usersAvatarsLocation') . "/" . $user->image_path;
             $territoryCount = Territory::where('id_owner', '=', $id) 
                 -> count();
             $usersAndScores[$name." ".$image]=$territoryCount*15;

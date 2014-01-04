@@ -56,7 +56,7 @@ class AuthController extends BaseController {
             'username' => 'required|alpha_num|min:3|max:32|unique:users,username',
             'email'    => 'required|email|max:320|unique:users,email',
             'password' => 'required|confirmed',
-            'slika'    => 'required|image|between:0,500'
+            'slika'    => 'image|between:0,500'
         );
 
         $validator = Validator::make($data, $rules);
@@ -80,13 +80,17 @@ class AuthController extends BaseController {
             /* shranjevanje slik v direktorij uploads */
             
             $file = Input::file('slika');
-            $destinationPath="uploads";
-            $fileName=$userID;
-            $file->move($destinationPath, $fileName.".".$file->getClientOriginalExtension());
+            if ($file) {
+                $fileName = md5($userID).".".$file->getClientOriginalExtension();
+                $destinationPath = Config::get('auth.usersAvatarsLocation');
+                $file->move($destinationPath, $fileName);
+            } else {
+                $fileName = 'default.jpg';
+            }
             
             /* shranjevanje poti do slike v bazo */
             User::where('id', '=', $userID)
-                 ->update(array('image_path' => $destinationPath."/".$fileName.".".$file->getClientOriginalExtension()));
+                 ->update(array('image_path' => $fileName));
 
             /* iskanje polozaja na mapi */
             $positionOnMap = $userdata['location'];
@@ -150,6 +154,7 @@ class AuthController extends BaseController {
             $territory -> pos_x = $posx;
             $territory -> pos_y = $posy;
             $territory -> id_owner = $userID;
+            $territory -> is_main_village = 1;
             $territory -> save();
 
             return Redirect::to('/');

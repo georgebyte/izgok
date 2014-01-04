@@ -52,7 +52,7 @@ class ProfileController extends BaseController {
         
 
 
-        $image = User::find($myID)->image_path;
+        $image = Config::get('auth.usersAvatarsLocation') . "/" . User::find($myID)->image_path;
 
     	$quizCount = Quiz::where('id_attacker', '=', $myID) 
             -> orWhere('id_defender', '=', $myID) 
