@@ -6,5 +6,7 @@
         <ul>
             <li><a href='admin/user'>Urejanje Uporabnika</a></li>
         </ul>
+
+        Game Version - v{{Config::get('version.majorVersion');}}.{{Config::get('version.minorVersion');}}
     </p>
 @stop
