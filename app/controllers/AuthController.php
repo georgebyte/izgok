@@ -72,6 +72,7 @@ class AuthController extends BaseController {
 
             /* dodajanje uporabnika */
             $user = new User($userdata);
+            $user -> score = 15;
             $user->save();
             $userID = $user -> id;
             $userName = $user -> username;

@@ -12,35 +12,52 @@ class QuizController extends BaseController {
         $this->beforeFilter('auth');
     }
 
-    public function getAttack($attackedUserID = null, $attackedTerritoryID = null)
+    public function getAttack($attackedUserID = null, $attackedTerritoryID = null, $x = null, $y = null)
     {
-        /* Iz profila naselja po kliku na gumb "Napad" preusmerimo napadalca
-        na url http://pp-project.dev/quiz/attack/[$attackedUserID]/[$villageID].
-        V getAttackUser zgeneriramo kviz, mu dodamo 8 vprasanj in shranimo
-        katera uporabnika resujeta ta kviz. Nato uporabnika preusmerimo na zgenerirani kviz.*/
-
-        /* preveri ce je ID napadenega igralca veljaven (obstaja v bazi 
-        in ni enak IDju napadalca) */
         $attackerID = Auth::user() -> id;
+        $defenderID = $attackedUserID;
 
-        if (!User::find($attackedUserID) || $attackedUserID == $attackerID) {
+        if ((!User::find($defenderID) || $defenderID == $attackerID) && $defenderID != 0) {
             $f = Config::get('error.errorInfo', "napaka");
             return $f("Napaden igralec ni veljaven.");
         }
-
-        $defenderID = $attackedUserID;
-        /*  */ 
-        if (!Territory::where('id', '=', $attackedTerritoryID) -> where('id_owner', '=', $defenderID) -> get() || $attackedTerritoryID == "TODO") {
+        $attackedTerritory = Territory::where('id', '=', $attackedTerritoryID) -> where('id_owner', '=', $defenderID) -> first();
+        if ((!$attackedTerritory || $attackedTerritory -> is_main_village) && 
+                $attackedTerritoryID != 0) {
             $f = Config::get('error.errorInfo', "napaka");
             return $f("Izbranega ozemlja ni mogoce napasti.");
         }
 
-        
+        $data = array('x' => $x, 'y' => $y);
+        $rules = array(
+            'x' => 'integer',
+            'y'    => 'integer'
+        );
+        $validator = Validator::make($data, $rules);
+        if (!$validator->passes()) {
+            $f = Config::get('error.errorInfo', "napaka");
+            return $f("Navedene koordinate niso veljavne.");
+        }
+   
         /* generiranje kviza */
         $quiz = new Quiz;
         $quiz -> id_attacker = $attackerID;
         $quiz -> id_defender = $defenderID;
         $quiz -> id_attacked_territory = $attackedTerritoryID;
+        $quiz -> attacked_territory_pos_x = $x;
+        $quiz -> attacked_territory_pos_y = $y;
+        if ($defenderID == 0 && $attackedTerritoryID == 0) {
+            // napadeno prazno ozemlje: shrani cas zakljucitve kviza + 5 pravilnih odgovorov
+            $quiz -> submit_time_defender = date("Y-m-d H:i:s");
+            $quiz -> defender_num_correct_ans = 5;
+        } else {
+            $defenderVillage = Territory::find($attackedTerritoryID)->first();
+            if ($defenderVillage['is_npc_village']){
+                // napadeno npc ozemlje: shrani cas zakljucitve kviza + 7 pravilnih odgovorov
+                $quiz -> submit_time_defender = date("Y-m-d H:i:s");
+                $quiz -> defender_num_correct_ans = 7;
+            }
+        }
         $quiz -> save();
         $quizID = $quiz -> id;
 
@@ -159,7 +176,6 @@ class QuizController extends BaseController {
         /* preveri ce je ID kviza veljaven */
         $quiz = Quiz::find($quizID);
         if (!$quiz) {
-
             $f = Config::get('error.errorInfo', "napaka");
             return $f("Zahtevani kviz ne obstaja.");          
         }
@@ -218,7 +234,6 @@ class QuizController extends BaseController {
         }
 
         /* nastavi cas oddaje kviza za uporabnika */
-        /* TODO :: pravilno vnesti noter ce je branilec offline */
         if ($isAttacker) {
             $quiz -> submit_time_attacker = date("Y-m-d H:i:s");
             $quiz -> attacker_num_correct_ans = $correctAttacker;
@@ -228,7 +243,50 @@ class QuizController extends BaseController {
         }
         $quiz -> save();
 
-        /* TODO :: pregled ce sta ze oba koncala kviz - dodelitev ozemlja ... */
+        /* Pregled ce sta ze oba koncala kviz - dodelitev ozemlja ... */
+        if ($quiz -> submit_time_attacker != null && $quiz -> submit_time_defender != null) {
+            $attacker = User::where('id', '=', $quiz -> id_attacker) -> first();
+            $defender = null;
+            if ($quiz -> id_defender) {
+                $defender = User::where('id', '=', $quiz -> id_defender) -> first();
+            }
+            // Napadalec zmaga
+            if ($quiz -> attacker_num_correct_ans > $quiz -> defender_num_correct_ans) {
+                // Osvojitev npc ali igralcevega naselja
+                if ($quiz -> id_defender != 0 && $quiz -> id_attacked_territory != 0) {
+                    $conqueredTerritory = Territory::where('id', '=', $quiz -> id_attacked_territory)->first();
+                    if ($conqueredTerritory -> is_npc_village) {
+                        $attacker -> score = $attacker -> score + 10;
+                    } else {
+                        $attacker -> score = $attacker -> score + 15;
+                    }
+                    $attacker -> save();
+                    $conqueredTerritory -> id_owner = $quiz -> id_attacker;
+                    $conqueredTerritory -> is_npc_village = 0;
+                    $conqueredTerritory -> is_main_village = 0;
+                    $conqueredTerritory -> save();
+                }
+                // Osvojitev praznega ozemlja
+                else if ($quiz -> id_defender == 0 && $quiz -> id_attacked_territory == 0) {
+                    $conqueredTerritory = new Territory;
+                    $conqueredTerritory -> pos_x = $quiz -> attacked_territory_pos_x;
+                    $conqueredTerritory -> pos_y = $quiz -> attacked_territory_pos_y;
+                    $conqueredTerritory -> id_owner = $quiz -> id_attacker;
+                    $conqueredTerritory -> is_npc_village = 0;
+                    $conqueredTerritory -> is_main_village = 0;
+                    $conqueredTerritory -> save();
+                    $attacker -> score = $attacker -> score + 5;
+                    $attacker -> save();
+                }
+            } 
+            // Branilec zmaga
+            else {
+                if ($defender) {
+                    $defender -> score = $defender -> score + 10;
+                    $defender -> save();
+                }
+            }
+        }
 
         return Redirect::to("quiz/show/$quizID");
     }

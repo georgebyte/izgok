@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration {
             $table -> string('email', 128);
             $table -> string('password', 60);
             $table -> string('image_path', 72);
+            $table -> integer('score') -> unsigned();
             $table -> boolean('is_admin');
             $table -> timestamps();
         });

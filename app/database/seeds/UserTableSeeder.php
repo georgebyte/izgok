@@ -12,6 +12,7 @@ class UserTableSeeder extends Seeder {
                 'username'   => 'jure',
                 'password'   => Hash::make('jure'),
                 'image_path' => md5('1').".jpg",
+                'score'      => '15',
                 'is_admin'   => '1'
             )
         );
@@ -22,6 +23,7 @@ class UserTableSeeder extends Seeder {
                 'username'   => 'sandi',
                 'password'   => Hash::make('sandi'),
                 'image_path' => md5('2').".jpg",
+                'score'      => '15',
                 'is_admin'   => '1'
             )
         );
@@ -32,6 +34,7 @@ class UserTableSeeder extends Seeder {
                 'username'   => 'ziga',
                 'password'   => Hash::make('ziga'),
                 'image_path' => md5('3').".jpg",
+                'score'      => '15',
                 'is_admin'   => '1'
             )
         );
@@ -42,6 +45,7 @@ class UserTableSeeder extends Seeder {
                 'username'   => 'matej',
                 'password'   => Hash::make('matej'),
                 'image_path' => md5('4').".jpg",
+                'score'      => '15',
                 'is_admin'   => '1'
             )
         );

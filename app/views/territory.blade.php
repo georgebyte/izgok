@@ -28,7 +28,7 @@
                 <p class="territory-profile-player">Vladar: <a href="/profile/show/{{ $player }}"> {{ $player }}</a></p>
             @endif
             <div class="territory-profile-buttons">
-                <a href="/quiz/attack/{{ $playerID }}/{{ $territoryID }}" class="btn btn-danger btn-lg"><apan class="glyphicon glyphicon-fire"></span> Napad</a>
+                <a href="/quiz/attack/{{ $playerID }}/{{ $territoryID }}/{{ $x }}/{{ $y }}" class="btn btn-danger btn-lg"><apan class="glyphicon glyphicon-fire"></span> Napad</a>
                 <a href="#" class="btn btn-success btn-lg @if(!$playerID) disabled @endif"><apan class="glyphicon glyphicon-comment"></span> Klepet</a>
             </div>   
         </div>

@@ -21,6 +21,8 @@ class CreateQuizzesTable extends Migration {
 
             $table -> integer('id_attacked_territory') -> unsigned() -> nullable();
             //$table -> foreign('id_attacked_territory') -> references('id') -> on('territories') -> onDelete('set null');
+            $table -> integer('attacked_territory_pos_x');
+            $table -> integer('attacked_territory_pos_y');
 
             $table -> dateTime('submit_time_attacker') -> nullable();
             $table -> dateTime('submit_time_defender') -> nullable();

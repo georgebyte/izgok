@@ -82,10 +82,11 @@
                 </div>
             </div>
         </div>
-        @section('footer')
-            @include('layouts.footer')
-        @show
     </div>
+    
+    @section('footer')
+        @include('layouts.footer')
+    @show
 </div>
 <script src="/js/MapTerritoryInfo.js"></script>
 @stop
