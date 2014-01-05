@@ -13,11 +13,6 @@
                     @yield('content')
                 </section>
             @show
-            @section('sidebar')
-                <aside id="sidebar" class="col-sm-3">
-                    @include('layouts.sidebar')
-                </aside>
-            @show
         </section>
     </div>
 
