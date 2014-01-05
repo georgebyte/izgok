@@ -49,5 +49,19 @@ class TerritoriesTableSeeder extends Seeder {
                 'is_main_village' => '1'
             )
         );
+
+        // for ($i=5; $i < 100; $i++) { 
+        //     Territory::create(
+        //         array(
+        //             'name' => "NPC".$i."'s Village",
+        //             'description' => 'Bla bla blaaaaaaa.',
+        //             'pos_x' => $i,
+        //             'pos_y' => $i,
+        //             'id_owner' => $i,
+        //             'is_main_village' => '0',
+        //             'is_npc_village' => '1'
+        //         )
+        //     );
+        // }
 	}
 }

@@ -49,6 +49,20 @@ class UserTableSeeder extends Seeder {
                 'is_admin'   => '1'
             )
         );
+
+
+        // for ($i=5; $i < 100; $i++) { 
+        //     User::create(
+        //         array(
+        //             'email'      => 'npc@izgok.si',
+        //             'username'   => 'npc'.$i,
+        //             'password'   => Hash::make('cpn'.$i),
+        //             'image_path' => 'default.jpg',
+        //             'score'      => '15',
+        //             'is_admin'   => '0'
+        //         )
+        //     );
+        // }
     }
 
 }

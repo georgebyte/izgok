@@ -51,7 +51,8 @@ class QuizController extends BaseController {
             $quiz -> submit_time_defender = date("Y-m-d H:i:s");
             $quiz -> defender_num_correct_ans = 5;
         } else {
-            $defenderVillage = Territory::find($attackedTerritoryID)->first();
+            $defenderVillage = Territory::find($attackedTerritoryID);
+            //return $defenderVillage;
             if ($defenderVillage['is_npc_village']){
                 // napadeno npc ozemlje: shrani cas zakljucitve kviza + 7 pravilnih odgovorov
                 $quiz -> submit_time_defender = date("Y-m-d H:i:s");
@@ -257,6 +258,7 @@ class QuizController extends BaseController {
                     $conqueredTerritory = Territory::where('id', '=', $quiz -> id_attacked_territory)->first();
                     if ($conqueredTerritory -> is_npc_village) {
                         $attacker -> score = $attacker -> score + 10;
+                        $defender -> delete();
                     } else {
                         $attacker -> score = $attacker -> score + 15;
                     }
