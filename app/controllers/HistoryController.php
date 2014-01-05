@@ -19,6 +19,9 @@ class HistoryController extends BaseController {
         $data = array();
         $attackedTerritoryData = array();
         $attackedTerritories = array();
+        $territoryName = array();
+        $territoryPosX = array();
+        $territoryPosY = array();
 
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
@@ -47,15 +50,23 @@ class HistoryController extends BaseController {
             array_push($attackedTerritories, $attackedTerritoryData[0]);
         }
 
-
-
+        /* podatki o teritorijih */
+        foreach($attackedTerritories as $value)
+            {
+                array_push($territoryName, $value['name']); 
+                array_push($territoryPosX, $value['pos_x']);
+                array_push($territoryPosY, $value['pos_y']); 
+            }
         /* sestavljanje tabele $data ki bo poslana v view */
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories);
+        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
         unset($quizDates);
         unset($solvedQuizes);
+        unset($territoryName);
+        unset($territoryPosX);
+        unset($territoryPosY);
 
         /* vracanje view in posiljanje podatkov */
         return View::make('history', $data);
@@ -73,6 +84,9 @@ class HistoryController extends BaseController {
         $data = array();
         $attackedTerritoryData = array();
         $attackedTerritories = array();
+        $territoryName = array();
+        $territoryPosX = array();
+        $territoryPosY = array();
 
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
@@ -99,15 +113,23 @@ class HistoryController extends BaseController {
             }
         }
 
-
-
+        /* podatki o teritorijih */
+        foreach($attackedTerritories as $value)
+            {
+                array_push($territoryName, $value['name']); 
+                array_push($territoryPosX, $value['pos_x']);
+                array_push($territoryPosY, $value['pos_y']); 
+            }
         /* sestavljanje tabele $data ki bo poslana v view */
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories);
+        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
         unset($quizDates);
         unset($solvedQuizes);
+        unset($territoryName);
+        unset($territoryPosX);
+        unset($territoryPosY);
 
         /* vracanje view in posiljanje podatkov */
         return View::make('history', $data);
@@ -125,6 +147,9 @@ class HistoryController extends BaseController {
         $data = array();
         $attackedTerritoryData = array();
         $attackedTerritories = array();
+        $territoryName = array();
+        $territoryPosX = array();
+        $territoryPosY = array();
 
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
@@ -152,15 +177,23 @@ class HistoryController extends BaseController {
             array_push($attackedTerritories, $attackedTerritoryData[0]);
         }
 
-
-
+        /* podatki o teritorijih */
+        foreach($attackedTerritories as $value)
+            {
+                array_push($territoryName, $value['name']); 
+                array_push($territoryPosX, $value['pos_x']);
+                array_push($territoryPosY, $value['pos_y']); 
+            }
         /* sestavljanje tabele $data ki bo poslana v view */
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories);
+        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
         unset($quizDates);
         unset($solvedQuizes);
+        unset($territoryName);
+        unset($territoryPosX);
+        unset($territoryPosY);
 
         /* vracanje view in posiljanje podatkov */
         return View::make('history', $data);
@@ -178,6 +211,9 @@ class HistoryController extends BaseController {
         $data = array();
         $attackedTerritoryData = array();
         $attackedTerritories = array();
+        $territoryName = array();
+        $territoryPosX = array();
+        $territoryPosY = array();
 
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
@@ -205,15 +241,23 @@ class HistoryController extends BaseController {
             array_push($attackedTerritories, $attackedTerritoryData[0]);
         }
 
-
-
+        /* podatki o teritorijih */
+        foreach($attackedTerritories as $value)
+            {
+                array_push($territoryName, $value['name']); 
+                array_push($territoryPosX, $value['pos_x']);
+                array_push($territoryPosY, $value['pos_y']); 
+            }
         /* sestavljanje tabele $data ki bo poslana v view */
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories);
+        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
         unset($quizDates);
         unset($solvedQuizes);
+        unset($territoryName);
+        unset($territoryPosX);
+        unset($territoryPosY);
 
         /* vracanje view in posiljanje podatkov */
         return View::make('history', $data);
