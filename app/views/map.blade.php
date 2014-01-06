@@ -19,6 +19,7 @@
                             @for ($currentX = $x-$visibleMapSize; $currentX <= $x+$visibleMapSize; $currentX++)
                                 <?php
                                 $currentTerritory = null;
+                                /* TODO :: imena vladarjev se ne delujejo pravilno */
                                 foreach ($visibleTerritories as $key => $territory) {
                                     if ($territory['pos_x'] == $currentX && $territory['pos_y'] == $currentY) {
                                         $currentTerritory = $territory;
