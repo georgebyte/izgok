@@ -26,7 +26,7 @@ class HistoryController extends BaseController {
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
 
-        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory')); 
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y'));
 
         foreach($quizHistory as $value){
             /* branje podatkov */
@@ -42,6 +42,12 @@ class HistoryController extends BaseController {
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
             $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
+
+            /* napad na nenaseljeno ozemlje */
+            if(count($attackedTerritoryData) == 0)
+            {
+                $attackedTerritoryData[0] = array('name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+            }
 
             /* polnenje tabel s podatki */
             array_push($quizIDsArray, $value['id']);
@@ -90,7 +96,7 @@ class HistoryController extends BaseController {
 
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory'));
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y'));
 
         foreach($quizHistory as $value){
             /* branje podatkov */
@@ -104,6 +110,12 @@ class HistoryController extends BaseController {
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
             $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
+            
+            /* napad na nenaseljeno ozemlje */
+            if(count($attackedTerritoryData) == 0)
+            {
+                $attackedTerritoryData[0] = array('name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+            }
 
             /* polnenje tabel s podatki */
             array_push($quizIDsArray, $value['id']);
@@ -153,7 +165,7 @@ class HistoryController extends BaseController {
 
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::Where('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory'));
+        $quizHistory = Quiz::Where('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y'));
 
         foreach($quizHistory as $value){
             /* branje podatkov */
@@ -169,6 +181,12 @@ class HistoryController extends BaseController {
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
             $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
+
+            /* napad na nenaseljeno ozemlje */
+            if(count($attackedTerritoryData) == 0)
+            {
+                $attackedTerritoryData[0] = array('name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+            }
 
             /* polnenje tabel s podatki */
             array_push($quizIDsArray, $value['id']);
@@ -217,7 +235,7 @@ class HistoryController extends BaseController {
 
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::Where('id_attacker', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory'));
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y'));
 
         foreach($quizHistory as $value){
             /* branje podatkov */
@@ -233,6 +251,12 @@ class HistoryController extends BaseController {
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
             $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
+
+            /* napad na nenaseljeno ozemlje */
+            if(count($attackedTerritoryData) == 0)
+            {
+                $attackedTerritoryData[0] = array('name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+            }
 
             /* polnenje tabel s podatki */
             array_push($quizIDsArray, $value['id']);
