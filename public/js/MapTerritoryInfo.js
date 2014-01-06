@@ -7,4 +7,7 @@ $(document).ready(function() {
         $('.village-name').html('---');
         $('.player-name').html('---');
     });
+    $('#search_pos').click(function(){
+    	window.location = "/map/show/" + $('#search_x').val() + "/" + $('#search_y').val();
+    });
 });
