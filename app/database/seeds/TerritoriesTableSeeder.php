@@ -50,6 +50,7 @@ class TerritoriesTableSeeder extends Seeder {
             )
         );
 
+        /* NPC territories */
         // for ($i=5; $i < 100; $i++) { 
         //     Territory::create(
         //         array(

@@ -22,7 +22,7 @@ class ScoreboardController extends BaseController {
     	$pageLength=10;
         $data=Array();
         $usersAndScores = array();
-        $users = User::all();    
+        $users = User::where('email', '!=', 'NPC') -> get();    
         foreach ($users as $user) {
             $id=$user->id;
             $name=$user->username;

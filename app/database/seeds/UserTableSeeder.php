@@ -51,6 +51,7 @@ class UserTableSeeder extends Seeder {
         );
 
 
+        /* NPCs */
         // for ($i=5; $i < 100; $i++) { 
         //     User::create(
         //         array(

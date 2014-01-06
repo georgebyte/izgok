@@ -28,7 +28,17 @@
 
                                 @if ($currentTerritory)
                                     <div class='village'>
-                                        <a href='/map/territory/{{ $currentTerritory['id'] }}/{{ $currentX }}/{{ $currentY }}'><img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/village.png'></a>
+                                        <a href='/map/territory/{{ $currentTerritory['id'] }}/{{ $currentX }}/{{ $currentY }}'>
+                                            @if($currentTerritory['is_main_village'] == 1)
+                                                <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/village.png'>
+                                            @endif
+                                            @if($currentTerritory['is_main_village'] == 0)
+                                                <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/smallvillage.png'>
+                                            @endif
+                                            @if($currentTerritory['is_npc_village'] == 1)
+                                                <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/npcvillage.png'>
+                                            @endif                                                                                      
+                                        </a>
                                     </div>
                                     <?php $villageIndex++; ?>
                                 @else

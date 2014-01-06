@@ -29,8 +29,6 @@ class MapController extends BaseController {
         /* Iz baze dobi vsa naselja ki se nahajajo v kvadratu 9x9 okoli izbrane tocke z x, y koordinatama */
         $visibleTerritories = Territory::whereBetween('pos_x', array($x-$visibleMapSize, $x+$visibleMapSize)) -> whereBetween('pos_y', array($y-$visibleMapSize, $y+$visibleMapSize)) -> get();
 
-        
-
         $visibleTerritoriesData = array();
         $territoryOwners = array();
         foreach ($visibleTerritories as $territory) {
