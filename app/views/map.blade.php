@@ -32,7 +32,7 @@
                                             @if($currentTerritory['is_main_village'] == 1)
                                                 <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/village.png'>
                                             @endif
-                                            @if($currentTerritory['is_main_village'] == 0)
+                                            @if($currentTerritory['is_main_village'] == 0 && $currentTerritory['is_npc_village'] == 0)
                                                 <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/smallvillage.png'>
                                             @endif
                                             @if($currentTerritory['is_npc_village'] == 1)
