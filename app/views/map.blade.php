@@ -19,7 +19,7 @@
                             @for ($currentX = $x-$visibleMapSize; $currentX <= $x+$visibleMapSize; $currentX++)
                                 <?php
                                 $currentTerritory = null;
-                                foreach ($visibleTerritories as $territory) {
+                                foreach ($visibleTerritories as $key => $territory) {
                                     if ($territory['pos_x'] == $currentX && $territory['pos_y'] == $currentY) {
                                         $currentTerritory = $territory;
                                         break;
@@ -28,7 +28,7 @@
 
                                 @if ($currentTerritory)
                                     <div class='village'>
-                                        <a href='/map/territory/{{ $currentTerritory['id'] }}/{{ $currentX }}/{{ $currentY }}'><img data-ref='{{ $currentTerritory['name'] }}' src='/img/village.png'></a>
+                                        <a href='/map/territory/{{ $currentTerritory['id'] }}/{{ $currentX }}/{{ $currentY }}'><img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/village.png'></a>
                                     </div>
                                     <?php $villageIndex++; ?>
                                 @else
