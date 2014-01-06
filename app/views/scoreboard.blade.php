@@ -53,6 +53,14 @@
 		
 	@endforeach
 	</table>
+	@if($start && $end)
+		<a href='/scoreboard/show/{{ $page-$pageLength }}'>nazaj</a>&nbsp&nbsp
+		<a href='/scoreboard/show/{{ $page+$pageLength }}'>naprej</a>
+	@elseif($start)
+		<a href='/scoreboard/show/{{ $page-$pageLength }}'>nazaj</a>
+	@elseif($end)
+		<a href='/scoreboard/show/{{ $page+$pageLength }}'>naprej</a>	
+	@endif
 	</div>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>

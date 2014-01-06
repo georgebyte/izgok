@@ -26,12 +26,30 @@ class QuestionsTableSeeder extends Seeder {
 		Question::create(array('question' => 'V katerem odbobju se je zgodil monglski vpad v srednjo Evropo ?', 'answer_1' => '1239 - 1240', 'answer_2' => '1237 - 1239', 'answer_3' => '1235 - 1236', 'answer_correct' => '1241 - 1242'));
 		Question::create(array('question' => 'Katerega leta je bila ustanovljena Verdunska pogodba ?', 'answer_1' => '800', 'answer_2' => '840', 'answer_3' => '838', 'answer_correct' => '843'));
 		Question::create(array('question' => 'Iz kje izvirajo samuraji ?', 'answer_1' => 'Kitajske', 'answer_2' => 'Mongolije', 'answer_3' => 'Koreje', 'answer_correct' => 'Japonske'));
-		Question::create(array('question' => 'V katerem obdobju se je odvijala Ameriška vojna za neodvistnost (ang: American War of Independence) ?', 'answer_1' => '1773 – 1775', 'answer_2' => '1766 – 1773', 'answer_3' => '1783 – 1873', 'answer_correct' => '1775 – 1783'));
+		Question::create(array('question' => 'V katerem obdobju se je odvijala Ameriška vojna za neodvisnost (ang: American War of Independence) ?', 'answer_1' => '1773 – 1775', 'answer_2' => '1766 – 1773', 'answer_3' => '1783 – 1873', 'answer_correct' => '1775 – 1783'));
 		Question::create(array('question' => 'Glavno mesto Aztekov?', 'answer_1' => 'Mississippi', 'answer_2' => 'Massachusetts', 'answer_3' => 'chinampas', 'answer_correct' => 'Tenochitlan'));
 		Question::create(array('question' => 'V katerem obdobju je bila Bronasta doba po večini Evrope?', 'answer_1' => 'Med leti 4000 in 2300 pr.n. št.', 'answer_2' => 'Med leti 3700 in 2700 pr.n. št.', 'answer_3' => 'Med leti 1700 in 500 pr.n. št.', 'answer_correct' => 'Med leti 1300 in 700 pr.n. št.'));
 		Question::create(array('question' => 'Okrog katerega leta je vladala v Indiji dinastija Sunga ?', 'answer_1' => '154 pr. n. št', 'answer_2' => '164 pr. n. št.', 'answer_3' => '175 pr. n. št.', 'answer_correct' => '185 pr. n. št'));
 		Question::create(array('question' => 'Kateri datum je pravilen za Dan D (D-Day) ?', 'answer_1' => '15 Junij 1945', 'answer_2' => '6 Junij 1945', 'answer_3' => '15 Junij 1944', 'answer_correct' => '6 Junij 1944'));
 		Question::create(array('question' => 'Kdo je odkril Penicilin ?', 'answer_1' => 'Charles Best', 'answer_2' => 'Florence Nightingale', 'answer_3' => 'Louis-Ferdinand Celine', 'answer_correct' => 'Alexander Fleming'));
+    
+		
+		Question::create(array('question' => 'Kdaj se je začela 1. svetovna vojna?', 'answer_1' => '26. november 1914', 'answer_2' => '12. maj 1914', 'answer_3' => '11. november 1918', 'answer_correct' => '28. julij 1914'));
+		Question::create(array('question' => 'Koliko vojakov je imela ena rimska legija?', 'answer_1' => 'Okoli 10 000', 'answer_2' => 'Do 1200', 'answer_3' => 'Do 250', 'answer_correct' => 'Do 5400'));
+    	Question::create(array('question' => 'Kdaj je nastala država Nemčija?', 'answer_1' => '800', 'answer_2' => '1323', 'answer_3' => '1521', 'answer_correct' => '1871'));
+    	Question::create(array('question' => 'Kdo je v Sarajevu ustrelil Franca Ferdinanda, kar je bil povod za 1. svetovno vojno?', 'answer_1' => 'Mahmud Ahmedinejad', 'answer_2' => 'Karel Erjavec', 'answer_3' => 'Vidkun Quisling', 'answer_correct' => 'Gavrilo Princip'));
+    	Question::create(array('question' => 'Kako se reče nemški taktiki med 2. svetovno vojno, ki temelji na hitrih napadih motoriziranih vojaških enot in podporo iz zraka?', 'answer_1' => 'Mein Kampf', 'answer_2' => 'Schnellkrieg', 'answer_3' => 'Pozicijska taktika', 'answer_correct' => 'Blietzkrieg'));
+    	Question::create(array('question' => 'Koliko Judov je umrlo med 2. svetovno vojno?', 'answer_1' => 'Okoli 4 milijone.', 'answer_2' => 'Okoli milijon.', 'answer_3' => 'Okoli 10 milijonov', 'answer_correct' => 'Okoli 6 milijonov'));
+    	Question::create(array('question' => 'Kako se je imenovala atomska bomba, ki so jo Američani 6. avgusta 1945 odvrgli na Hirošimo?', 'answer_1' => 'Mala Bertha (Small Bertha)', 'answer_2' => 'Veliki deček (Big boy)', 'answer_3' => 'Velika Bertha (Big Bertha)', 'answer_correct' => 'Mali deček (Little boy)'));
+		Question::create(array('question' => 'Kdo je prvi preplul pot iz Evrope do Indije?', 'answer_1' => 'Ferdinand Magellan', 'answer_2' => 'Vikingi', 'answer_3' => 'Krištof Kolumb', 'answer_correct' => 'Vasco da Gama'));
+		Question::create(array('question' => 'Kdaj je propadlo Zahodno Rimsko cesarstvo?', 'answer_1' => '388', 'answer_2' => '395', 'answer_3' => '512', 'answer_correct' => '476'));
+    	Question::create(array('question' => 'Kdo je odkril električno žarnico?', 'answer_1' => 'George Washington', 'answer_2' => 'Leondardo da Vinci', 'answer_3' => 'Michael Faraday', 'answer_correct' => 'Thomas Edison'));
+    	Question::create(array('question' => 'Kdaj se je zgodila Oktobrska revolucija (po Gregorijanskem koledarju)?', 'answer_1' => '14. oktober 1917', 'answer_2' => '25. oktober 1917', 'answer_3' => '23. september 1917', 'answer_correct' => '7. november 1917'));
+    	Question::create(array('question' => 'Kaj je holokavst?', 'answer_1' => 'Genocid nad Francozi med 2. svetovno vojno.', 'answer_2' => 'Genocid nad Japonci med 2. svetovno vojno.', 'answer_3' => 'Drugo ime za krščansko apokalipso.', 'answer_correct' => 'Genocid nad Judi med 2. svetovno vojno.'));
+    	Question::create(array('question' => 'Kdo od slednjih ni napisal evangelija?', 'answer_1' => 'Matej', 'answer_2' => 'Luka', 'answer_3' => 'Marko', 'answer_correct' => 'Egon'));
+    	Question::create(array('question' => 'Kje so živeli Neandertalci?', 'answer_1' => 'V Ameriki.', 'answer_2' => 'V Afriki.', 'answer_3' => 'V Aziji.', 'answer_correct' => 'V Evropi.'));
+    	Question::create(array('question' => 'Kdaj je umrl Mahatma Gandhi?', 'answer_1' => '1932', 'answer_2' => '1920', 'answer_3' => '1968', 'answer_correct' => '1948'));
+
     }
 
 }

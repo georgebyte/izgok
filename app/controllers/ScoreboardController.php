@@ -15,11 +15,11 @@ class ScoreboardController extends BaseController {
     }
 
 
-    public function getShow()
+    public function getShow($pagination = 0)
     {
 
     	/* data je tabela podatkov poslanih v view */
-    	
+    	$pageLength=10;
         $data=Array();
         $usersAndScores = array();
         $users = User::all();    
@@ -31,7 +31,18 @@ class ScoreboardController extends BaseController {
 
         }
         arsort($usersAndScores);
-        $data=array("scores"=> $usersAndScores);
+        
+        $start=true;
+        $end=true;
+        $length=count($usersAndScores);
+        if($pagination==0)
+            $start=false;
+        if($pagination+$pageLength>=$length){
+            $pageLength=$length-$pagination;
+            $end=false;
+        }
+        $usersAndScores = array_slice($usersAndScores, $pagination, $pageLength);
+        $data=array("scores"=> $usersAndScores,"start"=>$start,"end"=>$end,"page"=>$pagination,"pageLength"=>$pageLength);
         return View::make('scoreboard', $data);
     }
 }
