@@ -276,6 +276,7 @@ class QuizController extends BaseController {
                     $conqueredTerritory -> id_owner = $quiz -> id_attacker;
                     $conqueredTerritory -> is_npc_village = 0;
                     $conqueredTerritory -> is_main_village = 0;
+                    $conqueredTerritory -> name = "Naselje: ". Auth::user() -> username . rand(111,999);
                     $conqueredTerritory -> save();
                     $attacker -> score = $attacker -> score + 5;
                     $attacker -> save();
