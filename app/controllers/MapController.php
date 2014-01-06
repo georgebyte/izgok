@@ -33,10 +33,10 @@ class MapController extends BaseController {
         $territoryOwners = array();
         foreach ($visibleTerritories as $territory) {
             /* Iskanje lastnika ozemlja */
-            /* TODO :: imena vladarjev se ne delujejo pravilno */
             $territoryOwner = User::find($territory['id_owner'])['username'];
+            $tempTerritoryID = $territory['id'];
+            $territoryOwners[$tempTerritoryID] = $territoryOwner;
             array_push($visibleTerritoriesData, $territory);
-            array_push($territoryOwners, $territoryOwner);
         }
         $data['visibleTerritories'] = $visibleTerritoriesData;
         $data['leaders'] = $territoryOwners;

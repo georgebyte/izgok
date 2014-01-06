@@ -19,8 +19,7 @@
                             @for ($currentX = $x-$visibleMapSize; $currentX <= $x+$visibleMapSize; $currentX++)
                                 <?php
                                 $currentTerritory = null;
-                                /* TODO :: imena vladarjev se ne delujejo pravilno */
-                                foreach ($visibleTerritories as $key => $territory) {
+                                foreach ($visibleTerritories as $territory) {
                                     if ($territory['pos_x'] == $currentX && $territory['pos_y'] == $currentY) {
                                         $currentTerritory = $territory;
                                         break;
@@ -29,15 +28,18 @@
 
                                 @if ($currentTerritory)
                                     <div class='village'>
-                                        <a href='/map/territory/{{ $currentTerritory['id'] }}/{{ $currentX }}/{{ $currentY }}'>
+                                        <?php 
+                                        $territoryID = $currentTerritory['id'];
+                                        ?>
+                                        <a href='/map/territory/{{ $territoryID }}/{{ $currentX }}/{{ $currentY }}'>
                                             @if($currentTerritory['is_main_village'] == 1)
-                                                <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/village.png'>
+                                                <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$territoryID] }}' src='/img/village.png'>
                                             @endif
                                             @if($currentTerritory['is_main_village'] == 0 && $currentTerritory['is_npc_village'] == 0)
-                                                <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/smallvillage.png'>
+                                                <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$territoryID] }}' src='/img/smallvillage.png'>
                                             @endif
                                             @if($currentTerritory['is_npc_village'] == 1)
-                                                <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$key] }}' src='/img/npcvillage.png'>
+                                                <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$territoryID] }}' src='/img/npcvillage.png'>
                                             @endif                                                                                      
                                         </a>
                                     </div>
