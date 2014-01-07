@@ -17,6 +17,7 @@
             @endif
 
             @if(count($attackedTerritoryData) > 0)
+                Prikazanih {{ count($attackedTerritoryData) }} od {{ $all }}<br>
                 @foreach($quizIDs as $quizID)
                         <?php $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno"; ?>
                          <li>Napad na naselje: 
