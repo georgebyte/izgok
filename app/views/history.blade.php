@@ -9,7 +9,7 @@
         <a href="/history/all"> Vsi </a> - 
         <a href="/history/offense"> Napadi </a> - 
         <a href="/history/defense"> Obramba </a> - 
-        <a href="/history/unsolved"> Nereseni </a>
+        <a href="/history/unsolved"> Nereseni / Nepregledani</a>
         <br><br>
             
             @if(count($attackedTerritoryData) == 0)
@@ -19,7 +19,21 @@
             @if(count($attackedTerritoryData) > 0)
                 Prikazanih {{ count($attackedTerritoryData) }} od {{ $all }}<br>
                 @foreach($quizIDs as $quizID)
-                        <?php $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno"; ?>
+                        @if(isset($insideTimeLimit))
+                            @if($insideTimeLimit[0])
+                            <?php
+                            $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno"; 
+                            ?>
+                            @else
+                            <?php
+                            $solved = ($solvedQuizes[$cnt]) ? " " : " - še nepregledano"; 
+                            ?>
+                            @endif
+                        @else
+                            <?php
+                            $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno";
+                            ?>
+                        @endif
                          <li>Napad na naselje: 
                                  {{ $territoryName[$cnt] }} ({{$territoryPosX[$cnt]}},{{$territoryPosY[$cnt]}})
                                  <br>

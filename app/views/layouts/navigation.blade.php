@@ -17,7 +17,7 @@
                 <li><a href="{{ URL::to('scoreboard') }}"><span class="glyphicon glyphicon-stats"></span> Lestvica igralcev</a></li>
                 <li>
                     <?php $unsolved = checkUnsolved(); ?>
-                    <a href="/history/all/@if($unsolved > 0)/unsolved/@endif"><span class="glyphicon glyphicon-envelope"></span> Poročila napadov
+                    <a href="@if($unsolved == 0)/history/all/@endif @if($unsolved > 0)/history/unsolved/@endif"><span class="glyphicon glyphicon-envelope"></span> Poročila napadov
                         @if($unsolved > 0)
                             <span class="unsolved-notice" href="{{ URL::to('history') }}">{{ $unsolved }}</span>
                         @endif
