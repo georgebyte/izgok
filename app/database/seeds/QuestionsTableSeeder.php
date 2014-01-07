@@ -32,8 +32,6 @@ class QuestionsTableSeeder extends Seeder {
 		Question::create(array('question' => 'Okrog katerega leta je vladala v Indiji dinastija Sunga ?', 'answer_1' => '154 pr. n. št', 'answer_2' => '164 pr. n. št.', 'answer_3' => '175 pr. n. št.', 'answer_correct' => '185 pr. n. št'));
 		Question::create(array('question' => 'Kateri datum je pravilen za Dan D (D-Day) ?', 'answer_1' => '15 Junij 1945', 'answer_2' => '6 Junij 1945', 'answer_3' => '15 Junij 1944', 'answer_correct' => '6 Junij 1944'));
 		Question::create(array('question' => 'Kdo je odkril Penicilin ?', 'answer_1' => 'Charles Best', 'answer_2' => 'Florence Nightingale', 'answer_3' => 'Louis-Ferdinand Celine', 'answer_correct' => 'Alexander Fleming'));
-    
-		
 		Question::create(array('question' => 'Kdaj se je začela 1. svetovna vojna?', 'answer_1' => '26. november 1914', 'answer_2' => '12. maj 1914', 'answer_3' => '11. november 1918', 'answer_correct' => '28. julij 1914'));
 		Question::create(array('question' => 'Koliko vojakov je imela ena rimska legija?', 'answer_1' => 'Okoli 10 000', 'answer_2' => 'Do 1200', 'answer_3' => 'Do 250', 'answer_correct' => 'Do 5400'));
     	Question::create(array('question' => 'Kdaj je nastala država Nemčija?', 'answer_1' => '800', 'answer_2' => '1323', 'answer_3' => '1521', 'answer_correct' => '1871'));
@@ -49,7 +47,11 @@ class QuestionsTableSeeder extends Seeder {
     	Question::create(array('question' => 'Kdo od slednjih ni napisal evangelija?', 'answer_1' => 'Matej', 'answer_2' => 'Luka', 'answer_3' => 'Marko', 'answer_correct' => 'Egon'));
     	Question::create(array('question' => 'Kje so živeli Neandertalci?', 'answer_1' => 'V Ameriki.', 'answer_2' => 'V Afriki.', 'answer_3' => 'V Aziji.', 'answer_correct' => 'V Evropi.'));
     	Question::create(array('question' => 'Kdaj je umrl Mahatma Gandhi?', 'answer_1' => '1932', 'answer_2' => '1920', 'answer_3' => '1968', 'answer_correct' => '1948'));
-
+    	Question::create(array('question' => 'V času katere dinastije je bila zgrajena Velika piramida v Gizi ?', 'answer_1' => 'V času dinastije Khafre.', 'answer_2' => 'V času dinastije Baka.', 'answer_3' => 'V času dinastije Djedefre.', 'answer_correct' => 'V času dinastije Khufu.'));
+		Question::create(array('question' => 'Kdaj so začeli graditi Rimski Kolosej ?', 'answer_1' => 'V času vladavine cesarja Marka Avrelija.', 'answer_2' => 'V času vladavine cesarja Julija.', 'answer_3' => 'V času vladavine cesarja Titusa.', 'answer_correct' => 'V času vladavine cesarja Vespasiana.'));
+		Question::create(array('question' => 'Katerega leta je umrl Napoleon Bonaparte ?', 'answer_1' => '1769', 'answer_2' => '1791', 'answer_3' => '1812', 'answer_correct' => '1821'));
+		Question::create(array('question' => 'Kje je umrl Napoleon Bonaparte ?', 'answer_1' => 'Na Elbi.', 'answer_2' => 'Na Korziki.', 'answer_3' => 'Na Sardiniji.', 'answer_correct' => 'Na Sveti Heleni.'));
+		Question::create(array('question' => 'Misija Barbarosa je...', 'answer_1' => 'napad na države Beneluxa v drugi sv. vojni.', 'answer_2' => 'Napad na Francijo v drugi sv. vojni.', 'answer_3' => 'napad na Anglijo za časa Adolfa Hitlerja.', 'answer_correct' => 'napad na Sovjetsko Zvezo v drugi sv. vojni.'));
     }
 
 }
