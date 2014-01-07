@@ -52,6 +52,10 @@ class QuestionsTableSeeder extends Seeder {
 		Question::create(array('question' => 'Katerega leta je umrl Napoleon Bonaparte ?', 'answer_1' => '1769', 'answer_2' => '1791', 'answer_3' => '1812', 'answer_correct' => '1821'));
 		Question::create(array('question' => 'Kje je umrl Napoleon Bonaparte ?', 'answer_1' => 'Na Elbi.', 'answer_2' => 'Na Korziki.', 'answer_3' => 'Na Sardiniji.', 'answer_correct' => 'Na Sveti Heleni.'));
 		Question::create(array('question' => 'Misija Barbarosa je...', 'answer_1' => 'napad na države Beneluxa v drugi sv. vojni.', 'answer_2' => 'Napad na Francijo v drugi sv. vojni.', 'answer_3' => 'napad na Anglijo za časa Adolfa Hitlerja.', 'answer_correct' => 'napad na Sovjetsko Zvezo v drugi sv. vojni.'));
+		Question::create(array('question' => 'V katerem obdobju je Angliji vladal kralj Henry VIII ?', 'answer_1' => '1457 - 1491', 'answer_2' => '1491 - 1509', 'answer_3' => '1514 - 1531', 'answer_correct' => '1509 - 1547'));
+		Question::create(array('question' => 'Kdo je bil prvi predsednik ZDA ?', 'answer_1' => 'Alexander Hamilton', 'answer_2' => 'Thomas Jefferson', 'answer_3' => 'Benjamin Franklin', 'answer_correct' => 'George Washington'));
+		Question::create(array('question' => 'Katerega leta se je zgodil bojkot imenovan Bostonska Čajanka ?', 'answer_1' => '1751', 'answer_2' => '1772', 'answer_3' => '1789', 'answer_correct' => '1773'));
+		Question::create(array('question' => 'Kdo je izdelal ogrodje Kipa Svobode ?', 'answer_1' => 'Calvin Coolidge', 'answer_2' => 'Fort Wood', 'answer_3' => 'Frederic Auguste Barthold', 'answer_correct' => 'Alexandre Gustave Eiffel'));
     }
 
 }
