@@ -64,6 +64,8 @@ class MapController extends BaseController {
             $data['description'] = "Nenaseljeno ozemlje";
             $data['player'] = "---";
             $data['playerID'] = 0;
+            $data['is_main_village'] = 0;
+            $data['is_npc_village'] = 0;            
             return View::make('territory', $data);
         } else {
             $dbTerritory = Territory::where('id', '=', $territoryID)->first();

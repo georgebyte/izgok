@@ -105,7 +105,8 @@ function checkUnsolved(){
         $count = 0;
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory'));
+        $timenow = time();
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> where('quiz_opened_attacker', '<', $timenow) -> orWhere('id_defender', '=', $myID) -> where('quiz_opened_defender', '<', $timenow) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory'));
 
         foreach($quizHistory as $value){
             /* branje podatkov */
