@@ -50,7 +50,7 @@ class HistoryController extends BaseController {
             /* napad na nenaseljeno ozemlje */
             if(count($attackedTerritoryData) == 0)
             {
-                $attackedTerritoryData[0] = array('id' => $value['id'], 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+                $attackedTerritoryData[0] = array('id' => 0, 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
             }
 
             $timeLimitOK = false;
@@ -135,7 +135,7 @@ class HistoryController extends BaseController {
             /* napad na nenaseljeno ozemlje */
             if(count($attackedTerritoryData) == 0)
             {
-                $attackedTerritoryData[0] = array('id' => $value['id'], 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+                $attackedTerritoryData[0] = array('id' => 0, 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
             }
 
             /* polnenje tabel s podatki */
@@ -213,7 +213,7 @@ class HistoryController extends BaseController {
             /* napad na nenaseljeno ozemlje */
             if(count($attackedTerritoryData) == 0)
             {
-                $attackedTerritoryData[0] = array('id' => $value['id'], 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+                $attackedTerritoryData[0] = array('id' => 0, 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
             }
 
             /* polnenje tabel s podatki */
@@ -289,7 +289,7 @@ class HistoryController extends BaseController {
             /* napad na nenaseljeno ozemlje */
             if(count($attackedTerritoryData) == 0)
             {
-                $attackedTerritoryData[0] = array('id' => $value['id'], 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+                $attackedTerritoryData[0] = array('id' => 0, 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
             }
 
             /* polnenje tabel s podatki */
