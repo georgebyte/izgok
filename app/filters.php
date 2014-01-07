@@ -91,11 +91,7 @@ Route::filter('csrf', function()
 
 Route::filter('admin', function()
 {
-	$userID = Auth::user() -> id;
-	$isAdmin = User::where('id', '=', $userID)->get(array('is_admin'));
-	$isAdmin = $isAdmin[0];
-	$isAdmin = $isAdmin['is_admin'];
-	if(!$isAdmin){
+	if(!Auth::user()->is_admin){
 		$f = Config::get('error.errorInfo', "napaka");
         return $f("Access denied.", array("code" => "403"));
 	}
