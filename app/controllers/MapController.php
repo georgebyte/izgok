@@ -72,6 +72,8 @@ class MapController extends BaseController {
             $data['description'] = $dbTerritory['description'];
             $data['player'] = $dbPlayer['username'];
             $data['playerID'] = $dbPlayer['id'];
+            $data['is_main_village'] = $dbTerritory['is_main_village'];
+            $data['is_npc_village'] = $dbTerritory['is_npc_village'];
             return View::make('territory', $data);
         }
     }

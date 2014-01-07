@@ -5,8 +5,22 @@
 <div class="territory-profile">
     <div class="row">
         <div class="territory-image col-sm-4">
+            <?php 
+            //dd($territoryID); 
+            ?>
             @if ($territoryID)
+                @if($is_main_village == 1)
                 <img src='/img/village.png'>
+                @endif
+
+                @if($is_main_village == 0 && $is_npc_village == 0)
+                <img src='/img/smallvillage.png'>
+                @endif
+
+                @if($is_npc_village == 1)
+                <img src='/img/npcvillage.png'>
+                @endif
+
             @else
                 @if ($x % 9 == 0 && $y % 4 == 0)
                     <img class="empty-territory-image" src='/img/empty_territory_1.png'>
@@ -28,8 +42,12 @@
                 <p class="territory-profile-player">Vladar: <a href="/profile/show/{{ $player }}"> {{ $player }}</a></p>
             @endif
             <div class="territory-profile-buttons">
-                <a href="/quiz/attack/{{ $playerID }}/{{ $territoryID }}/{{ $x }}/{{ $y }}" class="btn btn-danger btn-lg"><apan class="glyphicon glyphicon-fire"></span> Napad</a>
-                <a href="#" class="btn btn-success btn-lg @if(!$playerID) disabled @endif"><apan class="glyphicon glyphicon-comment"></span> Klepet</a>
+                <a href="/quiz/attack/{{ $playerID }}/{{ $territoryID }}/{{ $x }}/{{ $y }}" class="btn btn-danger btn-lg @if($is_main_village == 1 || $player == Auth::user() -> username)disabled@endif">
+                    <apan class="glyphicon glyphicon-fire "></span> Napad
+                </a>
+                <a href="#" class="btn btn-success btn-lg @if(!$playerID || $is_npc_village == 1) disabled @endif">
+                    <apan class="glyphicon glyphicon-comment"></span> Klepet
+                </a>
             </div>   
         </div>
     </div>

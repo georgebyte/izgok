@@ -14,7 +14,7 @@
                 </div>
                 <div class='map'>
                     <?php $villageIndex = 0; ?>
-                    @for ($currentY = $y-$visibleMapSize; $currentY <= $y+$visibleMapSize; $currentY++)
+                    @for ($currentY = $y+$visibleMapSize; $currentY >= $y-$visibleMapSize; $currentY--)
                         <div class='map-row clearfix'>
                             @for ($currentX = $x-$visibleMapSize; $currentX <= $x+$visibleMapSize; $currentX++)
                                 <?php
