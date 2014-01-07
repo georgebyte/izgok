@@ -159,10 +159,10 @@ class QuizController extends BaseController {
 
         $correctNumAnswers = Quiz::where('id', $quizID) -> get(array('attacker_num_correct_ans', 'defender_num_correct_ans', 'quiz_opened_attacker', 'quiz_opened_defender')); 
 
-        $quizOpened = Quiz::where('id', $quizID) -> get(array('quiz_opened_attacker', 'quiz_opened_defender'))[0]; 
+        $quizOpened = Quiz::where('id', $quizID) -> get(array('id_attacker', 'id_defender', 'quiz_opened_attacker', 'quiz_opened_defender'))[0]; 
         
-        /* TODO :: pregled ce je cas ze potekel - ce je naredi submit za prazen kviz ter redirect na view report */
-        //dd($quizOpened['quiz_opened_attacker']);
+        $attackerName = User::find($quizOpened['id_attacker'])['username'];
+        $defenderName = User::find($quizOpened['id_defender'])['username'];
 
         $quizOpenedAttacker = $quizOpened['quiz_opened_attacker'];
         $quizOpenedDefender = $quizOpened['quiz_opened_defender'];
@@ -190,7 +190,9 @@ class QuizController extends BaseController {
             'quizOpenedAttacker' => $quizOpenedAttacker,
             'quizOpenedDefender' => $quizOpenedDefender,
             'isAttacker' => $isAttacker,
-            'isDefender' => $isDefender
+            'isDefender' => $isDefender,
+            'attackerName' => $attackerName,
+            'defenderName' => $defenderName
             );
 
         /* igralcu, ki kviza se ni oddal prikazi kviz, na katerega lahko odgovarja */

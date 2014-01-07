@@ -92,7 +92,6 @@
 		{{ Form::button('Answer', array('type' => 'submit', 'class' => 'btn btn-primary')) }}
 	{{ Form::close() }}
 	    
-	    {{-- TODO :: dodaj dinamicno vrednost countdown timerju  --}}
 	    @if($isAttacker)
 	    	<?php $timeLeft = $quizOpenedAttacker - time(); ?>
 	    @endif

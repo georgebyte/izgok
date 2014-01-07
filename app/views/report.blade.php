@@ -8,12 +8,52 @@
     $numberOfCorrectAnswersDefender = $correctNumAnswers['defender_num_correct_ans'];
     ?>
     <div class="report col-xs-12">
-        <b>Attacker</b>
-        Correct: {{ $numberOfCorrectAnswersAttacker }}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <b>Defender</b>
-        Correct: {{ $numberOfCorrectAnswersDefender }}
-    </div>
+           <div class="report-item text-center row">
+            <div class="report-answers col-xs-12">
+                <div class="report-answer row">
+                    <div class="answer-image-placeholder col-xs-4">
+                        <strong>Napadalec</strong>
+                        <br>
+                        {{ $attackerName }}
+                        <br>
+                        St. pravilnih odgovorov: <strong>{{ $numberOfCorrectAnswersAttacker }}</strong>
+                    </div>
+                    <div class="report-answer-text col-xs-4">
+                        @if($numberOfCorrectAnswersAttacker > $numberOfCorrectAnswersDefender)
+                            <div class="answer-image-placeholder col-xs-1">
+                                <img src="/img/win.png" />
+                            </div>
+                            <div class="answer-image-placeholder col-xs-2">
+                            </div>
+                            <div class="answer-image-placeholder col-xs-1">
+                                <img src="/img/lose.png" />
+                            </div>
+                        @endif
+                        @if($numberOfCorrectAnswersAttacker <= $numberOfCorrectAnswersDefender)
+                            <div class="answer-image-placeholder col-xs-1">
+                                <img src="/img/lose.png" />
+                            </div>
+                            <div class="answer-image-placeholder col-xs-2">
+                            </div>
+                            <div class="answer-image-placeholder col-xs-1">
+                                <img src="/img/win.png" />
+                            </div>
+                        @endif                        
+                    </div>
+                    <div class="answer-image-placeholder col-xs-4">
+                        @if(empty($defenderName))
+                           <?php $defenderName="Nezasedeno ozemlje"; ?>
+                        @endif
+                        <strong>Branilec</strong>
+                        <br>
+                        {{ $defenderName }}
+                        <br>
+                        St. pravilnih odgovorov: <strong>{{ $numberOfCorrectAnswersDefender }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
     <div class="report col-xs-12">
         @foreach($questions as $question)
             <?php
@@ -79,7 +119,7 @@
             }
 
             $groupName="question".$cnt;     
-            ?>
+            ?>           
             <div class="report-item text-center row">
                 <div class="report-question col-xs-12">
                 {{ $question['question'] }}
