@@ -9,6 +9,7 @@ return array(
     */
 
     'quizQuestionsCount' => 8,
+    'quizTimeLimit' => 60,
 
 
 );

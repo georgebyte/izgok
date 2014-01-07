@@ -27,6 +27,9 @@ class CreateQuizzesTable extends Migration {
             $table -> dateTime('submit_time_attacker') -> nullable();
             $table -> dateTime('submit_time_defender') -> nullable();
 
+            $table -> integer('quiz_opened_attacker') -> nullable();
+            $table -> integer('quiz_opened_defender') -> nullable();
+
             $table -> integer('attacker_num_correct_ans') -> unsigned();
             $table -> integer('defender_num_correct_ans');
 

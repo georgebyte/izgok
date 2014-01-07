@@ -157,13 +157,59 @@ class QuizController extends BaseController {
         /* iz baze preberi vprasanje in odgovore za vsa vprasanja, ki so del trenutnega kviza */
         $questions = Question::whereIn('id', $questionsIDs) -> get(array('question', 'answer_1', 'answer_2', 'answer_3', 'answer_correct')); 
 
-        $correctNumAnswers = Quiz::where('id', $quizID) -> get(array('attacker_num_correct_ans', 'defender_num_correct_ans')); 
+        $correctNumAnswers = Quiz::where('id', $quizID) -> get(array('attacker_num_correct_ans', 'defender_num_correct_ans', 'quiz_opened_attacker', 'quiz_opened_defender')); 
+
+        $quizOpened = Quiz::where('id', $quizID) -> get(array('quiz_opened_attacker', 'quiz_opened_defender'))[0]; 
+        
+        /* TODO :: pregled ce je cas ze potekel - ce je naredi submit za prazen kviz ter redirect na view report */
+        //dd($quizOpened['quiz_opened_attacker']);
+
+        $quizOpenedAttacker = $quizOpened['quiz_opened_attacker'];
+        $quizOpenedDefender = $quizOpened['quiz_opened_defender'];
+        if($isAttacker && $quizOpened['quiz_opened_attacker'] == NULL){
+            $quizOpenedAttacker = time()+Config::get('quiz.quizTimeLimit', 60);
+            $quiz -> quiz_opened_attacker = $quizOpenedAttacker;
+        }
+        elseif($isDefender && $quizOpened['quiz_opened_defender'] == NULL){
+            $quizOpenedDefender = time()+Config::get('quiz.quizTimeLimit', 60);
+            $quiz -> quiz_opened_defender = $quizOpenedDefender;
+        }
+        $quiz -> save();
+
+
         /* pripravi podatke, ki se jih poslje v View za prikaz neoddanega kviza */
-        $data = array('questionsData' => $questionsData, 'questions' => $questions, 'shuffles' => $shuffles, 'quizID' => $quizID, 'attackerAnswers' => $attackerAnswers, 'defenderAnswers' => $defenderAnswers, 'correctAnswers' => $correctAnswers, 'correctNumAnswers' => $correctNumAnswers);
+        $data = array(
+            'questionsData' => $questionsData, 
+            'questions' => $questions, 
+            'shuffles' => $shuffles, 
+            'quizID' => $quizID, 
+            'attackerAnswers' => $attackerAnswers, 
+            'defenderAnswers' => $defenderAnswers, 
+            'correctAnswers' => $correctAnswers, 
+            'correctNumAnswers' => $correctNumAnswers,
+            'quizOpenedAttacker' => $quizOpenedAttacker,
+            'quizOpenedDefender' => $quizOpenedDefender,
+            'isAttacker' => $isAttacker,
+            'isDefender' => $isDefender
+            );
 
         /* igralcu, ki kviza se ni oddal prikazi kviz, na katerega lahko odgovarja */
-        if(($isAttacker && $quiz -> submit_time_attacker == null) || ($isDefender && $quiz -> submit_time_defender == null)) {
+        if($isAttacker && $quiz -> submit_time_attacker == null && $quizOpenedAttacker - time() > 0) {
             return View::make('quiz', $data);
+        }
+        elseif($isDefender && $quiz -> submit_time_defender == null && $quizOpenedAttacker - time() > 0) {
+            return View::make('quiz', $data);
+        }
+
+        if($isAttacker && $quiz -> submit_time_attacker == null && $quizOpenedAttacker - time() < 1) {
+            $quiz -> submit_time_attacker = date("Y-m-d H:i:s");
+            $quiz -> save();
+            return View::make('report', $data);
+        }
+        elseif($isDefender && $quiz -> submit_time_defender == null && $quizOpenedAttacker - time() < 1) {
+            $quiz -> submit_time_defender = date("Y-m-d H:i:s");
+            $quiz -> save();
+            return View::make('report', $data);
         }
 
         /* igralcu, ki je kviz ze oddal prikazi porocilo o napadu */

@@ -2,9 +2,14 @@
 
 @section('content')
 
-    {{ Form::open(array('url' => URL::current())) }}
-	    <?php $cnt = 0; ?>
-
+    {{ Form::open(array('name' => 'quiz', 'url' => URL::current())) }}
+	    <?php $cnt = 0;?>
+	    <strong>
+			<div id="quiz" class="report col-xs-6">
+				time left
+			</div>
+		</strong>
+		<br><br>
 	   	@foreach($questions as $question)
 			<?php
 			$shuffle = $shuffles[$cnt];
@@ -86,4 +91,18 @@
 		@endforeach
 		{{ Form::button('Answer', array('type' => 'submit', 'class' => 'btn btn-primary')) }}
 	{{ Form::close() }}
+	    
+	    {{-- TODO :: dodaj dinamicno vrednost countdown timerju  --}}
+	    @if($isAttacker)
+	    	<?php $timeLeft = $quizOpenedAttacker - time(); ?>
+	    @endif
+	    @if($isDefender)
+	    	<?php $timeLeft = $quizOpenedDefender  - time(); ?>
+	    @endif
+	    <script src="/js/countdown.js"></script>
+	    <script> 
+			$(document).ready(function(){
+				updateTimer("quiz",{{ $timeLeft }},"false");
+			});           
+		</script>	
 @stop
