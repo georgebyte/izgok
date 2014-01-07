@@ -23,6 +23,8 @@ class HistoryController extends BaseController {
         $territoryName = array();
         $territoryPosX = array();
         $territoryPosY = array();
+        $insideTimeLimit = array();
+        $territoryIDs = array();
 
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
@@ -43,32 +45,39 @@ class HistoryController extends BaseController {
 
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
-            $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
+            $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('id', 'name','pos_x','pos_y')); 
 
             /* napad na nenaseljeno ozemlje */
             if(count($attackedTerritoryData) == 0)
             {
-                $attackedTerritoryData[0] = array('name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+                $attackedTerritoryData[0] = array('id' => $value['id'], 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
             }
 
+            $timeLimitOK = false;
+            if(($isAttacker && $value['quiz_opened_attacker'] > time()) || ($isDefender && $value['quiz_opened_defender'] > time())){
+                    $timeLimitOK = true;
+            }
             /* polnenje tabel s podatki */
             array_push($quizIDsArray, $value['id']);
             array_push($quizDates, $value['created_at']);
             array_push($solvedQuizes, $solved);
+            array_push($insideTimeLimit, $timeLimitOK);
             array_push($attackedTerritories, $attackedTerritoryData[0]);
         }
 
         /* podatki o teritorijih */
+        //dd($attackedTerritoryData[0]);
         foreach($attackedTerritories as $value)
             {
+                array_push($territoryIDs, $value['id']); 
                 array_push($territoryName, $value['name']); 
                 array_push($territoryPosX, $value['pos_x']);
-                array_push($territoryPosY, $value['pos_y']); 
+                array_push($territoryPosY, $value['pos_y']);
             }
         /* sestavljanje tabele $data ki bo poslana v view */
         $i = $limit + 1;
         $url="/history/all/".$i;
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url, "url" => $url);
+        $data=array("territoryIDs" => $territoryIDs, "quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "insideTimeLimit" => $insideTimeLimit,  "all" => $all, "url" => $url, "url" => $url);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
@@ -99,6 +108,7 @@ class HistoryController extends BaseController {
         $territoryPosX = array();
         $territoryPosY = array();
         $insideTimeLimit = array();
+        $territoryIDs = array();
 
         /* branje kvizov katerih uporabnik se ni resil - sortirano po casu padajoce */
         /* array s podatki id kviza*/
@@ -120,12 +130,12 @@ class HistoryController extends BaseController {
             }
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
-            $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
+            $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('id', 'name','pos_x','pos_y')); 
             
             /* napad na nenaseljeno ozemlje */
             if(count($attackedTerritoryData) == 0)
             {
-                $attackedTerritoryData[0] = array('name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+                $attackedTerritoryData[0] = array('id' => $value['id'], 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
             }
 
             /* polnenje tabel s podatki */
@@ -140,6 +150,7 @@ class HistoryController extends BaseController {
         /* podatki o teritorijih */
         foreach($attackedTerritories as $value)
             {
+                array_push($territoryIDs, $value['id']); 
                 array_push($territoryName, $value['name']); 
                 array_push($territoryPosX, $value['pos_x']);
                 array_push($territoryPosY, $value['pos_y']); 
@@ -147,7 +158,7 @@ class HistoryController extends BaseController {
         /* sestavljanje tabele $data ki bo poslana v view */
         $i = $limit + 1;
         $url="/history/unsolved/".$i;
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "insideTimeLimit" => $insideTimeLimit, "all" => $all, "url" => $url);
+        $data=array("territoryIDs" => $territoryIDs, "quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "insideTimeLimit" => $insideTimeLimit, "all" => $all, "url" => $url);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
@@ -177,6 +188,7 @@ class HistoryController extends BaseController {
         $territoryName = array();
         $territoryPosX = array();
         $territoryPosY = array();
+        $territoryIDs = array();
 
         /* branje kvizov v katerih je uporabnik sodeloval kot branitelec - sortirano po casu padajoce */
         /* array s podatki id kviza*/
@@ -196,12 +208,12 @@ class HistoryController extends BaseController {
 
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
-            $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
+            $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('id', 'name','pos_x','pos_y')); 
 
             /* napad na nenaseljeno ozemlje */
             if(count($attackedTerritoryData) == 0)
             {
-                $attackedTerritoryData[0] = array('name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+                $attackedTerritoryData[0] = array('id' => $value['id'], 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
             }
 
             /* polnenje tabel s podatki */
@@ -214,6 +226,7 @@ class HistoryController extends BaseController {
         /* podatki o teritorijih */
         foreach($attackedTerritories as $value)
             {
+                array_push($territoryIDs, $value['id']);                 
                 array_push($territoryName, $value['name']); 
                 array_push($territoryPosX, $value['pos_x']);
                 array_push($territoryPosY, $value['pos_y']); 
@@ -221,7 +234,7 @@ class HistoryController extends BaseController {
         /* sestavljanje tabele $data ki bo poslana v view */
         $i = $limit + 1;
         $url="/history/defense/".$i;
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url);
+        $data=array("territoryIDs" => $territoryIDs, "quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
@@ -251,6 +264,7 @@ class HistoryController extends BaseController {
         $territoryName = array();
         $territoryPosX = array();
         $territoryPosY = array();
+        $territoryIDs = array();
 
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec - sortirano po casu padajoce */
         /* array s podatki id kviza*/
@@ -270,12 +284,12 @@ class HistoryController extends BaseController {
 
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
-            $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('name','pos_x','pos_y')); 
+            $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('id', 'name','pos_x','pos_y')); 
 
             /* napad na nenaseljeno ozemlje */
             if(count($attackedTerritoryData) == 0)
             {
-                $attackedTerritoryData[0] = array('name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
+                $attackedTerritoryData[0] = array('id' => $value['id'], 'name' => 'Nenasljeno ozemlje', 'pos_x' => $value['attacked_territory_pos_x'], 'pos_y' => $value['attacked_territory_pos_y']);
             }
 
             /* polnenje tabel s podatki */
@@ -288,6 +302,7 @@ class HistoryController extends BaseController {
         /* podatki o teritorijih */
         foreach($attackedTerritories as $value)
             {
+                array_push($territoryIDs, $value['id']);                 
                 array_push($territoryName, $value['name']); 
                 array_push($territoryPosX, $value['pos_x']);
                 array_push($territoryPosY, $value['pos_y']); 
@@ -295,7 +310,7 @@ class HistoryController extends BaseController {
         /* sestavljanje tabele $data ki bo poslana v view */
         $i = $limit + 1;
         $url="/history/offense/".$i;
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url);
+        $data=array("territoryIDs" => $territoryIDs, "quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);

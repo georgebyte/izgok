@@ -36,6 +36,7 @@
                         @endif
                          <li>Napad na naselje: 
                                  {{ $territoryName[$cnt] }} ({{$territoryPosX[$cnt]}},{{$territoryPosY[$cnt]}})
+                                 <a href="/map/territory/{{ $territoryIDs[$cnt] }}/{{ $territoryPosX[$cnt] }}/{{ $territoryPosY[$cnt] }}/"> Pojdi na mapo</a>
                                  <br>
                                 &nbsp;&nbsp;&nbsp;
                                 <a href="/quiz/show/{{$quizID}}"> Poročilo bitke - {{ $quizDates[$cnt]}} {{ $solved }}</a></li>
