@@ -7,9 +7,10 @@ class HistoryController extends BaseController {
         $this->beforeFilter('auth');
     }
 
-    public function getIndex()
+    public function getAll($limit = 0)
     {
 
+        $max = ($limit+1)*5;
         /* deklaracija spremenljivk potrebna skozi controller */
         /* data je tabela podatkov poslanih v view */
         $myID = Auth::user() -> id;
@@ -26,8 +27,9 @@ class HistoryController extends BaseController {
         /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
         /* array s podatki id kviza*/
 
-        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y'));
-
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') -> get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y')) -> take($max);
+        $all = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') -> count();
+        
         foreach($quizHistory as $value){
             /* branje podatkov */
             $quiz = Quiz::find($value['id']);
@@ -64,7 +66,9 @@ class HistoryController extends BaseController {
                 array_push($territoryPosY, $value['pos_y']); 
             }
         /* sestavljanje tabele $data ki bo poslana v view */
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY);
+        $i = $limit + 1;
+        $url="/history/all/".$i;
+        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url, "url" => $url);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
@@ -78,9 +82,10 @@ class HistoryController extends BaseController {
         return View::make('history', $data);
     }
 
-    public function getUnsolved()
+    public function getUnsolved($limit = 0)
     {
 
+        $max = ($limit+1)*5;
         /* deklaracija spremenljivk potrebna skozi controller */
         /* data je tabela podatkov poslanih v view */
         $myID = Auth::user() -> id;
@@ -94,10 +99,11 @@ class HistoryController extends BaseController {
         $territoryPosX = array();
         $territoryPosY = array();
 
-        /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
+        /* branje kvizov katerih uporabnik se ni resil - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y'));
-
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') -> get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y')) -> take($max);
+        $all = checkUnsolved();
+        
         foreach($quizHistory as $value){
             /* branje podatkov */
             $quiz = Quiz::find($value['id']);
@@ -133,7 +139,9 @@ class HistoryController extends BaseController {
                 array_push($territoryPosY, $value['pos_y']); 
             }
         /* sestavljanje tabele $data ki bo poslana v view */
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY);
+        $i = $limit + 1;
+        $url="/history/unsolved/".$i;
+        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
@@ -147,9 +155,10 @@ class HistoryController extends BaseController {
         return View::make('history', $data);
     }
 
-    public function getDefense()
+    public function getDefense($limit = 0)
     {
 
+        $max = ($limit+1)*5;
         /* deklaracija spremenljivk potrebna skozi controller */
         /* data je tabela podatkov poslanih v view */
         $myID = Auth::user() -> id;
@@ -163,10 +172,11 @@ class HistoryController extends BaseController {
         $territoryPosX = array();
         $territoryPosY = array();
 
-        /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
+        /* branje kvizov v katerih je uporabnik sodeloval kot branitelec - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::Where('id_defender', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y'));
-
+        $quizHistory = Quiz::Where('id_defender', '=', $myID) -> orderBy('created_at','desc') -> get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y')) -> take($max);
+        $all = Quiz::Where('id_defender', '=', $myID) -> orderBy('created_at','desc') -> count();
+        
         foreach($quizHistory as $value){
             /* branje podatkov */
             $quiz = Quiz::find($value['id']);
@@ -203,7 +213,9 @@ class HistoryController extends BaseController {
                 array_push($territoryPosY, $value['pos_y']); 
             }
         /* sestavljanje tabele $data ki bo poslana v view */
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY);
+        $i = $limit + 1;
+        $url="/history/defense/".$i;
+        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);
@@ -217,9 +229,10 @@ class HistoryController extends BaseController {
         return View::make('history', $data);
     }
     
-    public function getOffense()
+    public function getOffense($limit = 0)
     {
 
+        $max = ($limit+1)*5;
         /* deklaracija spremenljivk potrebna skozi controller */
         /* data je tabela podatkov poslanih v view */
         $myID = Auth::user() -> id;
@@ -233,9 +246,10 @@ class HistoryController extends BaseController {
         $territoryPosX = array();
         $territoryPosY = array();
 
-        /* branje kvizov v katerih je uporabnik sodeloval kot napadalec ali branitelj - sortirano po casu padajoce */
+        /* branje kvizov v katerih je uporabnik sodeloval kot napadalec - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y'));
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orderBy('created_at','desc') ->get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y')) -> take($max);
+        $all = Quiz::where('id_attacker', '=', $myID) -> orderBy('created_at','desc') -> count();
 
         foreach($quizHistory as $value){
             /* branje podatkov */
@@ -273,7 +287,9 @@ class HistoryController extends BaseController {
                 array_push($territoryPosY, $value['pos_y']); 
             }
         /* sestavljanje tabele $data ki bo poslana v view */
-        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY);
+        $i = $limit + 1;
+        $url="/history/offense/".$i;
+        $data=array("quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);

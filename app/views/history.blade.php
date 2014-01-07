@@ -6,7 +6,7 @@
     <br>
     <?php $cnt=0; ?>
     <div class="container">
-        <a href="/history"> Vsi </a> - 
+        <a href="/history/all"> Vsi </a> - 
         <a href="/history/offense"> Napadi </a> - 
         <a href="/history/defense"> Obramba </a> - 
         <a href="/history/unsolved"> Nereseni </a>
@@ -27,6 +27,9 @@
                          <?php $cnt++; ?>
                 @endforeach
             @endif
-
+            @if($all > count($attackedTerritoryData))
+            <?php $i = ($all/5)-1 > 0 ? ($all/5)-1 : 1;?>
+             <a href="{{ $url }}">Vec...</a>
+            @endif
     </div>
 @stop
