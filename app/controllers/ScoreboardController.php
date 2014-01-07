@@ -46,5 +46,3 @@ class ScoreboardController extends BaseController {
         return View::make('scoreboard', $data);
     }
 }
-
-?>
