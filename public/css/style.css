@@ -308,6 +308,10 @@ td.village-name, td.player-name {
     background-color: #d6e9cf;
 }
 
+.territory-profile h3 {
+    margin-top: 0px;
+}
+
 .territory-profile-description {
     padding-left: 50px;
     font-style: italic;
@@ -320,6 +324,14 @@ td.village-name, td.player-name {
 
 .territory-profile-buttons a {
     margin-right: 10px;
+}
+
+@media (max-width: 410px) {
+    .territory-profile-buttons a {
+        margin-right: 0px;
+        margin-top: 10px;
+        width: 100%;
+    }
 }
 
 @media (max-width: 767px) {

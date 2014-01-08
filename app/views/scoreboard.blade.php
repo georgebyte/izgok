@@ -19,7 +19,7 @@
  		</div>
             
         <div class="form-components">
-        {{ Form::button('Poišči', array(
+        {{ Form::button('<span class="glyphicon glyphicon-search"></span>', array(
             'type'  => 'submit',
             'class' => 'btn btn-primary'
         )) }}
