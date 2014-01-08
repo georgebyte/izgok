@@ -36,7 +36,7 @@
             @endif
         </div>
         <div class="col-sm-8">
-            <p><h2>{{ $name }} <a href="/map/show/{{ $x }}/{{ $y }}">{{ "(" . $x . ", " . $y .")" }}</a></h2></p>
+            <h2>{{ $name }} <a href="/map/show/{{ $x }}/{{ $y }}"></h2><h3>{{ "(" . $x . ", " . $y .")" }}</a></h3>
             <p class="territory-profile-description">{{ $description }}</p>
             @if($playerID)
                 <p class="territory-profile-player">Vladar: <a href="/profile/show/{{ $player }}"> {{ $player }}</a></p>

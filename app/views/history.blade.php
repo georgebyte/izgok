@@ -24,7 +24,8 @@
                             <?php
                             $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno"; 
                             ?>
-                            @else
+                            @endif
+                            @if(!$insideTimeLimit[0])
                             <?php
                             $solved = ($solvedQuizes[$cnt]) ? " " : " - še nepregledano"; 
                             ?>

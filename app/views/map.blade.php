@@ -92,23 +92,13 @@
                             <td class='player-name'>---</td>
                         </tr>
                     </table>
-                    <br>
-                        {{ Form::open(array('name' => 'travel','url' => 'admin/usersubmit')) }}
-                   
-                        <div class="row">
-                            <div class="col-xs-1">
-                                {{ Form::label('x', 'X:') }}&nbsp;
-                                {{ Form::text('x', '0', array('id' => 'search_x', 'placeholder' => 'x')) }}
-                            </div>
-                            <div class="col-xs-1">
-                                {{ Form::label('y', 'Y:') }}&nbsp;
-                                {{ Form::text('y', '0', array('id' => 'search_y', 'placeholder' => 'y')) }}
-                            </div>
-                        </div>
-                        <br>
-
-                   {{ Form::close() }}
-                    {{ Form::button('Travel', array('id' => 'search_pos', 'name' => 'travel', 'type' => 'submit', 'class' => 'btn btn-primary')) }}
+                </div>
+                <div class='map-search-box'>
+                    {{ Form::label('x', 'X:') }}&nbsp;
+                    {{ Form::text('x', '0', array('id' => 'search_x', 'placeholder' => 'x', 'size' => '3', 'class' => 'map-search-textbox')) }}  
+                    {{ Form::label('y', 'Y:') }}&nbsp;
+                    {{ Form::text('y', '0', array('id' => 'search_y', 'placeholder' => 'y', 'size' => '3', 'class' => 'map-search-textbox')) }}
+                    {{ Form::button('<span class="glyphicon glyphicon-search"></span>', array('id' => 'search_pos', 'name' => 'travel', 'type' => 'submit', 'class' => 'btn btn-primary')) }}
                 </div>
             </div>
         </div>

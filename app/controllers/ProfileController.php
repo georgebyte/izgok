@@ -5,7 +5,7 @@ class ProfileController extends BaseController {
     public function __construct()
     {
         $this->beforeFilter('auth');
-        
+        $this->beforeFilter('csrf', array('on' => 'post'));
     }
 
     public function getIndex()
@@ -17,8 +17,56 @@ class ProfileController extends BaseController {
 
     public function postIndex()
     {
+
         $data=Input::all();
         return Redirect::to("/profile/show/".$data['find']);
+    }
+
+    public function postEdit()
+    {
+        $input = Input::all();
+        $myID = Auth::user() -> id;
+        $territoryID = $input['id'];
+
+        $territory= Territory::where('id_owner', '=', $myID)
+                                -> where('id', '=', $territoryID)
+                                -> take(1);
+
+        if(count($territory) == 0){
+            $f = Config::get('error.errorInfo', "napaka");
+            return $f("Nisi vladar tega ozemlja oz. to ozemlje ne obstaja.");
+        }
+
+        $territory = Territory::find($territoryID);
+        $territory -> name = $input['name'];
+        $territory -> description = $input['description'];
+        $posX = $territory -> pos_x;
+        $posY = $territory -> pos_y;
+        $territory -> save();
+        return Redirect::to("map/territory/$territoryID/$posX/$posY");
+    }
+
+    public function getEdit($territoryID = 0)
+    {
+        $myID = Auth::user() -> id;
+        $territory= Territory::where('id_owner', '=', $myID)
+                                -> where('id', '=', $territoryID)
+                                -> get(array('id', 'id_owner','name','description'))
+                                -> take(1);
+        if(count($territory) == 0){
+            $f = Config::get('error.errorInfo', "napaka");
+            return $f("Nisi vladar tega ozemlja oz. to ozemlje ne obstaja.");
+        }
+
+        $territoryInfo = array();
+        foreach($territory as $value){
+            $territoryInfo['id'] = $value['id'];
+            $territoryInfo['id_owner'] = $value['id_owner'];
+            $territoryInfo['name'] = $value['name'];
+            $territoryInfo['description'] = $value['description'];
+        }
+        $data = array("territoryInfo" => $territoryInfo);
+        return View::make('editterritory', $data);
     }
 
 
@@ -62,6 +110,7 @@ class ProfileController extends BaseController {
             -> count(); 
 
         $territories= Territory::where('id_owner', '=', $myID) 
+            -> orderBy('name', 'asc')
             -> get(array('id', 'name','description','pos_x','pos_y'));
 
         $highScoreAttack= Quiz::where('id_attacker', '=', $myID) 

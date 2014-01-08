@@ -112,7 +112,7 @@ class HistoryController extends BaseController {
 
         /* branje kvizov katerih uporabnik se ni resil - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') -> get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y')) -> take($max);
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') -> get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y','quiz_opened_defender','quiz_opened_attacker')) -> take($max);
         $all = checkUnsolved();
         
         foreach($quizHistory as $value){
@@ -125,7 +125,7 @@ class HistoryController extends BaseController {
                 $solved = false;
 
             $timeLimitOK = false;
-            if(($isAttacker && $value['quiz_opened_attacker'] > time()) || ($isDefender && $value['quiz_opened_defender'] > time()) || ($isDefender && $value['quiz_opened_defender'] != NULL)){
+            if(($isAttacker && $quiz -> quiz_opened_attacker > time()) || ($isDefender && $value['quiz_opened_defender'] > time()) || ($isDefender && $value['quiz_opened_defender'] != NULL) ) {
                 $timeLimitOK = true;
             }
             /* pridobivanje podatkov naselja */
@@ -189,10 +189,11 @@ class HistoryController extends BaseController {
         $territoryPosX = array();
         $territoryPosY = array();
         $territoryIDs = array();
+        $insideTimeLimit = array();
 
         /* branje kvizov v katerih je uporabnik sodeloval kot branitelec - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::Where('id_defender', '=', $myID) -> orderBy('created_at','desc') -> get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y')) -> take($max);
+        $quizHistory = Quiz::Where('id_defender', '=', $myID) -> orderBy('created_at','desc') -> get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y','quiz_opened_defender')) -> take($max);
         $all = Quiz::Where('id_defender', '=', $myID) -> orderBy('created_at','desc') -> count();
         
         foreach($quizHistory as $value){
@@ -209,7 +210,10 @@ class HistoryController extends BaseController {
             /* pridobivanje podatkov naselja */
             /* TODO :: fix empty attackedterritorydata*/
             $attackedTerritoryData = Territory::where('id','=', $value['id_attacked_territory']) -> get(array('id', 'name','pos_x','pos_y')); 
-
+            $timeLimitOK = false;
+            if(($isAttacker && $quiz -> quiz_opened_attacker > time()) || ($isDefender && $value['quiz_opened_defender'] > time()) || ($isDefender && $value['quiz_opened_defender'] != NULL) ) {
+                $timeLimitOK = true;
+            }
             /* napad na nenaseljeno ozemlje */
             if(count($attackedTerritoryData) == 0)
             {
@@ -220,6 +224,7 @@ class HistoryController extends BaseController {
             array_push($quizIDsArray, $value['id']);
             array_push($quizDates, $value['created_at']);
             array_push($solvedQuizes, $solved);
+            array_push($insideTimeLimit, $timeLimitOK);
             array_push($attackedTerritories, $attackedTerritoryData[0]);
         }
 
@@ -234,7 +239,7 @@ class HistoryController extends BaseController {
         /* sestavljanje tabele $data ki bo poslana v view */
         $i = $limit + 1;
         $url="/history/defense/".$i;
-        $data=array("territoryIDs" => $territoryIDs, "quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "all" => $all, "url" => $url);
+        $data=array("territoryIDs" => $territoryIDs, "quizIDs" => $quizIDsArray, "quizDates" => $quizDates, "solvedQuizes" => $solvedQuizes, 'attackedTerritoryData' => $attackedTerritories, 'territoryName' => $territoryName, 'territoryPosX' => $territoryPosX, 'territoryPosY' => $territoryPosY, "insideTimeLimit" => $insideTimeLimit,  "all" => $all, "url" => $url);
 
         /* brisanje tabel katerih se več ne potrebuje */
         unset($quizIDsArray);

@@ -47,6 +47,7 @@
 				 		&nbsp;&nbsp;&nbsp;Opis: {{ $val['description'] }} <br/>
 				 		&nbsp;&nbsp;&nbsp;koordinate: {{ $val['pos_x']}}, {{ $val['pos_y'] }} <br>
 				 		&nbsp;&nbsp;&nbsp;<a href="/map/show/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}">Pojdi na mapo</a>
+				 		&nbsp;&nbsp;&nbsp;<a href="/profile/edit/{{ $val['id'] }}">Uredi</a>
 				 		<hr>
 					</li>
 				@endforeach
