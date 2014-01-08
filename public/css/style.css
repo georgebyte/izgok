@@ -367,9 +367,9 @@ td.village-name, td.player-name {
 
 }
 
-.profile-player-pic-name {
+/*.profile-player-pic-name {
     height: 200px;
-}
+}*/
 
 .profile-player-pic {
     float: left;
@@ -384,6 +384,27 @@ td.village-name, td.player-name {
     float: left;
     padding-left: 20px;
     padding-top: 65px;
+}
+
+@media (max-width: 525px) {
+    .profile-player-pic {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+
+    .profile-player-name {
+        float: none;
+        padding-left: 0px;
+        padding-top: 0px;
+        margin-top: 20px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .profile-player-name h3 {
+        margin: 0 0;
+    }
 }
 
 .profile-player-stats {
@@ -403,7 +424,7 @@ td.village-name, td.player-name {
     height: 400px;
 }
 
-.first-letter{
+.first-letter {
     color:#000000;
     float:left;
     font-size:30px;
@@ -412,14 +433,14 @@ td.village-name, td.player-name {
     height:30px;
 }
 
-.other-letters{
+.other-letters {
     height:30px;
     float:left;
     vertical-align:bottom;
     padding-top:17px;
 }
 
-.song-home{
+.song-home {
     width:100%;
     clear:both;
     padding-bottom:5px;   
