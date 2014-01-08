@@ -112,7 +112,7 @@ class HistoryController extends BaseController {
 
         /* branje kvizov katerih uporabnik se ni resil - sortirano po casu padajoce */
         /* array s podatki id kviza*/
-        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') -> get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y')) -> take($max);
+        $quizHistory = Quiz::where('id_attacker', '=', $myID) -> orWhere('id_defender', '=', $myID) -> orderBy('created_at','desc') -> get(array('id', 'created_at','id_attacked_territory','attacked_territory_pos_x','attacked_territory_pos_y','quiz_opened_defender','quiz_opened_attacker')) -> take($max);
         $all = checkUnsolved();
         
         foreach($quizHistory as $value){
@@ -125,7 +125,7 @@ class HistoryController extends BaseController {
                 $solved = false;
 
             $timeLimitOK = false;
-            if(($isAttacker && $value['quiz_opened_attacker'] > time()) || ($isDefender && $value['quiz_opened_defender'] > time()) || ($isDefender && $value['quiz_opened_defender'] != NULL) ) {
+            if(($isAttacker && $quiz -> quiz_opened_attacker > time()) || ($isDefender && $value['quiz_opened_defender'] > time()) || ($isDefender && $value['quiz_opened_defender'] != NULL) ) {
                 $timeLimitOK = true;
             }
             /* pridobivanje podatkov naselja */
