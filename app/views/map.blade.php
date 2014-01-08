@@ -13,7 +13,7 @@
                     <h3>({{ $x }}, {{ $y }})</h3>
                 </div>
                 <div class='map'>
-                    <?php $villageIndex = 0; ?>
+                    <?php $villageIndex = 0; $me = Auth::user() -> username;?>
                     @for ($currentY = $y+$visibleMapSize; $currentY >= $y-$visibleMapSize; $currentY--)
                         <div class='map-row clearfix'>
                             @for ($currentX = $x-$visibleMapSize; $currentX <= $x+$visibleMapSize; $currentX++)
@@ -27,10 +27,11 @@
                                 } ?>
 
                                 @if ($currentTerritory)
-                                    <div class='village'>
                                         <?php 
                                         $territoryID = $currentTerritory['id'];
                                         ?>
+                                    <div class='village @if($leaders[$territoryID] == $me)owned-territory@endif'>
+
                                         <a href='/map/territory/{{ $territoryID }}/{{ $currentX }}/{{ $currentY }}'>
                                             @if($currentTerritory['is_main_village'] == 1)
                                                 <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$territoryID] }}' src='/img/village.png'>
@@ -40,8 +41,9 @@
                                             @endif
                                             @if($currentTerritory['is_npc_village'] == 1)
                                                 <img data-village='{{ $currentTerritory['name'] }}' data-leader='{{ $leaders[$territoryID] }}' src='/img/npcvillage.png'>
-                                            @endif                                                                                      
+                                            @endif                                                                                
                                         </a>
+
                                     </div>
                                     <?php $villageIndex++; ?>
                                 @else
