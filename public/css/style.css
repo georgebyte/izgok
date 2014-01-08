@@ -355,11 +355,39 @@ td.village-name, td.player-name {
     padding:0px 5px;
 }
 
-.profile{
-    float:left;
-    width:90%;
-    padding:15px 5px;
+.profile-player {
 
+}
+
+.profile-player-pic-name {
+    height: 200px;
+}
+
+.profile-player-pic {
+    float: left;
+}
+
+.profile-player img {
+    width: 200px;
+    height: 200px;
+}
+
+.profile-player-name {
+    float: left;
+    padding-left: 20px;
+    padding-top: 65px;
+}
+
+.profile-player-stats {
+    margin-top: 20px;
+}
+
+.profile-villages {
+
+}
+
+.profile-villages-list {
+    overflow-y: auto;
 }
 
 

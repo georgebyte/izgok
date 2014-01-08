@@ -1,28 +1,66 @@
 @extends('layouts.body')
 
-@section('content')
-
-	<div class="profile">
-		
-		<?php
-		$avgAttackScore=number_format($aas,1);
-		$avgDefenseScore=number_format($ads,1);
-		?>
-		<div style="padding:20px; background-color:#eeeeee; border-radius:20px; border-collapse:separate">
-			<h3>{{ $na }}</h3>
-			<strong>Profilna slika:</strong><br>
-			<img src='{{asset($im)}}' alt='user image' width='200' height='200'>
-			
-			</br><br/>
-			<strong>Statistika:</strong><br>
-			Število rešenih kvizov: <strong>{{ $qc }}</strong> <br/>
-			Največ pravilno odgovorjenih vprašanj v napadu: <strong>{{ $hsa }}</strong> <br/>
-			Največ pravilno odgovorjenih vprašanj v obrambi: <strong>{{ $hsd }}</strong> <br/>
-			Povprečno število pravilno odgovorjenih vprašanj v napadu: <strong>{{ $avgAttackScore }}</strong> <br/>
-			Povprečno število pravilno odgovorjenih vprašanj v obrambi: <strong>{{ $avgDefenseScore }}</strong> <br/><br>
+@section('content_container')
+	<div class="profile-player col-md-6">
+		<div class="profile-player-pic-name clearfix">
+			<?php
+			$avgAttackScore=number_format($aas,1);
+			$avgDefenseScore=number_format($ads,1);
+			?>
+			<div class="profile-player-pic">
+				<img src='{{asset($im)}}' alt='{{ $na }}'>
+			</div>
+			<div class="profile-player-name">
+				<h3>{{ $na }}</h3>
+			</div>
 		</div>
-		<br>
-		<div style="padding:20px; background-color:#eeeeee; border-radius:20px; border-collapse:separate">
+		<div class="profile-player-stats">
+			<table class="table table-bordered">
+				<tr>
+					<td>
+						Število rešenih kvizov
+					</td>
+					<td>
+						{{ $qc }}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Največ pravilno odgovorjenih vprašanj v napadu
+					</td>
+					<td>
+						{{ $hsa }}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Največ pravilno odgovorjenih vprašanj v obrambi
+					</td>
+					<td>
+						{{ $hsd }}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Povprečno število pravilno odgovorjenih vprašanj v napadu
+					</td>
+					<td>
+						{{ $avgAttackScore }}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Povprečno število pravilno odgovorjenih vprašanj v obrambi
+					</td>
+					<td>
+						{{ $avgDefenseScore }}
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="profile-villages col-md-6">
+		<div class="profile-villages-header">
 			@if($tc == 0)
 				Ta igralec nima nobenega ozemlja
 			@else
@@ -40,18 +78,17 @@
 					ozemelj
 				@endif
 			@endif
-			<br/><br/>
-			<div style="padding-left:15px">
-				@foreach($t as $val)
-					<li>Ime: {{ $val['name'] }} <a href="/map/territory/{{ $val['id'] }}/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}"> Link </a><br/>
-				 		&nbsp;&nbsp;&nbsp;Opis: {{ $val['description'] }} <br/>
-				 		&nbsp;&nbsp;&nbsp;koordinate: {{ $val['pos_x']}}, {{ $val['pos_y'] }} <br>
-				 		&nbsp;&nbsp;&nbsp;<a href="/map/show/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}">Pojdi na mapo</a>
-				 		&nbsp;&nbsp;&nbsp;<a href="/profile/edit/{{ $val['id'] }}">Uredi</a>
-				 		<hr>
-					</li>
-				@endforeach
-			</div>
+		</div>
+		<div class="profile-villages-list">
+			@foreach($t as $val)
+				<li>Ime: {{ $val['name'] }} <a href="/map/territory/{{ $val['id'] }}/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}"> Link </a><br/>
+			 		&nbsp;&nbsp;&nbsp;Opis: {{ $val['description'] }} <br/>
+			 		&nbsp;&nbsp;&nbsp;koordinate: {{ $val['pos_x']}}, {{ $val['pos_y'] }} <br>
+			 		&nbsp;&nbsp;&nbsp;<a href="/map/show/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}">Pojdi na mapo</a>
+			 		&nbsp;&nbsp;&nbsp;<a href="/profile/edit/{{ $val['id'] }}">Uredi</a>
+			 		<hr>
+				</li>
+			@endforeach
 		</div>
 	</div>
 @stop
