@@ -42,7 +42,7 @@
                 <p class="territory-profile-player">Vladar: <a href="/profile/show/{{ $player }}"> {{ $player }}</a></p>
             @endif
             <div class="territory-profile-buttons">
-                <a href="/quiz/attack/{{ $playerID }}/{{ $territoryID }}/{{ $x }}/{{ $y }}" class="btn btn-danger btn-lg @if($is_main_village == 1 || $player == Auth::user() -> username)disabled@endif">
+                <a href="/quiz/attack/{{ $playerID }}/{{ $territoryID }}/{{ $x }}/{{ $y }}@if($is_main_village == 1 || $player == Auth::user() -> username)#@endif" class="btn btn-danger btn-lg @if($is_main_village == 1 || $player == Auth::user() -> username)disabled@endif">
                     <apan class="glyphicon glyphicon-fire "></span> Napad
                 </a>
                 <a href="#" class="btn btn-success btn-lg @if(!$playerID || $is_npc_village == 1) disabled @endif">
