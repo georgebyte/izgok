@@ -12,8 +12,15 @@ class MapController extends BaseController {
         return Redirect::to("/map/show/");
     }
 
-    public function getShow($x = 0, $y = 0)
+    public function getShow($x = NULL, $y = NULL)
     {
+        if($x == NULL && $y == NULL){
+            $myID = Auth::user() -> id;
+            $mainTerritory = Territory::where('id_owner', '=', $myID) -> where('is_main_village','=','1') -> get()[0];
+            $x = $mainTerritory['pos_x'];
+            $y = $mainTerritory['pos_y'];
+        }
+
         $visibleMapSize = Config::get('map.visibleMapSize', 4);
         $data = array('x' => $x, 'y' => $y, 'visibleTerritories' => null, 'visibleMapSize' => $visibleMapSize);
         $rules = array(
