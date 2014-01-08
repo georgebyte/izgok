@@ -242,6 +242,54 @@ a:hover, a:active {
     padding-top: 20px;
 }
 
+.map-search-box {
+    text-align: center;
+}
+
+.map-search-box label {
+    font-size: 14px;
+    line-height: 1.428571429;
+    vertical-align: middle;
+}
+
+.map-search-textbox {
+    height: 34px;
+    width: 50px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.map-search-box button {
+    margin-left: 5px;
+}
+
+@media (max-width: 991px) {
+    .map-search-box button {
+        margin-left: 0px;
+        margin-top: 5px;
+        width: 100%;
+    }
+}   
+
+@media (max-width: 767px) {
+    .map-search-box button {
+        margin-left: 5px;
+        margin-top: 0px;
+        width: 40px;
+    }
+}
+
 td.village-name, td.player-name {
     text-align: right;
 }
