@@ -62,6 +62,7 @@ class ProfileController extends BaseController {
             -> count(); 
 
         $territories= Territory::where('id_owner', '=', $myID) 
+            -> orderBy('name', 'asc')
             -> get(array('id', 'name','description','pos_x','pos_y'));
 
         $highScoreAttack= Quiz::where('id_attacker', '=', $myID) 
