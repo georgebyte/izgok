@@ -394,8 +394,13 @@ td.village-name, td.player-name {
 
 }
 
+.profile-villages-header {
+    
+}
+
 .profile-villages-list {
     overflow-y: auto;
+    height: 400px;
 }
 
 .first-letter{
@@ -408,21 +413,16 @@ td.village-name, td.player-name {
 }
 
 .other-letters{
-    
     height:30px;
     float:left;
     vertical-align:bottom;
     padding-top:17px;
-
-    
-    
 }
 
 .song-home{
     width:100%;
     clear:both;
-    padding-bottom:5px;
-    
+    padding-bottom:5px;   
 }
 
 
