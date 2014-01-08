@@ -11,6 +11,12 @@ a:hover, a:active {
     text-decoration: none;
 }
 
+.owned-territory{
+    background-color: #339900;
+    filter:alpha(opacity=50);
+    opacity:0.50;
+}
+
 .btn-primary {
     background-color: #685648;
     border-color: #453C35;
@@ -188,6 +194,8 @@ a:hover, a:active {
 .village img, .empty_territory img {
     max-width:100%;
     max-height:100%;
+    opacity: 1;
+    filter: Alpha(opacity=100);
 }
 
 .info-container {
