@@ -34,6 +34,9 @@
                             $solved = ($solvedQuizes[$cnt]) ? " " : " - še nerešeno";
                             ?>
                         @endif
+                        <?php
+                        $solved .= $insideTimeLimit[0];
+                        ?>
                          <li>Napad na naselje: 
                                  {{ $territoryName[$cnt] }} ({{$territoryPosX[$cnt]}},{{$territoryPosY[$cnt]}})
                                  <a href="/map/territory/{{ $territoryIDs[$cnt] }}/{{ $territoryPosX[$cnt] }}/{{ $territoryPosY[$cnt] }}/"> Pojdi na mapo</a>

@@ -125,7 +125,7 @@ class HistoryController extends BaseController {
                 $solved = false;
 
             $timeLimitOK = false;
-            if(($isAttacker && $value['quiz_opened_attacker'] > time()) || ($isDefender && $value['quiz_opened_defender'] > time()) || ($isDefender && $value['quiz_opened_defender'] != NULL)){
+            if(($isAttacker && $value['quiz_opened_attacker'] > time()) || ($isDefender && $value['quiz_opened_defender'] > time()) || ($isDefender && $value['quiz_opened_defender'] != NULL) ) {
                 $timeLimitOK = true;
             }
             /* pridobivanje podatkov naselja */
