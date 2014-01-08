@@ -69,7 +69,7 @@
             <div class='info-container col-sm-3'>
                 <div class='map-navigation'>
                     <div class='map-up'>
-                        <a href='/map/show/{{ $x }}/{{ $y-1 }}'><img src='/img/map_arrow.png'></a>
+                        <a href='/map/show/{{ $x }}/{{ $y+1 }}'><img src='/img/map_arrow.png'></a>
                     </div>
                     <div class='map-left'>
                         <a href='/map/show/{{ $x-1 }}/{{ $y }}'><img src='/img/map_arrow.png'></a>
@@ -78,7 +78,7 @@
                         <a href='/map/show/{{ $x+1 }}/{{ $y }}'><img src='/img/map_arrow.png'></a>
                     </div>
                     <div class='map-down'>
-                        <a href='/map/show/{{ $x }}/{{ $y+1 }}'><img src='/img/map_arrow.png'></a>
+                        <a href='/map/show/{{ $x }}/{{ $y-1 }}'><img src='/img/map_arrow.png'></a>
                     </div>
                 </div>
                 <div class='territory-info'>
