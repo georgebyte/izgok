@@ -17,6 +17,13 @@ class QuizController extends BaseController {
         $attackerID = Auth::user() -> id;
         $defenderID = $attackedUserID;
 
+        $attacksOnTerritory = Quiz::where('id_attacked_territory', '=', $attackedTerritoryID) -> where('submit_time_defender','=', NULL) -> count();
+
+        if ($attacksOnTerritory > 0){
+            $f = Config::get('error.errorInfo', "napaka");
+            return $f("Izbrano ozemljo je ze napadeno");
+        }
+
         if ((!User::find($defenderID) || $defenderID == $attackerID) && $defenderID != 0) {
             $f = Config::get('error.errorInfo', "napaka");
             return $f("Napaden igralec ni veljaven.");
