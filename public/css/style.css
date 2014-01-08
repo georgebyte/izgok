@@ -11,10 +11,16 @@ a:hover, a:active {
     text-decoration: none;
 }
 
-.owned-territory{
-    background-color: #339900;
-    filter:alpha(opacity=50);
-    opacity:0.50;
+.owned-territory img{
+    background-color: #FFFFFF;
+    max-width:100%;
+    max-height:100%;
+    width: 14.2857142857%;
+    padding: 1% 1%;
+    float: left;
+    border-right: 1px dashed #82b02a;
+    border-bottom: 1px dashed #82b02a;
+    background-color: #d6F7cf;
 }
 
 .btn-primary {
