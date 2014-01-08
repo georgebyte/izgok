@@ -7,23 +7,23 @@
     )) }}
 
         <div class="form-group">
-            {{ Form::label('username', 'Username') }}
+            {{ Form::label('username', 'Uporabniško ime') }}
             {{ Form::text('username', '', array(
                 'class'       => 'form-control',
-                'placeholder' => 'Username'
+                'placeholder' => 'Uporabniško ime'
             )) }}
         </div>
 
         <div class="form-group">
-            {{ Form::label('password', 'Password') }}
+            {{ Form::label('password', 'Geslo') }}
             {{ Form::password('password', array(
                 'class'       => 'form-control',
-                'placeholder' => 'Password'
+                'placeholder' => 'Geslo'
             )) }}
         </div>
 
         <div class="checkbox">
-            {{ Form::label('remember_me', 'Remember me') }}
+            {{ Form::label('remember_me', 'Zapomni si me') }}
             {{ Form::checkbox('remember_me', 'on', true) }}
         </div>
         

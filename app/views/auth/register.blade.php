@@ -9,45 +9,45 @@
     )) }}
 
         <div class="form-group @if($errors->has('username'))has-error @elseif(!$errors->has('username') && $errors->all())has-success @endif">
-            {{ Form::label('username', 'Username', array(
+            {{ Form::label('username', 'Uporabniško ime', array(
                 'class' => 'control-label'
             )) }}
             {{ Form::text('username', '', array(
                 'class'       => 'form-control',
-                'placeholder' => 'Username'
+                'placeholder' => 'Uporabniško ime'
             )) }}
             {{ $errors->first('username', '<p class="help-block">:message</p>') }}
         </div>
 
         <div class="form-group @if($errors->has('email'))has-error @elseif(!$errors->has('email') && $errors->all())has-success @endif">
-            {{ Form::label('email', 'Email address', array(
+            {{ Form::label('email', 'Elektronski naslov', array(
                 'class' => 'control-label'
             )) }}
             {{ Form::email('email', '', array(
                 'class'       => 'form-control',
-                'placeholder' => 'Email address'
+                'placeholder' => 'Elektronski naslov'
             )) }}
             {{ $errors->first('email', '<p class="help-block">:message</p>') }}
         </div>
 
         <div class="form-group @if($errors->has('password'))has-error @endif">
-            {{ Form::label('password', 'Password', array(
+            {{ Form::label('password', 'Geslo', array(
                 'class' => 'control-label'
             )) }}
             {{ Form::password('password', array(
                 'class'       => 'form-control',
-                'placeholder' => 'Password'
+                'placeholder' => 'Geslo'
             )) }}
             {{ $errors->first('password', '<p class="help-block">:message</p>') }}
         </div>
 
         <div class="form-group @if($errors->has('password'))has-error @endif">
-            {{ Form::label('password_confirmation', 'Password confirmation', array(
+            {{ Form::label('password_confirmation', 'Potrdi geslo', array(
                 'class' => 'control-label'
             )) }}
             {{ Form::password('password_confirmation', array(
                 'class'       => 'form-control',
-                'placeholder' => 'Password confirmation'
+                'placeholder' => 'Potrdi geslo'
             )) }}
         </div>
         
@@ -56,7 +56,8 @@
                 'class' => 'control-label'
             )) }}
             {{ Form::file('slika', '', array(
-                'class' => 'form-control',
+                'class' => 'form-control'
+                
             )) }}
             {{ $errors->first('slika', '<p class="help-block">:message</p>') }}
         </div>
@@ -75,12 +76,12 @@
 
        
 
-        {{ Form::button('Register', array(
+        {{ Form::button('Registracija', array(
             'type'  => 'submit',
             'class' => 'btn btn-primary'
         )) }}
 
-        {{ Form::button('Reset', array(
+        {{ Form::button('Počisti', array(
             'type'  => 'reset',
             'class' => 'btn btn-danger'
         )) }}

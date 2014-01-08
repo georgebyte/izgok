@@ -9,39 +9,39 @@
     )) }}
 
        <div class="form-group @if($errors->has('oldPassword'))has-error @endif">
-            {{ Form::label('oldPassword', 'Old password (required field)', array(
+            {{ Form::label('oldPassword', 'Geslo (obvezno polje)', array(
                 'class' => 'control-label'
             )) }}
             {{ Form::password('oldPassword', array(
                 'class'       => 'form-control',
-                'placeholder' => 'Password'
+                'placeholder' => 'geslo'
             )) }}
             {{ $up }}
         </div>
 
         <div class="form-group @if($errors->has('password'))has-error @endif">
-            {{ Form::label('password', 'Change password', array(
+            {{ Form::label('password', 'Spremeni geslo', array(
                 'class' => 'control-label'
             )) }}
             {{ Form::password('password', array(
                 'class'       => 'form-control',
-                'placeholder' => 'New password'
+                'placeholder' => 'Novo geslo'
             )) }}
             {{ $errors->first('password', '<p class="help-block">:message</p>') }}
         </div>
 
         <div class="form-group @if($errors->has('password'))has-error @endif">
-            {{ Form::label('password_confirmation', 'New password confirmation', array(
+            {{ Form::label('password_confirmation', 'Potrdi novo geslo', array(
                 'class' => 'control-label'
             )) }}
             {{ Form::password('password_confirmation', array(
                 'class'       => 'form-control',
-                'placeholder' => 'New password confirmation'
+                'placeholder' => 'Novo geslo'
             )) }}
         </div>
         
         <div class="form-group @if($errors->has('slika'))has-error @endif">
-            {{ Form::label('slika', 'Change user image', array(
+            {{ Form::label('slika', 'Spremeni svojo sliko', array(
                 'class' => 'control-label'
             )) }}
             {{ Form::file('slika', '', array(
@@ -52,12 +52,12 @@
         
        
 
-        {{ Form::button('Change', array(
+        {{ Form::button('Spremeni', array(
             'type'  => 'submit',
             'class' => 'btn btn-primary'
         )) }}
 
-        {{ Form::button('Reset', array(
+        {{ Form::button('Počisti', array(
             'type'  => 'reset',
             'class' => 'btn btn-danger'
         )) }}

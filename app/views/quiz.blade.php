@@ -89,7 +89,7 @@
 				{{ Form::radio($groupName, '4') }} {{ $answer4 }}						
 			</div>
 		@endforeach
-		{{ Form::button('Answer', array('type' => 'submit', 'class' => 'btn btn-primary')) }}
+		{{ Form::button('Odgovori', array('type' => 'submit', 'class' => 'btn btn-primary')) }}
 	{{ Form::close() }}
 	    
 	    @if($isAttacker)
