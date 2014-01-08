@@ -199,7 +199,7 @@ class QuizController extends BaseController {
         if($isAttacker && $quiz -> submit_time_attacker == null && $quizOpenedAttacker - time() > 0) {
             return View::make('quiz', $data);
         }
-        elseif($isDefender && $quiz -> submit_time_defender == null && $quizOpenedAttacker - time() > 0) {
+        elseif($isDefender && $quiz -> submit_time_defender == null && $quizOpenedDefender - time() > 0) {
             return View::make('quiz', $data);
         }
 
@@ -208,7 +208,7 @@ class QuizController extends BaseController {
             $quiz -> save();
             return View::make('report', $data);
         }
-        elseif($isDefender && $quiz -> submit_time_defender == null && $quizOpenedAttacker - time() < 1) {
+        elseif($isDefender && $quiz -> submit_time_defender == null && $quizOpenedDefender - time() < 1) {
             $quiz -> submit_time_defender = date("Y-m-d H:i:s");
             $quiz -> save();
             return View::make('report', $data);
