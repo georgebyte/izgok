@@ -189,6 +189,7 @@ class HistoryController extends BaseController {
         $territoryPosX = array();
         $territoryPosY = array();
         $territoryIDs = array();
+        $insideTimeLimit = array();
 
         /* branje kvizov v katerih je uporabnik sodeloval kot branitelec - sortirano po casu padajoce */
         /* array s podatki id kviza*/
@@ -223,6 +224,7 @@ class HistoryController extends BaseController {
             array_push($quizIDsArray, $value['id']);
             array_push($quizDates, $value['created_at']);
             array_push($solvedQuizes, $solved);
+            array_push($insideTimeLimit, $timeLimitOK);
             array_push($attackedTerritories, $attackedTerritoryData[0]);
         }
 
