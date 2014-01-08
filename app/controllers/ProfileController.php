@@ -62,7 +62,7 @@ class ProfileController extends BaseController {
             -> count(); 
 
         $territories= Territory::where('id_owner', '=', $myID) 
-            -> get(array('name','description','pos_x','pos_y'));
+            -> get(array('id', 'name','description','pos_x','pos_y'));
 
         $highScoreAttack= Quiz::where('id_attacker', '=', $myID) 
             -> max('attacker_num_correct_ans');
@@ -80,7 +80,7 @@ class ProfileController extends BaseController {
         
         /* sestavljanje tabele $data ki bo poslana v view */
 
-    	$data=array("na"=>$name, "im" =>$image, "id"=>$myID, "qc" => $quizCount,"tc" => $territoryCount, "t" => $territories, "hsa" => $highScoreAttack, "hsd" => $highScoreDefense, "aas" => $averageAttackScore, "ads" => $averageDefenseScore);
+    	$data=array("na"=>$name, "im" => $image, "id"=>$myID, "qc" => $quizCount,"tc" => $territoryCount, "t" => $territories, "hsa" => $highScoreAttack, "hsd" => $highScoreDefense, "aas" => $averageAttackScore, "ads" => $averageDefenseScore);
 
     	/* vracanje view in posiljanje podatkov */
     	return View::make('profile', $data);

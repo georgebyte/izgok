@@ -43,7 +43,7 @@
 			<br/><br/>
 			<div style="padding-left:15px">
 				@foreach($t as $val)
-					<li>Ime: {{ $val['name'] }} <br/>
+					<li>Ime: {{ $val['name'] }} <a href="/map/territory/{{ $val['id'] }}/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}"> Link </a><br/>
 				 		&nbsp;&nbsp;&nbsp;Opis: {{ $val['description'] }} <br/>
 				 		&nbsp;&nbsp;&nbsp;koordinate: {{ $val['pos_x']}}, {{ $val['pos_y'] }} <br>
 				 		&nbsp;&nbsp;&nbsp;<a href="/map/show/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}">Pojdi na mapo</a>
