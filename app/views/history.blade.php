@@ -39,13 +39,13 @@
                                  <a href="/map/territory/{{ $territoryIDs[$cnt] }}/{{ $territoryPosX[$cnt] }}/{{ $territoryPosY[$cnt] }}/"> Pojdi na mapo</a>
                                  <br>
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="/quiz/show/{{$quizID}}"> Poročilo bitke - {{ $quizDates[$cnt]}} {{ $solved }}</a></li>
+                                <a href="/quiz/show/{{$quizID}}" id="{{$cnt}}"> Poročilo bitke - {{ $quizDates[$cnt]}} {{ $solved }}</a></li>
                          <?php $cnt++; ?>
                 @endforeach
             @endif
             @if($all > count($attackedTerritoryData))
             <?php $i = ($all/5)-1 > 0 ? ($all/5)-1 : 1;?>
-             <a href="{{ $url }}">Vec...</a>
+             <a href="{{ $url }}#{{ $cnt }}">Vec...</a>
             @endif
     </div>
 @stop
