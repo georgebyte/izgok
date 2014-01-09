@@ -30,7 +30,7 @@
                                         <?php 
                                         $territoryID = $currentTerritory['id'];
                                         ?>
-                                    <div class='village @if($leaders[$territoryID] == $me)owned-territory@endif'>
+                                    <div class='@if($leaders[$territoryID] == $me)owned-territory @elsevillage@endif'>
 
                                         <a href='/map/territory/{{ $territoryID }}/{{ $currentX }}/{{ $currentY }}'>
                                             @if($currentTerritory['is_main_village'] == 1)

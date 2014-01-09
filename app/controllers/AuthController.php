@@ -99,53 +99,59 @@ class AuthController extends BaseController {
 
             /* razdelitev limit za sirjenje od znotraj navzven */
             $min = (int)($allTerritoriesCount / 10);
-            $min = (int)(($min + 1) * 10);
-            $max = (int)($min * 2.2);
+            $min = (int)(($min + 1) * 2);
+            $max = (int)($min * 2.5);
             $minNeg = -1 * $min;
             $maxNeg = -1 * $max;
 
-            if($allTerritoriesCount <= $min){
+            do{
+                if($allTerritoriesCount <= $min){
 
-                switch($positionOnMap){
-                    case 'NE': 
-                        $posx=rand(0,$min);
-                        $posy=rand(0,$min);
-                    break;
-                    case 'SE': 
-                        $posx=rand(0,$min);
-                        $posy=rand($minNeg,0);
-                    break;
-                    case 'SW':
-                        $posx=rand($minNeg,0);
-                        $posy=rand($minNeg,0);
-                    break;
-                    case 'NW': 
-                        $posx=rand($minNeg,0);
-                        $posy=rand(0,$min);
-                    break;
+                    switch($positionOnMap){
+                        case 'NE': 
+                            $posx=rand(0,$min);
+                            $posy=rand(0,$min);
+                        break;
+                        case 'SE': 
+                            $posx=rand(0,$min);
+                            $posy=rand($minNeg,0);
+                        break;
+                        case 'SW':
+                            $posx=rand($minNeg,0);
+                            $posy=rand($minNeg,0);
+                        break;
+                        case 'NW': 
+                            $posx=rand($minNeg,0);
+                            $posy=rand(0,$min);
+                        break;
+                    }
                 }
-            }
-            elseif($allTerritoriesCount > $min && $allTerritoriesCount <= $max){
+                elseif($allTerritoriesCount > $min && $allTerritoriesCount <= $max){
 
-                switch($positionOnMap){
-                    case 'NE': 
-                        $posx=rand($min,$max);
-                        $posy=rand($min,$max);
-                    break;
-                    case 'SE': 
-                        $posx=rand($min,$max);
-                        $posy=rand($maxNeg,$minNeg);
-                    break;
-                    case 'SW':
-                        $posx=rand($maxNeg,$minNeg);
-                        $posy=rand($maxNeg,$minNeg);
-                    break;
-                    case 'NW': 
-                        $posx=rand($maxNeg,$minNeg);
-                        $posy=rand($min,$max);
-                    break;
+                    switch($positionOnMap){
+                        case 'NE': 
+                            $posx=rand($min,$max);
+                            $posy=rand($min,$max);
+                        break;
+                        case 'SE': 
+                            $posx=rand($min,$max);
+                            $posy=rand($maxNeg,$minNeg);
+                        break;
+                        case 'SW':
+                            $posx=rand($maxNeg,$minNeg);
+                            $posy=rand($maxNeg,$minNeg);
+                        break;
+                        case 'NW': 
+                            $posx=rand($maxNeg,$minNeg);
+                            $posy=rand($min,$max);
+                        break;
+                    }
                 }
-            }
+                        $territory= Territory::where('pos_x', '=', $posx)
+                                            -> where('pos_y', '=', $posy)
+                                            -> take(1);
+
+            }while(count($territory) == 1);
 
             /* dodajanje teritorija uporabniku */
             $userName = $userdata['username'];
