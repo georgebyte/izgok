@@ -24,7 +24,7 @@ class MapController extends BaseController {
         $width=abs($minX)+abs($maxX)+50;
         $height=abs($minY)+abs($maxY)+50;
         /* poveca slike */
-        $sizeMultiplier = 12;
+        $sizeMultiplier = 4;
         /* velikost pike na zemljevidu (1=1 2=4 3=9) */
         $dotSize = 3;
 
