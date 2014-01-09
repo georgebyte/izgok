@@ -71,7 +71,7 @@ class MapController extends BaseController {
 
             /* centriranje na sredino mape */
             $mapX = $mapX + $wHalf;
-            $mapY = $mapY >= 0 ? $hHalf - $mapY : $mapY + $height;
+            $mapY = $mapY >= 0 ? $hHalf - $mapY : abs($mapY) + $hHalf;
 
             /* barvanje svojih teritorijev v zeleno */
             if($territoryOwner == Auth::user() -> username){
