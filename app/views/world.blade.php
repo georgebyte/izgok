@@ -6,7 +6,7 @@
     @section('header')
         @include('layouts.header')
     @show
-    <div id="main-container">
+    <div class="world">
         <?php
         $im = "/map/drawworld";
         ?>

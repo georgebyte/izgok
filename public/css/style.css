@@ -11,6 +11,10 @@ a:hover, a:active {
     text-decoration: none;
 }
 
+.world {
+    width: 25%;
+    height: 25%;
+}
 .btn-primary {
     background-color: #685648;
     border-color: #453C35;
