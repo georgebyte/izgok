@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     @show
     @section('javascript')
-        <script src="https://code.jquery.com/jquery.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     @show
 </head>
