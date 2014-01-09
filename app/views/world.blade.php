@@ -6,11 +6,12 @@
     @section('header')
         @include('layouts.header')
     @show
-    <div class="world">
+    <div id="main-container">
         <?php
         $im = "/map/drawworld";
         ?>
-        <div id="world"><img src="{{asset($im)}}"></div>
+        <div id="world" class="world"><img src="{{asset($im)}}"></div>
+
 
     </div>    
     @section('footer')
