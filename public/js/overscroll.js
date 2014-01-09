@@ -1,11 +1,11 @@
 /**
- * Overscroll v1.7.0
+ * Overscroll v1.7.3
  *  A jQuery Plugin that emulates the iPhone scrolling experience in a browser.
  *  http://azoffdesign.com/overscroll
  *
  * Intended for use with the latest jQuery
  *  http://code.jquery.com/jquery-latest.js
- *
+ *  
  * Copyright 2013, Jonathan Azoff
  * Licensed under the MIT license.
  *  https://github.com/azoff/overscroll/blob/master/mit.license
@@ -13,7 +13,7 @@
  * For API documentation, see the README file
  *  http://azof.fr/pYCzuM
  *
- * Date: Monday, February 2nd 2013
+ * Date: Tuesday, March 18th 2013
  */
 (function(global, dom, browser, math, wait, cancel, namespace, $, none){
 
@@ -23,6 +23,32 @@
 
 	// The key used to bind-instance specific data to an object
 	var datakey = 'overscroll';
+
+    // create <body> node if there's not one present (e.g., for test runners)
+	if (dom.body === null) {
+		dom.documentElement.appendChild(
+			dom.createElement('body')
+		);
+	}
+
+	// quick fix for IE 8 and below since getComputedStyle() is not supported
+	// TODO: find a better solution
+	if (!global.getComputedStyle) {
+		global.getComputedStyle = function (el, pseudo) {
+			this.el = el;
+			this.getPropertyValue = function (prop) {
+				var re = /(\-([a-z]){1})/g;
+				if (prop == 'float') prop = 'styleFloat';
+				if (re.test(prop)) {
+					prop = prop.replace(re, function () {
+						return arguments[2].toUpperCase();
+					});
+				}
+				return el.currentStyle[prop] ? el.currentStyle[prop] : null;
+			};
+			return this;
+		};
+	}
 
 	// runs feature detection for overscroll
 	var compat = {
@@ -127,7 +153,8 @@
 		captureWheel:   true,
 		wheelDelta:     settings.wheelDelta,
 		wheelDirection: 'multi',
-		zIndex:         999
+		zIndex:         999,
+		ignoreSizing:	false
 	};
 
 	// Triggers a DOM event on the overscrolled element.
@@ -224,6 +251,7 @@
 	function scroll(event) {
 		var data = event.data;
 		if (!data.flags.dragged) {
+			/*jshint validthis:true */
 			moveThumbs(data.thumbs, data.sizing, this.scrollLeft, this.scrollTop);
 		}
 	}
@@ -279,6 +307,7 @@
 
 		// actually modify scroll offsets
 		if (options.wheelDirection === 'vertical'){
+			/*jshint validthis:true */
 			this.scrollTop -= delta;
 		} else if ( options.wheelDirection === 'horizontal') {
 			this.scrollLeft -= delta;
@@ -664,7 +693,7 @@
 
 		// only apply handlers if the overscrolled element
 		// actually has an area to scroll
-		if (sizing.valid) {
+		if (sizing.valid || options.ignoreSizing) {
 			// provide a circular-reference, enable events, and
 			// apply any required CSS
 			data.target = target = $(target).css({
@@ -734,6 +763,7 @@
 	// You can find it's exposure point at the end
 	// of this closure
 	function overscroll(options) {
+		/*jshint validthis:true */
 		return this.removeOverscroll().each(function() {
 			setup(this, options);
 		});
@@ -743,6 +773,7 @@
 	// You can find it's exposure point at the end
 	// of this closure
 	function removeOverscroll() {
+		/*jshint validthis:true */
 		return this.each(function () {
 			teardown(this);
 		});

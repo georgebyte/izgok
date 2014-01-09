@@ -21,10 +21,10 @@ class MapController extends BaseController {
         $maxY = Territory::max('pos_y');
 
         /* nastavljanje velikosti slike */
-        $width=abs($minX)+abs($maxX)+50;
-        $height=abs($minY)+abs($maxY)+50;
+        $width=abs($minX)+abs($maxX);
+        $height=abs($minY)+abs($maxY);
         /* poveca slike */
-        $sizeMultiplier = 4;
+        $sizeMultiplier = 72;
         /* velikost pike na zemljevidu (1=1 2=4 3=9) */
         $dotSize = 3;
 
@@ -71,7 +71,7 @@ class MapController extends BaseController {
 
             /* centriranje na sredino mape */
             $mapX = $mapX + $wHalf;
-            $mapY = $mapY > 0 ? $hHalf - $mapY : $mapY + $height;
+            $mapY = $mapY >= 0 ? $hHalf - $mapY : $mapY + $height;
 
             /* barvanje svojih teritorijev v zeleno */
             if($territoryOwner == Auth::user() -> username){
