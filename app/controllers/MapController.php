@@ -12,6 +12,106 @@ class MapController extends BaseController {
         return Redirect::to("/map/show/");
     }
 
+    public function getDrawworld()
+    {        
+        /* branje extremov iz baze */
+        $minX = Territory::min('pos_x');
+        $minY = Territory::min('pos_y');
+        $maxX = Territory::max('pos_x');
+        $maxY = Territory::max('pos_y');
+
+        /* nastavljanje velikosti slike */
+        $width=abs($minX)+abs($maxX)+50;
+        $height=abs($minY)+abs($maxY)+50;
+        /* poveca slike */
+        $sizeMultiplier = 12;
+        /* velikost pike na zemljevidu (1=1 2=4 3=9) */
+        $dotSize = 3;
+
+
+        /* size multipling */
+        $width *= $sizeMultiplier;
+        $height *= $sizeMultiplier;
+
+        /* half size */
+        $wHalf=$width/2;
+        $hHalf=$height/2;
+
+        /* risanje slike celotnega zemljevida */
+        header ('Content-Type: image/png');
+
+        /* izdelava osnovne slike velikosti $width in $height */
+        $im = imagecreatetruecolor($width, $height);
+
+        /* inicializacija barv */
+        $red = imagecolorallocate($im,239,0,0);
+        $green = imagecolorallocate($im,0,239,0); 
+        $blue = imagecolorallocate($im,0,0,239);
+        $black = imagecolorallocate($im, 65, 65, 65);
+        $background = imagecolorallocate($im,0,119,0); 
+
+        /* nastavljanje velikosti */
+        $size=1;
+
+        /* polnilo slike */
+        imagefilledrectangle($im, 0, 0, $width, $height, $background);
+
+        /* izris koordinatnega sistema */
+        imageline($im,$width/2,0,$width/2,$height,$black);
+        imageline($im,0,($height/2)-1,$width,($height/2)-1,$black);
+
+        /* risanje */
+        $visibleTerritories = Territory::get();
+        foreach ($visibleTerritories as $territory) {
+
+            /* Iskanje lastnika ozemlja */
+            $territoryOwner = User::find($territory['id_owner'])['username'];
+            $mapX = $territory['pos_x'];
+            $mapY = $territory['pos_y'];
+
+            /* centriranje na sredino mape */
+            $mapX = $mapX + $wHalf;
+            $mapY = $mapY + $hHalf;
+
+            /* barvanje svojih teritorijev v zeleno */
+            if($territoryOwner == Auth::user() -> username){
+                for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
+                    for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
+                        imagesetpixel($im, $i, $j, $green);
+                    }  
+                }
+
+            }
+
+            /* barvanje NPC teritorijev v modro */
+            elseif($territory['is_npc_village'] == 1){
+                for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
+                    for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
+                        imagesetpixel($im, $i, $j, $blue);
+                    }  
+                }
+            }
+
+            /* barvanje ostalih teritorijev v rdeco */
+            else{
+                for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
+                    for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
+                        imagesetpixel($im, $i, $j, $red);
+                    }  
+                }
+            }
+        }
+        
+        /* se par nastavitev in kreiranje slike */
+        imagepng($im);
+        imagedestroy($im);
+    }
+
+    public function getWorld()
+    {
+        return View::make("world");   
+    }
+
     public function getShow($x = NULL, $y = NULL)
     {
         if($x == NULL && $y == NULL){
