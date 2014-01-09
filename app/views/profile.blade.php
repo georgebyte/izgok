@@ -8,7 +8,7 @@
 			$avgDefenseScore=number_format($ads,1);
 			?>
 			<div class="profile-player-pic">
-				<img src='{{asset($im)}}' alt='{{ $na }}'>
+				<img src='{{asset($im)}}' class="img-thumbnail" alt='{{ $na }}'>
 			</div>
 			<div class="profile-player-name">
 				<h3>{{ $na }}</h3>
@@ -61,34 +61,42 @@
 	</div>
 	<div class="profile-villages col-md-6">
 		<div class="profile-villages-header">
-			@if($tc == 0)
-				Ta igralec nima nobenega ozemlja
-			@else
-				Ta igralec ima {{ $tc }}
-				@if($tc == 1)
-					ozemlje
+			<h3>
+				@if($tc == 0)
+					{{ ucfirst ($na) }} si ne lasti nobene vasi.
+				@else
+					{{ ucfirst ($na) }} ima v lasti <strong>{{ $tc }}</strong>
+					@if($tc == 1)
+						vas:
+					@endif
+					@if($tc == 2)
+						vasi:
+					@endif
+					@if($tc == 3 || $tc == 4)
+						vasi:
+					@endif
+					@if($tc > 4)
+						vasi:
+					@endif
 				@endif
-				@if($tc == 2)
-					ozemlji
-				@endif
-				@if($tc == 3 || $tc == 4)
-					ozemlja
-				@endif
-				@if($tc > 4)
-					ozemelj
-				@endif
-			@endif
+			</h3>
 		</div>
 		<div class="profile-villages-list">
-			@foreach($t as $val)
-				<li>Ime: {{ $val['name'] }} <a href="/map/territory/{{ $val['id'] }}/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}"> Link </a><br/>
-			 		&nbsp;&nbsp;&nbsp;Opis: {{ $val['description'] }} <br/>
-			 		&nbsp;&nbsp;&nbsp;koordinate: {{ $val['pos_x']}}, {{ $val['pos_y'] }} <br>
-			 		&nbsp;&nbsp;&nbsp;<a href="/map/show/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}">Pojdi na mapo</a>
-			 		&nbsp;&nbsp;&nbsp;<a href="/profile/edit/{{ $val['id'] }}">Uredi</a>
-			 		<hr>
-				</li>
-			@endforeach
+			<table>
+				@foreach($t as $val)				
+					<tr>
+						<td>
+							<strong><a href="/map/territory/{{ $val['id'] }}/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}">{{ $val['name'] }}</a> ({{ $val['pos_x']}}, {{ $val['pos_y'] }})</strong>
+						</td>
+						<td>
+							<a href="/map/show/{{ $val['pos_x'] }}/{{ $val['pos_y'] }}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-globe"></span></a>
+				 			@if (Auth::user()->username == $na)
+				 				<a href="/profile/edit/{{ $val['id'] }}" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+				 			@endif
+						</td>
+					</tr>
+				@endforeach
+			</table>		
 		</div>
 	</div>
 @stop
