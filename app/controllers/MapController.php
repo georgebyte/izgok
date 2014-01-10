@@ -85,18 +85,8 @@ class MapController extends BaseController {
             $mapX = $mapX + $wHalf;
             $mapY = $mapY >= 0 ? $hHalf - $mapY : abs($mapY) + $hHalf;
 
-            /* barvanje svojih teritorijev v zeleno */
-            if($territoryOwner == Auth::user() -> username){
-                for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
-                    for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
-                        imagesetpixel($im, $i, $j, $green);
-                    }  
-                }
-
-            }
-
             /* barvanje NPC teritorijev v rdece */
-            elseif($territory['is_npc_village'] == 1){
+            if($territory['is_npc_village'] == 1){
                 for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
                     for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
                         imagesetpixel($im, $i, $j, $red);
@@ -113,7 +103,29 @@ class MapController extends BaseController {
                 }
             }
         }
-        
+                foreach ($visibleTerritories as $territory) {
+
+            /* Iskanje lastnika ozemlja */
+            $territoryOwner = User::find($territory['id_owner'])['username'];
+            $mapX = $territory['pos_x'] * $dotSize;
+            $mapY = $territory['pos_y'] * $dotSize;
+
+            /* centriranje na sredino mape */
+            $mapX = $mapX + $wHalf;
+            $mapY = $mapY >= 0 ? $hHalf - $mapY : abs($mapY) + $hHalf;
+
+            /* barvanje svojih teritorijev v zeleno */
+            if($territoryOwner == Auth::user() -> username){
+                for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
+                    for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
+                        imagesetpixel($im, $i, $j, $green);
+                    }  
+                }
+
+            }
+            
+        }
+
         /* se par nastavitev in kreiranje slike */
         imagepng($im);
         imagedestroy($im);
