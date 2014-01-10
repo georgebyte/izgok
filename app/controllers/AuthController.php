@@ -103,7 +103,8 @@ class AuthController extends BaseController {
             $max = (int)($min * 2.5);
             $minNeg = -1 * $min;
             $maxNeg = -1 * $max;
-
+            $posx=0;
+            $posy=0;
             do{
                 if($allTerritoriesCount <= $min){
 
