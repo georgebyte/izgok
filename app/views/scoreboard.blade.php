@@ -1,68 +1,68 @@
-@extends('layouts.body')
+@extends('layouts.base')
 
-@section('content')
+@section('body')
+    <div class="container">
 
-	<?php 
-		$cnt=0;
-	?>
-	{{ Form::open(array(
-        'url'   => 'profile',
-        'class' => 'search-form'
-    )) }}
+        @section('header')
+            @include('layouts.header')
+        @show
 
-        <div class="form-components">
-        {{ Form::text('find', '', array(
-                'class'       => 'form-control',
-                'placeholder' => 'Poišči igralca',
-                'id'		  => 'username'
-        )) }}
- 		</div>
+        <div id="main-container">
+            {{ Form::open(array(
+                'url'   => 'profile',
+                'class' => 'form-inline'
+            )) }}
+                <div class="form-group">
+                    {{ Form::text('find', '', array(
+                            'class'       => 'form-control',
+                            'placeholder' => 'Poišči igralca',
+                            'id'          => 'username'
+                    )) }}
+                </div>
+                {{ Form::button('<span class="glyphicon glyphicon-search"></span>', array(
+                    'type'  => 'submit',
+                    'class' => 'btn btn-primary scorebord-players-search'
+                )) }}
+            {{ Form::close() }}
+            <div class="scorebord clearfix">
+                <h1>Lestvica igralcev</h1>
+                <div class="scorebord-players-list">
+                    @foreach($scores as $nameAndImage => $score)
+                        <?php 
+                        $array=explode(" ", $nameAndImage);
+                        ?>
+                        <div class="scorebord-players-list-item">
+                            <div class="pic-name">
+                                <img src='{{asset($array[1])}}' alt='{{ $array[0] }}' class="img-thumbnail">
+                                <a href='/profile/show/{{ $array[0] }}'>{{$array[0]}}</a>
+                            </div>
+                            <div class="score">
+                                {{$score}} točk
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="scorebord-pagination">
+                    @if($start && $end)
+                        <a class="btn btn-primary" href='/scoreboard/show/{{ $page-$pageLength }}'><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        <a class="btn btn-primary" href='/scoreboard/show/{{ $page+$pageLength }}'><span class="glyphicon glyphicon-chevron-right"></span></a>
+                    @elseif($start)
+                        <a class="btn btn-primary" href='/scoreboard/show/{{ $page-$pageLength }}'><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        <a class="btn btn-primary disabled" href='/scoreboard/show/{{ $page+$pageLength }}'><span class="glyphicon glyphicon-chevron-right"></span></a>
+                    @elseif($end)
+                        <a class="btn btn-primary disabled" href='/scoreboard/show/{{ $page-$pageLength }}'><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        <a class="btn btn-primary" href='/scoreboard/show/{{ $page+$pageLength }}'><span class="glyphicon glyphicon-chevron-right"></span></a>
+                    @endif
+                </div>
+            </div>
             
-        <div class="form-components">
-        {{ Form::button('<span class="glyphicon glyphicon-search"></span>', array(
-            'type'  => 'submit',
-            'class' => 'btn btn-primary'
-        )) }}
+            @section('footer')
+                @include('layouts.footer')
+            @show
         </div>
+    </div>
 
-    {{ Form::close() }}
-	<br><br><br>
-	<h1>Lestvica igralcev</h1><br/>
-	<div style="padding:20px; background-color:#eeeeee; border-radius:25px; border-collapse:separate">
-	<table>
-	@foreach($scores as $nameAndImage => $score)
-		<?php 
-		$array=explode(" ", $nameAndImage);
-		?>
-			<tr>
-				
-				<td>
-					<a href='/profile/show/{{ $array[0] }}'>
-						<img src='{{asset($array[1])}}' alt='user image' width='50' height='60' style="padding-bottom:10px">
-					</a>
-				</td>
-				<td>
-					<a href='/profile/show/{{ $array[0] }}'>
-						<p style="padding-bottom:10px; padding-left:30px; color:#333333; font-size:250%">{{$array[0]}}</p>
-					</a>
-				</td>
-				<td>
-					<p style="padding-bottom:10px; padding-left:30px; color:#333333; font-size:250%">{{$score}} točk</p>
-				</td>
-			</tr>
-		
-	@endforeach
-	</table>
-	@if($start && $end)
-		<a href='/scoreboard/show/{{ $page-$pageLength }}'>nazaj</a>&nbsp&nbsp
-		<a href='/scoreboard/show/{{ $page+$pageLength }}'>naprej</a>
-	@elseif($start)
-		<a href='/scoreboard/show/{{ $page-$pageLength }}'>nazaj</a>
-	@elseif($end)
-		<a href='/scoreboard/show/{{ $page+$pageLength }}'>naprej</a>	
-	@endif
-	</div>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script src="/js/UserAutoComplete.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="/js/UserAutoComplete.js"></script>
 @stop
