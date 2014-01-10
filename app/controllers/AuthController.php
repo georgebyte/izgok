@@ -99,8 +99,8 @@ class AuthController extends BaseController {
 
             /* razdelitev limit za sirjenje od znotraj navzven */
             $min = (int)($allTerritoriesCount / 10);
-            $min = (int)(($min + 1) * 2);
-            $max = (int)($min * 2.5);
+            $min = (int)(($min + 1) * 1.8);
+            $max = (int)($min * 2.4);
             $minNeg = -1 * $min;
             $maxNeg = -1 * $max;
             $posx=0;
