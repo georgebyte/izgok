@@ -127,7 +127,7 @@ class AuthController extends BaseController {
                         break;
                     }
                 }
-                elseif($allTerritoriesCount > $min && $allTerritoriesCount <= $max){
+                else{
 
                     switch($positionOnMap){
                         case 'NE': 
@@ -149,11 +149,10 @@ class AuthController extends BaseController {
                     }
                 }
 
-                $territory = Territory::where('pos_x', '=', $posx)
+                $territoryCount = Territory::where('pos_x', '=', $posx)
                                     -> where('pos_y', '=', $posy)
                                     -> count();
-
-            }while($territory > 0);
+            }while($territoryCounty > 1);
 
             /* dodajanje teritorija uporabniku */
             $userName = $userdata['username'];
