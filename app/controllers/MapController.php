@@ -28,7 +28,7 @@ class MapController extends BaseController {
         /* velikost pike na zemljevidu (1=1 2=4 3=9) */
         $dotSize = 2;
         /* ce je slika manjsa od limita jo poveca do limita */
-        $sizeLimit = 1106;
+        $sizeLimit = 2000;
 
         /* ce je slika manjsa od limita jo poveca do limita */
         if((($width+$height)/2)*$sizeMultiplier < $sizeLimit){
