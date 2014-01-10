@@ -26,7 +26,7 @@ class MapController extends BaseController {
         /* poveca slike */
         $sizeMultiplier = 8;
         /* velikost pike na zemljevidu (1=1 2=4 3=9) */
-        $dotSize = 5;
+        $dotSize = 2;
         /* ce je slika manjsa od limita jo poveca do limita */
         $sizeLimit = 1100;
 
@@ -54,7 +54,7 @@ class MapController extends BaseController {
 
         /* inicializacija barv */
         $red = imagecolorallocate($im,240,33,33);
-        $green = imagecolorallocate($im,163,212,144); 
+        $green = imagecolorallocate($im,163,232,144); 
         $blue = imagecolorallocate($im,46,46,240);
         $black = imagecolorallocate($im, 65, 65, 65);
         $coordinateColor = imagecolorallocate($im, 130,176,42);
