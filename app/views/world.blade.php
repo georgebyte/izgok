@@ -18,10 +18,4 @@
         @include('layouts.footer')
     @show
 </div>
-<script src="/js/overscroll.js"></script>
-<script>
-$(document).ready(function(){
-    $("#world").overscroll();
-});
-</script>
 @stop

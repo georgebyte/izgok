@@ -33,8 +33,8 @@ class MapController extends BaseController {
         /* ce je slika manjsa od limita jo poveca do limita */
         if((($width+$height)/2)*$sizeMultiplier < $sizeLimit){
             $newMultiplier = $sizeLimit/(($width+$height)/2);
-            $sizeMultiplier = $newMultiplier;
-            $dotsize *= (int)($newMultiplier/$sizeMultiplier)+1;
+           $sizeMultiplier = $newMultiplier;
+            $dotSize *= (int)($newMultiplier/$sizeMultiplier)+1;
         }
 
 
@@ -95,20 +95,20 @@ class MapController extends BaseController {
 
             }
 
-            /* barvanje NPC teritorijev v modro */
+            /* barvanje NPC teritorijev v rdece */
             elseif($territory['is_npc_village'] == 1){
                 for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
                     for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
-                        imagesetpixel($im, $i, $j, $blue);
+                        imagesetpixel($im, $i, $j, $red);
                     }  
                 }
             }
 
-            /* barvanje ostalih teritorijev v rdeco */
+            /* barvanje ostalih teritorijev v modro */
             else{
                 for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
                     for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
-                        imagesetpixel($im, $i, $j, $red);
+                        imagesetpixel($im, $i, $j, $blue);
                     }  
                 }
             }
