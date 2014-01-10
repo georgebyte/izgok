@@ -54,10 +54,10 @@ class MapController extends BaseController {
 
         /* inicializacija barv */
         $red = imagecolorallocate($im,240,33,33);
-        $green = imagecolorallocate($im,163,232,144); 
+        $coordinateColor = imagecolorallocate($im,163,232,144); 
         $blue = imagecolorallocate($im,46,46,240);
         $black = imagecolorallocate($im, 65, 65, 65);
-        $coordinateColor = imagecolorallocate($im, 130,176,42);
+        $green = imagecolorallocate($im, 130,176,42);
         $background = imagecolorallocate($im,214,233,207); 
 
         /* nastavljanje velikosti */
