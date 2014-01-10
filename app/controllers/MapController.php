@@ -33,7 +33,7 @@ class MapController extends BaseController {
         /* ce je slika manjsa od limita jo poveca do limita */
         if((($width+$height)/2)*$sizeMultiplier < $sizeLimit){
             $newMultiplier = $sizeLimit/(($width+$height)/2);
-           $sizeMultiplier = $newMultiplier;
+            $sizeMultiplier = $newMultiplier;
             $dotSize *= (int)($newMultiplier/$sizeMultiplier)+1;
         }
 
@@ -78,8 +78,8 @@ class MapController extends BaseController {
 
             /* Iskanje lastnika ozemlja */
             $territoryOwner = User::find($territory['id_owner'])['username'];
-            $mapX = $territory['pos_x'];
-            $mapY = $territory['pos_y'];
+            $mapX = $territory['pos_x'] * $dotSize;
+            $mapY = $territory['pos_y'] * $dotSize;
 
             /* centriranje na sredino mape */
             $mapX = $mapX + $wHalf;
