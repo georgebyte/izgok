@@ -55,11 +55,11 @@
                     @endif
                 </div>
             </div>
-            
-            @section('footer')
-                @include('layouts.footer')
-            @show
         </div>
+
+        @section('footer')
+            @include('layouts.footer')
+        @show
     </div>
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">

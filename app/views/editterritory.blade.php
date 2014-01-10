@@ -1,46 +1,46 @@
-@extends('layouts.body')
+@extends('layouts.base')
 
-@section('content')
+@section('body')
+    <div class="container">
 
-    
+        @section('header')
+            @include('layouts.header')
+        @show
 
-    
         <div id="main-container">
-            {{ Form::open(array(
-                'url'   => 'profile/edit/',
-                'class' => 'form-inline'
-            )) }}
-                <div class="form-group">
-                    {{ Form::hidden('id', $territoryInfo['id'])}}
-                    {{ Form::label('name', 'Ime naselja:') }}&nbsp;
-                    {{ Form::text('name', $territoryInfo['name'], array(
-                            'class'       => 'form-control',
-                            'id'          => 'name'
+            <div class="row">
+                <div class="col-sm-6">
+                    {{ Form::open(array(
+                        'url'   => 'profile/edit/',
                     )) }}
-                    {{ Form::label('description', 'Opis naselja:') }}<br>
-                    {{ Form::textarea('description', $territoryInfo['description'],array(
-                            'class'       => 'form-control',
-                            'id'          => 'description'
-                    )) }}<br>
-                    {{ Form::button('Uredi', array(
-                    'type'  => 'submit',
-                    'class' => 'btn btn-primary scorebord-players-search'
-                )) }}
-
+                        <div class="form-group">
+                            {{ Form::hidden('id', $territoryInfo['id'])}}
+                            {{ Form::label('name', 'Ime naselja:') }}&nbsp;
+                            {{ Form::text('name', $territoryInfo['name'], array(
+                                    'class'       => 'form-control',
+                                    'id'          => 'name'
+                            )) }}
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('description', 'Opis naselja:') }}
+                            {{ Form::textarea('description', $territoryInfo['description'],array(
+                                    'class'       => 'form-control',
+                                    'id'          => 'description'
+                            )) }}
+                        </div>
+                        {{ Form::button('Uredi', array(
+                            'type'  => 'submit',
+                            'class' => 'btn btn-primary'
+                        )) }}
+                    {{ Form::close() }}
                 </div>
-               
-            {{ Form::close() }}
-            
+            </div>
+        </div>
+
         @section('footer')
             @include('layouts.footer')
         @show
-    
-
-
-       
     </div>
-
-
 @stop
 
 
