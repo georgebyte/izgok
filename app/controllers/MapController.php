@@ -58,12 +58,12 @@ class MapController extends BaseController {
         imagefilledrectangle($im, 0, 0, $width, $height, $background);
 
         /* izris koordinatnega sistema */
-        imageline($im,($width/2)-1,0,($width/2)-1,$height,$black);
-        imageline($im,($width/2),0,($width/2),$height,$black);
-        imageline($im,($width/2)+1,0,($width/2)+1,$height,$black);
-        imageline($im,0,($height/2)-1,$width,($height/2)-1,$black);
-        imageline($im,0,($height/2),$width,($height/2),$black);
-        imageline($im,0,($height/2)+1,$width,($height/2)+1,$black);
+        imageline($im,($width/2)-1,0,($width/2)-1,$height,$coordinateColor);
+        imageline($im,($width/2),0,($width/2),$height,$coordinateColor);
+        imageline($im,($width/2)+1,0,($width/2)+1,$height,$coordinateColor);
+        imageline($im,0,($height/2)-1,$width,($height/2)-1,$coordinateColor);
+        imageline($im,0,($height/2),$width,($height/2),$coordinateColor);
+        imageline($im,0,($height/2)+1,$width,($height/2)+1,$coordinateColor);
 
         /* risanje */
         $visibleTerritories = Territory::get();
