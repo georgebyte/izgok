@@ -149,11 +149,11 @@ class AuthController extends BaseController {
                     }
                 }
 
-                $territory= Territory::where('pos_x', '=', $posx)
+                $territory = Territory::where('pos_x', '=', $posx)
                                     -> where('pos_y', '=', $posy)
                                     -> count();
 
-            }while(count($territory) > 0);
+            }while($territory > 0);
 
             /* dodajanje teritorija uporabniku */
             $userName = $userdata['username'];
