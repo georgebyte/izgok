@@ -132,8 +132,42 @@ class MapController extends BaseController {
     }
 
     public function getWorld()
-    {
-        return View::make("world");   
+    {        
+        /* branje extremov iz baze */
+        $minX = Territory::min('pos_x');
+        $minY = Territory::min('pos_y');
+        $maxX = Territory::max('pos_x');
+        $maxY = Territory::max('pos_y');
+
+        /* nastavljanje velikosti slike */
+        $width=abs($minX)+abs($maxX);
+        $height=abs($minY)+abs($maxY);
+        /* poveca slike */
+        $sizeMultiplier = 8;
+        /* velikost pike na zemljevidu (1=1 2=4 3=9) */
+        $dotSize = 2;
+        /* ce je slika manjsa od limita jo poveca do limita */
+        $sizeLimit = 2000;
+
+        /* ce je slika manjsa od limita jo poveca do limita */
+        if((($width+$height)/2)*$sizeMultiplier < $sizeLimit){
+            $newMultiplier = $sizeLimit/(($width+$height)/2);
+            $sizeMultiplier = $newMultiplier;
+            $dotSize *= (int)($newMultiplier/$sizeMultiplier)+1;
+        }
+
+
+        /* size multipling */
+        $width *= $sizeMultiplier;
+        $height *= $sizeMultiplier;
+
+        /* half size */
+        $wHalf=$width/2;
+        $hHalf=$height/2;
+
+        $data = array("xCenter" => $wHalf, "yCenter" => $hHalf);
+
+        return View::make("world", $data);
     }
 
     public function getShow($x = NULL, $y = NULL)
