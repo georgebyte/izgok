@@ -25,6 +25,11 @@ a:hover, a:active {
     border-color: #453C35;
 }
 
+.btn-primary.disabled {
+    background-color: #8C8179;
+    border-color: #453C35;
+}
+
 .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
     background-color: #685648;
 }
@@ -441,11 +446,84 @@ td.village-name, td.player-name {
     clear:both;
     padding-bottom:5px;   
 }
+
+.scorebord-players-list {
+    margin-top: 20px;
+}
+
+.scorebord-players-list-item {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 5px;
+}
+
+.scorebord-players-list-item:first-child {
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.scorebord-players-list-item:last-child {
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.scorebord-players-list-item:hover {
+    background-color: #CABFB7;
+}
+
+.scorebord-players-list-item .pic-name {
+    float: left;
+    width: 70%;
+}
+
+.scorebord-players-list-item .pic-name a {
+    line-height: 60px;
+}
+
+.scorebord-players-list-item .score {
+    float: left;
+    width: 30%;
+    line-height: 60px;
+}
+
+.scorebord-players-list-item .pic-name img {
+    width: 50px;
+    height: 50px;
+    margin-top: -2px;
+}
+
+button.scorebord-players-search {
+    margin-left: 10px;
+}
+
+.scorebord-pagination {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
 @media (max-width: 767px) {
     button.scorebord-players-search {
         width: 100%;
+        margin-left: 0px;
+    }
+
+    .scorebord h1 {
+        width: 100%;
+        text-align: center;
     }
 }
+
+
+
 
 
 
