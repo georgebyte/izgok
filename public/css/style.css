@@ -441,6 +441,11 @@ td.village-name, td.player-name {
     clear:both;
     padding-bottom:5px;   
 }
+@media (max-width: 767px) {
+    button.scorebord-players-search {
+        width: 100%;
+    }
+}
 
 
 
