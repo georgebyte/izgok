@@ -44,11 +44,12 @@ class MapController extends BaseController {
         $im = imagecreatetruecolor($width, $height);
 
         /* inicializacija barv */
-        $red = imagecolorallocate($im,239,0,0);
-        $green = imagecolorallocate($im,0,239,0); 
-        $blue = imagecolorallocate($im,0,0,239);
+        $red = imagecolorallocate($im,240,33,33);
+        $green = imagecolorallocate($im,163,212,144); 
+        $blue = imagecolorallocate($im,46,46,240);
         $black = imagecolorallocate($im, 65, 65, 65);
-        $background = imagecolorallocate($im,0,119,0); 
+        $coordinateColor = imagecolorallocate($im, 130,176,42);
+        $background = imagecolorallocate($im,214,233,207); 
 
         /* nastavljanje velikosti */
         $size=1;
@@ -57,8 +58,12 @@ class MapController extends BaseController {
         imagefilledrectangle($im, 0, 0, $width, $height, $background);
 
         /* izris koordinatnega sistema */
-        imageline($im,$width/2,0,$width/2,$height,$black);
+        imageline($im,($width/2)-1,0,($width/2)-1,$height,$black);
+        imageline($im,($width/2),0,($width/2),$height,$black);
+        imageline($im,($width/2)+1,0,($width/2)+1,$height,$black);
         imageline($im,0,($height/2)-1,$width,($height/2)-1,$black);
+        imageline($im,0,($height/2),$width,($height/2),$black);
+        imageline($im,0,($height/2)+1,$width,($height/2)+1,$black);
 
         /* risanje */
         $visibleTerritories = Territory::get();
