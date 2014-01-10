@@ -103,7 +103,9 @@ class AuthController extends BaseController {
             $max = (int)($min * 2.5);
             $minNeg = -1 * $min;
             $maxNeg = -1 * $max;
-
+            $posx=0;
+            $posy=0;
+            $territoryCount = 1;
             do{
                 if($allTerritoriesCount <= $min){
 
@@ -126,7 +128,7 @@ class AuthController extends BaseController {
                         break;
                     }
                 }
-                elseif($allTerritoriesCount > $min && $allTerritoriesCount <= $max){
+                else{
 
                     switch($positionOnMap){
                         case 'NE': 
@@ -147,11 +149,11 @@ class AuthController extends BaseController {
                         break;
                     }
                 }
-                        $territory= Territory::where('pos_x', '=', $posx)
-                                            -> where('pos_y', '=', $posy)
-                                            -> take(1);
 
-            }while(count($territory) == 1);
+                $territoryCount = Territory::where('pos_x', '=', $posx)
+                                    -> where('pos_y', '=', $posy)
+                                    -> count();
+            }while($territoryCount > 1);
 
             /* dodajanje teritorija uporabniku */
             $userName = $userdata['username'];
