@@ -34,7 +34,7 @@ class MapController extends BaseController {
         if((($width+$height)/2)*$sizeMultiplier < $sizeLimit){
             $newMultiplier = $sizeLimit/(($width+$height)/2);
             $sizeMultiplier = $newMultiplier;
-            $dotsize *= $newMultiplier/$sizeMultiplier;
+            $dotsize *= (int)($newMultiplier/$sizeMultiplier)+1;
         }
 
 
