@@ -102,6 +102,9 @@
                     {{ Form::text('y', '0', array('id' => 'search_y', 'placeholder' => 'y', 'size' => '3', 'class' => 'map-search-textbox')) }}
                     {{ Form::button('<span class="glyphicon glyphicon-search"></span>', array('id' => 'search_pos', 'name' => 'travel', 'type' => 'submit', 'class' => 'btn btn-primary')) }}
                 </div>
+                <div class='map-world-map-link'>
+                    <a href="/map/world" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Zemljevid sveta</a>
+                </div>
             </div>
         </div>
     </div>
