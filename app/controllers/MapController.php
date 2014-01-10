@@ -25,16 +25,17 @@ class MapController extends BaseController {
         $height=abs($minY)+abs($maxY);
         /* poveca slike */
         $sizeMultiplier = 8;
+        /* velikost pike na zemljevidu (1=1 2=4 3=9) */
+        $dotSize = 3;
         /* ce je slika manjsa od limita jo poveca do limita */
         $sizeLimit = 1100;
 
         /* ce je slika manjsa od limita jo poveca do limita */
         if((($width+$height)/2)*$sizeMultiplier < $sizeLimit){
-            $sizeMultiplier = $sizeLimit/(($width+$height)/2);
+            $newMultiplier = $sizeLimit/(($width+$height)/2);
+            $sizeMultiplier = $newMultiplier;
+            $dotsize *= $newMultiplier/$sizeMultiplier;
         }
-
-        /* velikost pike na zemljevidu (1=1 2=4 3=9) */
-        $dotSize = 3;
 
 
         /* size multipling */
