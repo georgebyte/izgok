@@ -6,6 +6,7 @@
     $cnt = 0; 
     $numberOfCorrectAnswersAttacker = $correctNumAnswers['attacker_num_correct_ans'];
     $numberOfCorrectAnswersDefender = $correctNumAnswers['defender_num_correct_ans'];
+    $defenderSubmit = true;
     if($submit_time_defender == NULL){
             $defenderSubmit = false;
             $numberOfCorrectAnswersDefender = "Se ne odgovorjeno";
