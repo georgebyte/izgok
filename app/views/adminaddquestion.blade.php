@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     @if(isset($added))
-                        Vprasanje <i>{{ $npcName }}</i> je uspesno dodano.
+                        Vprasanje <i>{{ $question }}</i> je uspesno dodano.
                     @endif
                     {{ Form::open(array(
                         'url'   => '/admin/question/',
