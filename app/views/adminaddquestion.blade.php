@@ -21,6 +21,7 @@
                             {{ Form::text('question', '', array(
                                     'class'       => 'form-control',
                                     'id'          => 'question'
+                            )) }}
                         </div>
                         <div class="form-group">
                             {{ Form::label('answer_1', 'Answer I:') }}
