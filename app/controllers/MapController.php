@@ -35,7 +35,7 @@ class MapController extends BaseController {
             $dotSize = (int)(sqrt($sizeMultiplier));
 
         if($shape == "circle")
-            $dotSize = $sizeMultiplier;
+            $dotSize = (int)($sizeMultiplier/2);
 
         /* ce je slika manjsa od limita jo poveca do limita */
         $sizeLimit = 2000;
