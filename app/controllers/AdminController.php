@@ -33,6 +33,7 @@ class AdminController extends BaseController {
         $answercorrect = $inputData['answercorrect'];
 
         $question = new Question;
+        $question -> question = $quizQuestion;
         $question -> answer_1 = $answer1;
         $question -> answer_2 = $answer2;
         $question -> answer_3 = $answer3;
