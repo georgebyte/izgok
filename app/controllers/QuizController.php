@@ -166,7 +166,7 @@ class QuizController extends BaseController {
 
         $correctNumAnswers = Quiz::where('id', $quizID) -> get(array('attacker_num_correct_ans', 'defender_num_correct_ans', 'quiz_opened_attacker', 'quiz_opened_defender')); 
 
-        $quizOpened = Quiz::where('id', $quizID) -> get(array('id_attacker', 'id_defender', 'quiz_opened_attacker', 'quiz_opened_defender'))[0]; 
+        $quizOpened = Quiz::where('id', $quizID) -> get(array('id_attacker', 'id_defender', 'quiz_opened_attacker', 'quiz_opened_defender', 'submit_time_defender'))[0]; 
         
         $attackerName = User::find($quizOpened['id_attacker'])['username'];
         $defenderName = User::find($quizOpened['id_defender'])['username'];
@@ -199,7 +199,8 @@ class QuizController extends BaseController {
             'isAttacker' => $isAttacker,
             'isDefender' => $isDefender,
             'attackerName' => $attackerName,
-            'defenderName' => $defenderName
+            'defenderName' => $defenderName,
+            'submit_time_defender' => $quizOpened['submit_time_defender']
             );
 
         /* igralcu, ki kviza se ni oddal prikazi kviz, na katerega lahko odgovarja */

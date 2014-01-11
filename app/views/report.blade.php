@@ -6,6 +6,10 @@
     $cnt = 0; 
     $numberOfCorrectAnswersAttacker = $correctNumAnswers['attacker_num_correct_ans'];
     $numberOfCorrectAnswersDefender = $correctNumAnswers['defender_num_correct_ans'];
+    if($submit_time_defender == NULL){
+            $defenderSubmit = false;
+            $numberOfCorrectAnswersDefender = "Se ne odgovorjeno"
+        }
     ?>
     <div class="report col-xs-12">
            <div class="report-item text-center row">
@@ -19,7 +23,7 @@
                         St. pravilnih odgovorov: <strong>{{ $numberOfCorrectAnswersAttacker }}</strong>
                     </div>
                     <div class="report-answer-text col-xs-4">
-                        @if($numberOfCorrectAnswersAttacker > $numberOfCorrectAnswersDefender)
+                        @if($numberOfCorrectAnswersAttacker > $numberOfCorrectAnswersDefender && $defenderSubmit)
                             <div class="answer-image-placeholder col-xs-1">
                                 <img src="/img/win.png" />
                             </div>
@@ -29,7 +33,7 @@
                                 <img src="/img/lose.png" />
                             </div>
                         @endif
-                        @if($numberOfCorrectAnswersAttacker <= $numberOfCorrectAnswersDefender)
+                        @if($numberOfCorrectAnswersAttacker <= $numberOfCorrectAnswersDefender && $defenderSubmit)
                             <div class="answer-image-placeholder col-xs-1">
                                 <img src="/img/lose.png" />
                             </div>
@@ -38,7 +42,12 @@
                             <div class="answer-image-placeholder col-xs-1">
                                 <img src="/img/win.png" />
                             </div>
-                        @endif                        
+                        @endif
+                        @if(!$defenderSubmit)
+                            <div class="answer-image-placeholder col-xs-4">
+                                <img src="/img/questionmark.png" />
+                            </div>
+                        @endif
                     </div>
                     <div class="answer-image-placeholder col-xs-4">
                         @if(empty($defenderName))
