@@ -60,30 +60,37 @@ postTerritory($territoryId)
 
         /* izbiranje smeri neba ( $positionOnMap ) za postavitev NPCja glede na tjo kje jih je najmanj */
         
-        /* v primeru ce ne bo spadal v spodaj podane kriterije */
-        switch(rand(1,4)){
+        /* vec nacinov razvrscanja za NPCje*/
+
+        $positionSelection = rand(1,100);
+
+        if($positionSelection <= 15){
+            switch(rand(1,4)){
             case 1: $positionOnMap = "S"; break;
             case 2: $positionOnMap = "E"; break;
             case 3: $positionOnMap = "W"; break;
             case 4: $positionOnMap = "N"; break;
+            }
         }
 
-        $countNE = Territory::where('pos_x', '>', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
-        $countSW = Territory::where('pos_x', '<', '0') -> where('pos_y', '<', '0') -> where('is_npc_village' ,'=', '1') -> count();
-        $countNW = Territory::where('pos_x', '<', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
-        $countSE = Territory::where('pos_x', '>', '0') -> where('pos_y', '<', '0') -> where('is_npc_village' ,'=', '1') -> count();
+        if($positionSelection > 15){
+            $countNE = Territory::where('pos_x', '>', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
+            $countSW = Territory::where('pos_x', '<', '0') -> where('pos_y', '<', '0') -> where('is_npc_village' ,'=', '1') -> count();
+            $countNW = Territory::where('pos_x', '<', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
+            $countSE = Territory::where('pos_x', '>', '0') -> where('pos_y', '<', '0') -> where('is_npc_village' ,'=', '1') -> count();
 
-        if(($countNE + $countSW + $countNW) >= $countSE*3)
-            $positionOnMap = "SE";
+            if(($countNE + $countSW + $countNW) >= $countSE*3)
+                $positionOnMap = "SE";
 
-        elseif(($countSW + $countNW + $countSE) >= $countNE*3)
-            $positionOnMap = "NE";
+            elseif(($countSW + $countNW + $countSE) >= $countNE*3)
+                $positionOnMap = "NE";
 
-        elseif(($countSW + $countNE + $countSE) >= $countNW*3)
-            $positionOnMap = "NW";
+            elseif(($countSW + $countNE + $countSE) >= $countNW*3)
+                $positionOnMap = "NW";
 
-        elseif(($countNE + $countNW + $countSE) >= $countSW*3)
-            $positionOnMap = "SW";
+            elseif(($countNE + $countNW + $countSE) >= $countSW*3)
+                $positionOnMap = "SW";
+        }
 
         /* razdelitev limit za sirjenje od znotraj navzven */
         $min = (int)($allTerritoriesCount / 10);
