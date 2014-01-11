@@ -8,22 +8,6 @@ class AdminController extends BaseController {
         $this->beforeFilter('admin');
     }
 
-/*
-getIndex()
-    home page
-
-getUsers()
-    seznam uporabnikov
-    ko kliknes te preusmeri na getUser($userid)
-    izpis vasi klink na vasi getTerritory($villageid)
-
-postUser($userid)
-    za potrditev sprememb
-
-postTerritory($territoryId)
-
-
-*/
     public function getIndex()
     {
         return View::make('admin');
@@ -42,23 +26,21 @@ postTerritory($territoryId)
     public function postQuestion()
     {
         $inputData = Input::all();
-        $question = $inputData['question'];
+        $quizQuestion = $inputData['question'];
         $answer1 = $inputData['answer1'];
         $answer2 = $inputData['answer2'];
         $answer3 = $inputData['answer3'];
         $answercorrect = $inputData['answercorrect'];
 
-        $questiondata = array(
-            'answer_1' => $answer1,
-            'answer_2' => $answer2,
-            'answer_3' => $answer3,
-            'answer_correct' => $answercorrect,
-            'tezavnost' => 0
-            );
+        $question = new Question;
+        $question -> answer_1 = $answer1;
+        $question -> answer_2 = $answer2;
+        $question -> answer_3 = $answer3;
+        $question -> answer_correct = $answercorrect;
+        $question -> tezavnost = 0;
+        $question -> save();
 
-        new Question($questiondata);
-
-        $data = array("added" => true, "question" => $question);
+        $data = array("added" => true, "question" => $quizQuestion);
         return View::make('adminaddquestion', $data);
     }
 
