@@ -8,7 +8,7 @@
     $numberOfCorrectAnswersDefender = $correctNumAnswers['defender_num_correct_ans'];
     if($submit_time_defender == NULL){
             $defenderSubmit = false;
-            $numberOfCorrectAnswersDefender = "Se ne odgovorjeno"
+            $numberOfCorrectAnswersDefender = "Se ne odgovorjeno";
         }
     ?>
     <div class="report col-xs-12">
