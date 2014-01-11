@@ -23,10 +23,20 @@ class MapController extends BaseController {
         /* nastavljanje velikosti slike */
         $width=abs($minX)+abs($maxX);
         $height=abs($minY)+abs($maxY);
+
         /* poveca slike */
         $sizeMultiplier = 9;
+
+        /* oblike pike na zemljevidu  circle - square */
+        $shape = "circle";
+
         /* velikost pike na zemljevidu (1=1 2=4 3=9) */
-        $dotSize = (int)(sqrt($sizeMultiplier));
+        if($shape == "square")
+            $dotSize = (int)(sqrt($sizeMultiplier));
+
+        if($shape == "circle")
+            $dotSize = $sizeMultiplier;
+
         /* ce je slika manjsa od limita jo poveca do limita */
         $sizeLimit = 2000;
 
@@ -84,20 +94,28 @@ class MapController extends BaseController {
 
             /* barvanje NPC teritorijev v rdece */
             if($territory['is_npc_village'] == 1){
-                for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
-                    for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
-                        imagesetpixel($im, $i, $j, $red);
-                    }  
+                if($shape == 'square'){
+                    for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
+                        for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
+                            imagesetpixel($im, $i, $j, $red);
+                        }  
+                    }
                 }
+                elseif($shape == 'circle')
+                    imagefilledellipse($im, $mapX, $mapY, $dotSize, $dotSize, $red);
             }
 
             /* barvanje ostalih teritorijev v modro */
             else{
-                for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
-                    for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
-                        imagesetpixel($im, $i, $j, $blue);
-                    }  
+                if($shape == 'square'){
+                    for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
+                        for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
+                            imagesetpixel($im, $i, $j, $blue);
+                        }  
+                    }
                 }
+                elseif($shape == 'circle')
+                    imagefilledellipse($im, $mapX, $mapY, $dotSize, $dotSize, $blue);
             }
         }
                 foreach ($visibleTerritories as $territory) {
@@ -113,18 +131,22 @@ class MapController extends BaseController {
 
             /* barvanje svojih teritorijev v zeleno */
             if($territoryOwner == Auth::user() -> username){
-                for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
-                    for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
-                        imagesetpixel($im, $i, $j, $green);
-                    }  
+                
+                if($shape == 'square'){
+                    for($i=$mapX-$dotSize; $i <= $mapX + $dotSize; $i++){
+                        for($j=$mapY-$dotSize; $j <= $mapY + $dotSize; $j++){
+                            imagesetpixel($im, $i, $j, $green);
+                        }  
+                    }
                 }
+                elseif($shape == 'circle')
+                    imagefilledellipse($im, $mapX, $mapY, $dotSize, $dotSize, $green);
 
             }
 
         }
 
         /* se par nastavitev in kreiranje slike */
-        imageantialias($im, true);
         imagepng($im);
         imagedestroy($im);
     }
