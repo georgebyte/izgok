@@ -24,9 +24,9 @@ class MapController extends BaseController {
         $width=abs($minX)+abs($maxX);
         $height=abs($minY)+abs($maxY);
         /* poveca slike */
-        $sizeMultiplier = 8;
+        $sizeMultiplier = 9;
         /* velikost pike na zemljevidu (1=1 2=4 3=9) */
-        $dotSize = 2;
+        $dotSize = (int)(sqrt($sizeMultiplier));
         /* ce je slika manjsa od limita jo poveca do limita */
         $sizeLimit = 2000;
 
@@ -59,9 +59,6 @@ class MapController extends BaseController {
         $black = imagecolorallocate($im, 65, 65, 65);
         $green = imagecolorallocate($im, 130,176,42);
         $background = imagecolorallocate($im,214,233,207); 
-
-        /* nastavljanje velikosti */
-        $size=1;
 
         /* polnilo slike */
         imagefilledrectangle($im, 0, 0, $width, $height, $background);
