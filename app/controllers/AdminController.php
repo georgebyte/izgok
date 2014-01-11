@@ -62,10 +62,10 @@ postTerritory($territoryId)
         
         /* v primeru ce ne bo spadal v spodaj podane kriterije */
         switch(rand(1,4)){
-            case 1: $positionOnMap = "SE"; break;
-            case 2: $positionOnMap = "NE"; break;
-            case 3: $positionOnMap = "SW"; break;
-            case 4: $positionOnMap = "NW"; break;
+            case 1: $positionOnMap = "S"; break;
+            case 2: $positionOnMap = "E"; break;
+            case 3: $positionOnMap = "W"; break;
+            case 4: $positionOnMap = "N"; break;
         }
 
         $countNE = Territory::where('pos_x', '>', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
@@ -114,6 +114,22 @@ postTerritory($territoryId)
                         $posx=rand($minNeg,0);
                         $posy=rand(0,$min);
                     break;
+                    case 'S':
+                        $posx=rand($minNeg,$max);
+                        $posy=rand($minNeg,0);
+                    break;
+                    case 'E':
+                        $posx=rand(0,$max);
+                        $posy=rand($minNeg,$max);
+                    break;
+                    case 'N':
+                        $posx=rand($minNeg,$max);
+                        $posy=rand(0,$max);
+                    break;
+                    case 'W':
+                        $posx=rand($minNeg, 0);
+                        $posy=rand($minNeg,$max);
+                    break;
                 }
             }
             else{
@@ -135,6 +151,22 @@ postTerritory($territoryId)
                         $posx=rand($maxNeg,$minNeg);
                         $posy=rand($min,$max);
                     break;
+                    case 'S':
+                        $posx=rand($minNeg,$max);
+                        $posy=rand($minNeg,0);
+                    break;
+                    case 'E':
+                        $posx=rand(0,$max);
+                        $posy=rand($minNeg,$max);
+                    break;
+                    case 'N':
+                        $posx=rand($minNeg,$max);
+                        $posy=rand(0,$max);
+                    break;
+                    case 'W':
+                        $posx=rand($minNeg, 0);
+                        $posy=rand($minNeg,$max);
+                    break;                    
                 }
             }
 
