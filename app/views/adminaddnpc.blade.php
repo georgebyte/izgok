@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     @if(isset($added))
-                        NPC {{ $npcName }} je uspesno dodan
+                        NPC {{ $npcName }} je uspesno dodan ter postavljen na {{ $position }} ({{ $posx }},{{ $posy }})
                     @endif
                     {{ Form::open(array(
                         'url'   => '/admin/npc/',

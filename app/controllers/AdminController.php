@@ -193,7 +193,7 @@ postTerritory($territoryId)
         $territory -> is_npc_village = 1;
         $territory -> save();
 
-        $data = array("added" => true, "npcName" => $npcName);
+        $data = array("added" => true, "npcName" => $npcName, "position" => $positionOnMap, "posX" => $posx, "posy" => $posy);
         return View::make('adminaddnpc', $data);
     }
 
