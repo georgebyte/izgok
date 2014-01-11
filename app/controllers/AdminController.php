@@ -64,7 +64,7 @@ postTerritory($territoryId)
 
         $positionSelection = rand(1,100);
 
-        if($positionSelection <= 20){
+        if($positionSelection <= 40){
             switch(rand(1,4)){
             case 1: $positionOnMap = "S"; break;
             case 2: $positionOnMap = "E"; break;
@@ -73,7 +73,7 @@ postTerritory($territoryId)
             }
         }
 
-        if($positionSelection > 20){
+        if($positionSelection > 40){
             $countNE = Territory::where('pos_x', '>', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
             $countSW = Territory::where('pos_x', '<', '0') -> where('pos_y', '<', '0') -> where('is_npc_village' ,'=', '1') -> count();
             $countNW = Territory::where('pos_x', '<', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
