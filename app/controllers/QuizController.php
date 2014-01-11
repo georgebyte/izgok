@@ -24,6 +24,11 @@ class QuizController extends BaseController {
             return $f("Izbrano ozemljo je ze napadeno");
         }
 
+        if (checkUnsolved() > 0){
+            $f = Config::get('error.errorInfo', "napaka");
+            return $f("Dokler imas neresene/nepregledane kvize ne mores napasti.");
+        }
+
         if ((!User::find($defenderID) || $defenderID == $attackerID) && $defenderID != 0) {
             $f = Config::get('error.errorInfo', "napaka");
             return $f("Napaden igralec ni veljaven.");
