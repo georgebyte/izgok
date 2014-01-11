@@ -43,16 +43,16 @@ postTerritory($territoryId)
     {
         $inputData = Input::all();
         $question = $inputData['question'];
-        $answer_1 = $inputData['answer_1'];
-        $answer_2 = $inputData['answer_2'];
-        $answer_3 = $inputData['answer_3'];
-        $answer_correct = $inputData['answer_correct'];
+        $answer1 = $inputData['answer1'];
+        $answer2 = $inputData['answer2'];
+        $answer3 = $inputData['answer3'];
+        $answercorrect = $inputData['answercorrect'];
 
         $questiondata = array(
-            'answer_1' => $answer_1,
-            'answer_2' => $answer_2,
-            'answer_3' => $answer_3,
-            'answer_correct' => $answer_correct,
+            'answer_1' => $answer1,
+            'answer_2' => $answer2,
+            'answer_3' => $answer3,
+            'answer_correct' => $answercorrect,
             'tezavnost' => 0
             );
 

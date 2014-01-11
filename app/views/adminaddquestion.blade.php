@@ -24,31 +24,31 @@
                             )) }}
                         </div>
                         <div class="form-group">
-                            {{ Form::label('answer_1', 'Answer I:') }}
-                            {{ Form::text('answer_1', '', array(
+                            {{ Form::label('answer1', 'Answer I:') }}
+                            {{ Form::text('answer1', '', array(
                                     'class'       => 'form-control',
-                                    'id'          => 'answer_1'
+                                    'id'          => 'answer1'
                             )) }}
                         </div>
                         <div class="form-group">
-                            {{ Form::label('answer_2', 'Answer II:') }}
-                            {{ Form::text('answer_2', '', array(
+                            {{ Form::label('answer2', 'Answer II:') }}
+                            {{ Form::text('answer2', '', array(
                                     'class'       => 'form-control',
-                                    'id'          => 'answer_2'
+                                    'id'          => 'answer2'
                             )) }}
                         </div>
                         <div class="form-group">
-                            {{ Form::label('answer_3', 'Answer III:') }}
-                            {{ Form::text('answer_3', '', array(
+                            {{ Form::label('answer3', 'Answer III:') }}
+                            {{ Form::text('answer3', '', array(
                                     'class'       => 'form-control',
-                                    'id'          => 'answer_3'
+                                    'id'          => 'answer3'
                             )) }}
                         </div>
                         <div class="form-group">
-                            {{ Form::label('answer_correct', 'Correct Answer:') }}
-                            {{ Form::text('answer_correct', '', array(
+                            {{ Form::label('answercorrect', 'Correct Answer:') }}
+                            {{ Form::text('answercorrect', '', array(
                                     'class'       => 'form-control',
-                                    'id'          => 'answer_correct'
+                                    'id'          => 'answercorrect'
                             )) }}
                         </div>                        
                         {{ Form::button('Add', array(
