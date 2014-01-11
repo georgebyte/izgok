@@ -29,6 +29,135 @@ postTerritory($territoryId)
         return View::make('admin');
     }
 
+    public function getNpc()
+    {
+        return View::make('adminaddnpc');
+    }
+
+    public function postNpc()
+    {
+        $inputData = Input::all();
+        $npcName = $inputData['name'];
+        $npcDesc = $inputData['description'];
+        $varName = rand(1,2) == 1 ? "vas" : "ozemlje";
+        //territoryName = $npcName."'s ".$varName;
+        $territoryName = $varName." ".$npcName;
+
+        /* dodajanje NPC-ja */
+        $userdata = array(
+            'username' => $npcName,
+            'email'    => "NPC",
+            'password' => Hash::make($npcName.rand(123,321))
+            );
+        $user = new User($userdata);
+        $user -> score = 10;
+        $user->save();
+        $userID = $user -> id;
+
+        /* iskanje pozicije na mapi */
+        $allTerritoriesCount = Territory::all() -> count();
+
+
+        /* izbiranje smeri neba ( $positionOnMap ) za postavitev NPCja glede na tjo kje jih je najmanj */
+        
+        /* v primeru ce ne bo spadal v spodaj podane kriterije */
+        switch(rand(1,4)){
+            case 1: $positionOnMap = "SE"; break;
+            case 2: $positionOnMap = "NE"; break;
+            case 3: $positionOnMap = "SW"; break;
+            case 4: $positionOnMap = "NW"; break;
+        }
+
+        $countNE = Territory::where('pos_x', '>', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
+        $countSW = Territory::where('pos_x', '<', '0') -> where('pos_y', '<', '0') -> where('is_npc_village' ,'=', '1') -> count();
+        $countNW = Territory::where('pos_x', '<', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
+        $countSE = Territory::where('pos_x', '>', '0') -> where('pos_y', '<', '0') -> where('is_npc_village' ,'=', '1') -> count();
+
+        if($countNE >= $countSW && $countSW >= $countNW && $countNW > $countSE)
+            $positionOnMap = "SE";
+
+        elseif($countNE <= $countSW && $countSW <= $countNW && $countNW < $countSE)
+            $positionOnMap = "NE";
+
+        elseif($countSW >= $countNE && $countNE >= $countSE && $countSE > $countNW)
+            $positionOnMap = "NW";
+
+        elseif($countSW <= $countNE && $countNE <= $countSE && $countSE < $countNW)
+            $positionOnMap = "SW";
+
+        /* razdelitev limit za sirjenje od znotraj navzven */
+        $min = (int)($allTerritoriesCount / 10);
+        $min = (int)(($min + 1) * 1.8);
+        $max = (int)($min * 2.4);
+        $minNeg = -1 * $min;
+        $maxNeg = -1 * $max;
+        $posx=0;
+        $posy=0;
+        $territoryCount = 1;
+        do{
+            if($allTerritoriesCount <= $min){
+
+                switch($positionOnMap){
+                    case 'NE': 
+                        $posx=rand(0,$min);
+                        $posy=rand(0,$min);
+                    break;
+                    case 'SE': 
+                        $posx=rand(0,$min);
+                        $posy=rand($minNeg,0);
+                    break;
+                    case 'SW':
+                        $posx=rand($minNeg,0);
+                        $posy=rand($minNeg,0);
+                    break;
+                    case 'NW': 
+                        $posx=rand($minNeg,0);
+                        $posy=rand(0,$min);
+                    break;
+                }
+            }
+            else{
+
+                switch($positionOnMap){
+                    case 'NE': 
+                        $posx=rand($min,$max);
+                        $posy=rand($min,$max);
+                    break;
+                    case 'SE': 
+                        $posx=rand($min,$max);
+                        $posy=rand($maxNeg,$minNeg);
+                    break;
+                    case 'SW':
+                        $posx=rand($maxNeg,$minNeg);
+                        $posy=rand($maxNeg,$minNeg);
+                    break;
+                    case 'NW': 
+                        $posx=rand($maxNeg,$minNeg);
+                        $posy=rand($min,$max);
+                    break;
+                }
+            }
+
+            $territoryCount = Territory::where('pos_x', '=', $posx)
+                                -> where('pos_y', '=', $posy)
+                                -> count();
+        }while($territoryCount > 1);
+
+        /* dodajanje teritorija */
+        $territory = new Territory;
+        $territory -> name = $territoryName;
+        $territory -> description = $npcDesc;
+        $territory -> pos_x = $posx;
+        $territory -> pos_y = $posy;
+        $territory -> id_owner = $userID;
+        $territory -> is_main_village = 0;
+        $territory -> is_npc_village = 1;
+        $territory -> save();
+
+        $data = array("added" => true, "npcName" => $npcName);
+        return View::make('adminaddnpc', $data);
+    }
+
     public function getUser()
     {
             $userList = User::orderBy('username', 'asc') -> get(array('id', 'username'));
