@@ -223,6 +223,7 @@ class QuizController extends BaseController {
         }
         elseif($isDefender && $quiz -> submit_time_defender == null && $quizOpenedDefender - time() < 1) {
             /* prisvojitev ozemlja ce branitelj ne odgovori */
+            $attacker = User::where('id', '=', $quiz -> id_attacker) -> first();
             $conqueredTerritory = Territory::where('id', '=', $quiz -> id_attacked_territory)->first();
             if ($conqueredTerritory -> is_npc_village) {
                 $attacker -> score = $attacker -> score + 10;
@@ -235,7 +236,7 @@ class QuizController extends BaseController {
             $conqueredTerritory -> is_npc_village = 0;
             $conqueredTerritory -> is_main_village = 0;
             $conqueredTerritory -> save();
-            
+
             $quiz -> submit_time_defender = date("Y-m-d H:i:s");
             $quiz -> save();
             return View::make('report', $data);
