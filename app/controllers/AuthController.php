@@ -21,14 +21,20 @@ class AuthController extends BaseController {
 
     public function postLogin()
     {
+        $allowLogin = true;
         $userdata = array(
             'username' => Input::get('username'),
             'password' => Input::get('password')
         );
 
+        /* preprecevanje logina v NPC racune  */
+        $checkNPC = User::where('username', '=', $userdata['username']) -> get(array('email'));
+        if(count($checkNPC) > 0)
+            $allowLogin = $checkNPC[0]['email'] == "NPC" ? false : true;
+
         $remember = (Input::get('remember_me') == 'on') ? true : false;
 
-        if (Auth::attempt($userdata, $remember)) {        	
+        if (Auth::attempt($userdata, $remember) && $allowLogin) {
             return Redirect::intended('/');
         }
 
