@@ -124,6 +124,7 @@ class MapController extends BaseController {
         }
 
         /* se par nastavitev in kreiranje slike */
+        imageantialias($im, true);
         imagepng($im);
         imagedestroy($im);
     }
