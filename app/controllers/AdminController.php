@@ -94,8 +94,8 @@ postTerritory($territoryId)
 
         /* razdelitev limit za sirjenje od znotraj navzven */
         $min = (int)($allTerritoriesCount / 10);
-        $min = (int)(($min + 1) * 1.5);
-        $max = (int)($min * 2);
+        $min = (int)(($min + 1) * 1.33);
+        $max = (int)($min * 1.67);
         $minNeg = -1 * $min;
         $maxNeg = -1 * $max;
         $posx=0;
