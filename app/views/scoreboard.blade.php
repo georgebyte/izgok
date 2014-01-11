@@ -47,7 +47,7 @@
                         <a class="btn btn-primary" href='/scoreboard/show/{{ $page-$pageLength }}'><span class="glyphicon glyphicon-chevron-left"></span></a>
                         <a class="btn btn-primary" href='/scoreboard/show/{{ $page+$pageLength }}'><span class="glyphicon glyphicon-chevron-right"></span></a>
                     @elseif($start)
-                        <a class="btn btn-primary" href='/scoreboard/show/{{ $page-$pageLength }}'><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        <a class="btn btn-primary" href='/scoreboard/show/{{ $page-10 }}'><span class="glyphicon glyphicon-chevron-left"></span></a>
                         <a class="btn btn-primary disabled" href='/scoreboard/show/{{ $page+$pageLength }}'><span class="glyphicon glyphicon-chevron-right"></span></a>
                     @elseif($end)
                         <a class="btn btn-primary disabled" href='/scoreboard/show/{{ $page-$pageLength }}'><span class="glyphicon glyphicon-chevron-left"></span></a>

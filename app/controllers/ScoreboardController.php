@@ -35,6 +35,8 @@ class ScoreboardController extends BaseController {
         $start=true;
         $end=true;
         $length=count($usersAndScores);
+        if($pagination<0)
+            $pagination=0;
         if($pagination==0)
             $start=false;
         if($pagination+$pageLength>=$length){
