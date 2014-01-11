@@ -73,16 +73,16 @@ postTerritory($territoryId)
         $countNW = Territory::where('pos_x', '<', '0') -> where('pos_y', '>', '0') -> where('is_npc_village' ,'=', '1') -> count();
         $countSE = Territory::where('pos_x', '>', '0') -> where('pos_y', '<', '0') -> where('is_npc_village' ,'=', '1') -> count();
 
-        if($countNE >= $countSW && $countSW >= $countNW && $countNW > $countSE)
+        if(($countNE + $countSW + $countNW) >= $countSE*3)
             $positionOnMap = "SE";
 
-        elseif($countNE <= $countSW && $countSW <= $countNW && $countNW < $countSE)
+        elseif(($countSW + $countNW + $countSE) >= $countNE*3)
             $positionOnMap = "NE";
 
-        elseif($countSW >= $countNE && $countNE >= $countSE && $countSE > $countNW)
+        elseif(($countSW + $countNE + $countSE) >= $countNW*3)
             $positionOnMap = "NW";
 
-        elseif($countSW <= $countNE && $countNE <= $countSE && $countSE < $countNW)
+        elseif(($countNE + $countNW + $countSE) >= $countSW*3)
             $positionOnMap = "SW";
 
         /* razdelitev limit za sirjenje od znotraj navzven */
