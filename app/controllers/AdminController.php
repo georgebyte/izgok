@@ -29,9 +29,37 @@ postTerritory($territoryId)
         return View::make('admin');
     }
 
+    public function getQuestion()
+    {
+        return View::make('adminaddquestion');
+    }
+
     public function getNpc()
     {
         return View::make('adminaddnpc');
+    }
+
+    public function postQuestion()
+    {
+        $inputData = Input::all();
+        $question = $inputData['question'];
+        $answer_1 = $inputData['answer_1'];
+        $answer_2 = $inputData['answer_2'];
+        $answer_3 = $inputData['answer_3'];
+        $answer_correct = $inputData['answer_correct'];
+
+        $questiondata = array(
+            'answer_1' => $answer_1,
+            'answer_2' => $answer_2,
+            'answer_3' => $answer_3,
+            'answer_correct' => $answer_correct,
+            'tezavnost' => 0
+            );
+
+        new Question($questiondata);
+
+        $data = array("added" => true, "question" => $question);
+        return View::make('adminaddquestion', $data);
     }
 
     public function postNpc()
@@ -51,7 +79,7 @@ postTerritory($territoryId)
             );
         $user = new User($userdata);
         $user -> score = 10;
-        $user->save();
+        $user -> save();
         $userID = $user -> id;
 
         /* iskanje pozicije na mapi */
